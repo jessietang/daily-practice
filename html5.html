@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html5 and css3</title>
+    <!--
+    transition: 过渡 默认情况来书写，而不是写在鼠标滑过事件中
+    animation: 动画  默认情况来书写，而不是写在鼠标滑过事件中
+    transform: 转换
+    CSS3 resize 属性:
+    resize: both (默认) 、none . horizontal 、vertical
+    常见于textarea文本输入框的设置
+    -->
+    <style>
+        .div1{
+            width: 200px;
+            height:200px;
+            background-color: red;
+            -webkit-transition: all 1s linear .5s;
+            -moz-transition: all 1s linear .5s;
+            -ms-transition: all 1s linear .5s;
+            -o-transition: all 1s linear .5s;
+            transition: all 1s linear .5s;
+        }
+        .div1:hover{
+            background-color: green;
+            /*-webkit-transform: rotate(30deg);
+            -moz-transform: rotate(30deg);
+            -ms-transform: rotate(30deg);
+            -o-transform: rotate(30deg);
+            transform: rotate(30deg);
+            transform-origin: right bottom;*/
+            /*-webkit-transform: scale(2,3);
+            -moz-transform: scale(2,3);
+            -ms-transform: scale(2,3);
+            -o-transform: scale(2,3);
+            transform: scale(2,3);*/
+            /*-webkit-transform: translate(200px, 100px);
+            -moz-transform: translate(200px, 100px);
+            -ms-transform: translate(200px, 100px);
+            -o-transform: translate(200px, 100px);
+            transform: translate(200px, 100px);*/
+            /*-webkit-transform: skew(45deg, 45deg);
+            -moz-transform: skew(45deg, 45deg);
+            -ms-transform: skew(45deg, 45deg);
+            -o-transform: skew(45deg, 45deg);
+            transform: skew(45deg, 45deg);*/
+            -webkit-transform: translateZ(100px); /*safari and chrome*/
+            -moz-transform: translateZ(100px);/*ff*/
+            -ms-transform: translateZ(100px);/*ie*/
+            -o-transform: translateZ(100px);/*opera*/
+            transform: translateZ(100px);
+            transform-origin:center center;
+
+        }
+
+
+        .div2{
+            width: 20px;
+            height:20px;
+            border-radius: 100%;
+            background-color: palegreen;
+            position: absolute;
+            left:100px;
+            top: 200px;
+            -webkit-animation: myKeyframes 5s ease-in-out infinite; /*infinite: 动画循环播放*/
+            -o-animation: myKeyframes 5s ease-in-out infinite;
+            animation: myKeyframes 5s ease-in-out infinite;
+        }
+
+        .div2:hover{
+            -webkit-animation: none;
+            -o-animation: none;
+            animation: none;
+        }
+        
+        @keyframes myKeyframes { /*自定义动画*/
+            0%{
+                left: 100px;
+                top: 200px;
+            }
+            25%{
+                left: 100px;
+                top: 500px;
+            }
+            50%{
+                left: 600px;
+                top: 500px;
+            }
+            75%{
+                left: 600px;
+                top: 200px;
+            }
+            100%{
+                left: 100px;
+                top: 200px;
+            }
+        }
+
+        #btn1{
+            width: 100px;
+            height: 30px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0px 2px 3px 3px #e3e3e3;
+            -moz-box-shadow: 0px 2px 3px 3px #e3e3e3;
+            box-shadow: 0px 2px 3px 3px #e3e3e3;
+            background-color: #eee;
+        }
+        #btn2 {
+            width: 100px;
+            height: 30px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(top, red, green);
+        }
+        #btn3 {
+            width: 100px;
+            height: 30px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(left, red, green);
+        }
+        #btn4 {
+            width: 100px;
+            height: 60px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(left top, red, green);
+        }
+
+    </style>
+</head>
+<body>
+    <!--<video width="400" height="320" src="movi.ogg" controls="controls">
+        your video does not support the video
+    </video>
+    <audio src="song.mp3" controls="controls"></audio>-->
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <textArea style="width:200px;height:30px;resize:vertical;"></textArea>
+
+    <button id="btn1">cancel</button>
+    <button id="btn2">save</button>
+    <button id="btn3">sure</button>
+    <button id="btn4">order</button>
+
+</body>
+</html>

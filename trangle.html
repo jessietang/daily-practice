@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>倒三角制作</title>
+    <style>
+        .context-box {
+            margin: 100px 0 0 100px;
+            position: relative;
+            width: 150px;
+            height: 30px;
+            background-color: palegreen;
+        }
+        .context-box .trangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+            border: 8px solid transparent;  /*border: 8px solid red;*/
+            border-top-color: gainsboro;
+            left: 50%;
+            margin-left: -4px;
+            bottom: -16px; //
+        }
+        .alert-content {
+            position: absolute;
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+    <div class="context-box">
+        <div class="alert-content">this is you trangle</div>
+        <span class="trangle"></span>
+    </div>
+</body>
+</html>

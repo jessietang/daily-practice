@@ -1,0 +1,81 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+       /* .test {
+            width: 200px;
+            height:50px;
+            background-color:red;
+            padding-top: 20px;
+            [;padding-top:2px;]
+        }*/
+    </style>
+</head>
+<body>
+    <div class="test">1234</div>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .box {
+            display: inline-block;
+            width: 500px;
+            height: 200px;
+        }
+        .item {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+            background-color: red;
+
+            float: left;  /*(换成display： inline-block就会出现问题。)*/
+            /*display: inline-block;*/
+            text-align: center;
+        }
+        .pic {
+            width: 100px;
+            height: 100px;
+            background-color: grey;
+        }
+        p {
+            width: 100px;
+            height: 40px;
+            line-height: 20px;
+            background-color: green;
+            word-break: keep-all;
+            overflow: hidden;
+            padding-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>dsfffffffffff</h1>
+    <div>
+        <div class="item">
+            <div class="pic">11111111</div>
+            222 2 2222 22 222
+        </div>
+        <div class="item">
+            <div class="pic">11111111</div>
+            3333
+        </div>
+        <div class="item">
+            <div class="pic">11111111</div>
+            <p>2222</p>
+        </div>
+
+    </div>
+</div>
+
+<div style="margin-top: 100px;background-color:red;width:100px;height:auto;word-break:break-all;">11111 111111111122 111111111</div>
+</body>
+</html>

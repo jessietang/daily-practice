@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>zIndex</title>
+    <style>
+        #div1, #div2, #div3 {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #div1{
+            background-color: red;
+            z-index: 2;
+        }
+        #div2{
+            background-color: orange;
+            margin-left: 20px;
+            margin-top: 20px;
+
+        }
+        #div3{
+            background-color: yellow;
+            margin-left:40px;
+            margin-top: 40px;
+            z-index: 3;
+        }
+        #div4, #div5{
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            background-color: #000;
+        }
+        #div5 {
+            background-color: #0000cc;
+            z-index: 90;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        <div id="div4"></div>
+    </div>
+    <div id="div2"></div>
+    <div id="div3">
+        <div id="div5"></div>
+    </div>
+</body>
+</html>

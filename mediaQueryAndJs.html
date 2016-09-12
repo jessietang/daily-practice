@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /* 使用CSS的伪元素的content属性是个更好的方法： */
+        .state-indicator {
+            position: absolute;
+            top: -999em;
+            left: -999em;
+        }
+        .state-indicator:before { content: 'desktop'; }
+
+        /* 小屏幕桌面 */
+        @media all and (max-width: 1200px) {
+            .state-indicator:before { content: 'small-desktop'; }
+        }
+
+        /* 平板 */
+        @media all and (max-width: 1024px) {
+            .state-indicator:before { content: 'tablet'; }
+        }
+
+        /* 手机 */
+        @media all and (max-width: 768px) {
+            .state-indicator:before { content: 'mobile'; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="state-indicator"></div>
+    <script>
+        var initialState;
+        var lastDeviceState;
+        var myMediaQuery = {
+            init:function(){
+                var _this = this;
+                initialState = _this.getDeviceState();
+                window.addEventListener("resize",function(){
+                    lastDeviceState = _this.getDeviceState();
+                    console.log(lastDeviceState);
+                });
+            },
+            getDeviceState:function(){
+                return window.getComputedStyle(
+                        document.querySelector('.state-indicator'), ':before'
+                ).getPropertyValue('content');
+            }
+        };
+        window.onload = function(){
+            myMediaQuery.init();
+            console.log(initialState);
+
+        };
+
+    </script>
+</body>
+</html>

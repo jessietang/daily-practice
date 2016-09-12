@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        substring(start, end)  [start, end)
+        substr(start, length) 不推荐使用， ECAMscript没有对该方法进行标准化，因此反对使用它
+        slice(start, end)  [start, end)
+    </title>
+</head>
+<body>
+<script>
+    window.onload = function(){
+        var str = 'abcdefg'
+        var str1 = str.substring(1,3);
+        var str2 = str.substr(1,3);
+        var str3 = str.slice(1,3);
+        console.log(str1+'==='+str2+"==="+str3);
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>冒泡排序---从小到大</title>
+</head>
+<body>
+<script>
+    /*
+    * 第一个元素与第二个比较，第一个小于第二个，就交换。
+    * 第二个元素与第三个元素比较，第二个小于第三个，就交换
+    * 第三个元素与第四个元素比较，第三个小于第四个，就交换
+    * 。。。
+    * 一轮比较完了， 然后进行 第二轮比较， 一共arr.length轮
+    * */
+    function bubbleSort(arr){
+        if(arr.length <= 1){
+            return arr;
+        }
+        var temp = 0;
+        for(var i=0; i<arr.length; i++){
+            for(var j=0; j<arr.length; j++){
+                if(arr[j] > arr[j+1]){
+                    temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
+    var arr = [1,2,0,10,-9,-10,100];
+    console.log(bubbleSort(arr)); // [-10, -9, 0, 1, 2, 10, 100]
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .flex1 {display:flex;display:-webkit-flex;/*safari*/width:300px;height:50px;line-height:50px;}
+
+        .flex2 {display:flex;width:500px;height:60px;background-color:#eee;}
+        .flex2 .flex2_child{float:left;width:100px;background-color:red;}
+
+        .flex3 {display:flex;flex-direction:row-reverse;/*row row-reverse column column-reverse*/
+            margin-top:10px;}
+        .flex3 .flex3_child {width:100px;height:100px;border:1px solid #000;}
+
+        .flex4{display:flex;flex-wrap:nowrap;/*nowrap wrap wrap-reverse*/width:300px;background-color:gold;}
+        .flex4 .flex4_child{box-sizing:border-box;border:1px solid red;width:100px;height:100px;padding:10px;}
+
+        .flex5{display:flex;flex-flow:row wrap;width:300px;background-color:yellowgreen;}
+        .flex5 .flex5_child {/*box-sizing:border-box;*/width:100px;height:100px;border:1px solid red;padding:50px;}
+
+        .flex6 {display:flex;justify-content: space-around;/*flex-start flex-end center space-between space-around*/
+            width:600px;border:1px solid #000;
+            background-color:greenyellow;}
+        .flex6 .flex6_child:nth-child(1) {width:100px;height:100px;border:1px solid #000;}
+        .flex6 .flex6_child:nth-child(2) {margin-left:10px;width:200px;height:60px;border:1px solid #000;}
+        .flex6 .flex6_child:nth-child(3) {margin-left:10px;width:70px;height:60px;border:1px solid #000;}
+
+        .flex7{display:flex;align-items:baseline;/*flex-start flex-end center stretch baseline*/
+            justify-content:space-between;width:400px;height:150px;background-color:#008000;}
+        .flex7 .flex7_child:nth-of-type(1){width:100px;height:100px;background-color:red;}
+        .flex7 .flex7_child:nth-child(2){width:80px;height:80px;line-height:40px;text-align:center;background-color:deeppink;}
+        .flex7 .flex7_child:nth-last-child(1){width:120px;height:120px;background-color:yellow;}
+
+
+        .flex8{display:flex;align-content:flex-start;width:400px;height:150px;background-color:rosybrown;}
+        .flex8
+    </style>
+</head>
+<body>
+    <span class="flex1">1111111111</span>
+    <span class="flex1">2222222222</span>
+    <div class="flex2">
+        <div class="flex2_child">child1</div>
+        <div class="flex2_child">child2</div>
+    </div>
+    <div class="flex3">
+        <div class="flex3_child">flex-direction1</div>
+        <div class="flex3_child">flex-direction2</div>
+        <div class="flex3_child">flex-direction3</div>
+        <div class="flex3_child">flex-direction4</div>
+    </div>
+    <div class="flex4">
+        <div class="flex4_child">flex-wrap1</div>
+        <div class="flex4_child">flex-wrap2</div>
+        <div class="flex4_child">flex-wrap3</div>
+        <div class="flex4_child">flex-wrap4</div>
+        <div class="flex4_child">flex-wrap5</div>
+        <div class="flex4_child">flex-wrap6</div>
+        <div class="flex4_child">flex-wrap7</div>
+        <div class="flex4_child">flex-wrap8</div>
+        <div class="flex4_child">flex-wrap9</div>
+    </div>
+    <!--flex-flow是flex-direction和flex-wrap的简写-->
+    <div class="flex5">
+        <div class="flex5_child">flex-flow1</div>
+        <div class="flex5_child">flex-flow2</div>
+        <div class="flex5_child">flex-flow3</div>
+        <div class="flex5_child">flex-flow4</div>
+        <div class="flex5_child">flex-flow5</div>
+        <div class="flex5_child">flex-flow6</div>
+        <div class="flex5_child">flex-flow7</div>
+        <div class="flex5_child">flex-flow8</div>
+    </div>
+    <!--justify-content定义项目在主轴上的对齐方式-->
+    <div class="flex6">
+        <div class="flex6_child">justify-content1</div>
+        <div class="flex6_child">justify-content2</div>
+        <div class="flex6_child">justify-content3</div>
+    </div>
+    <!--align-items定义项目在交叉轴上如何对齐-->
+    <div class="flex7">
+        <div class="flex7_child">align-items1</div>
+        <div class="flex7_child">align-items2</div>
+        <div class="flex7_child">align-items3</div>
+    </div>
+    <!--align-content定义多根轴线的对齐方式，如果只有一根轴线，该属性不起作用-->
+    <div class="flex8">
+        <div class="flex8_child">align-content1</div>
+        <div class="flex8_child">align-content1</div>
+        <div class="flex8_child">align-content1</div>
+        <div class="flex8_child">align-content1</div>
+        <div class="flex8_child">align-content1</div>
+        <div class="flex8_child">align-content1</div>
+    </div>
+</body>
+</html>

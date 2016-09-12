@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>快速排序</title>
+</head>
+<body>
+<script>
+    function quickSort(arr){
+        if(arr.length <= 1){
+            return arr;
+        }
+        var middle_num = Math.floor(arr.length / 2);
+        var middle_value = arr[middle_num];
+        var leftArr = [];
+        var rightArr = [];
+        var middleArr = [];
+        for(var i=0; i<arr.length; i++){
+            if(arr[i] < middle_value){
+                leftArr.push(arr[i]);
+            }else if(arr[i] > middle_value){
+                rightArr.push(arr[i]);
+            }else{
+                middleArr.push(arr[i]);
+            }
+        }
+        return [].concat(quickSort(leftArr), middleArr, quickSort(rightArr));
+    }
+
+    var arr = [1,2,0,2,0,10,-9,-10,100];
+    console.log(quickSort(arr));
+</script>
+</body>
+</html>

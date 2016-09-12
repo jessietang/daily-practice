@@ -1,0 +1,1012 @@
+<!--this is a base and important file about js-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #example {
+            width: 100px;
+            height: 200px;
+            background-color: red;
+        }
+
+        .ul1 {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 0;
+            letter-spacing: -4px;
+            word-spacing: -4px;
+        }
+
+        .ul1 li.nav {
+            display: inline-block;
+            font-size: 16px;
+            letter-spacing: normal;
+            word-spacing: normal;
+            zoom: 1;
+            *display: inline;
+            padding: 5px 10px;
+            color: #fff;
+            background-color: #000;
+            cursor: pointer;
+        }
+
+        .ul1 li.active {
+            background-color: red;
+        }
+
+        .tabContent div {
+            display: none;
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            color: #fff;
+        }
+
+        .tabContent div.contentActive {
+            display: block;
+        }
+
+        .scroll-no-gap {
+            width: 300px;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-no-gap .ul-scroll {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .scroll-no-gap .ul-scroll li {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            float: left;
+        }
+
+        .scroll-no-gap .ul-scroll li:nth-child(even) {
+            background-color: rosybrown;
+        }
+
+        .scroll-no-gap .ul-scroll li:nth-child(odd) {
+            background-color: aquamarine;
+        }
+
+        .zoom-in {
+            cursor: zoom-in;
+        }
+
+        .zoom-out {
+            cursor: zoom-out;
+        }
+
+        .box {
+            height: 500px;
+            overflow: hidden;
+        }
+        .box .grab {
+            cursor: grab;
+            cursor:-moz-grab;
+            cursor:-webkit-grab;
+        }
+
+        .box .grabbing {
+            cursor: -moz-grabbing;
+            cursor: -webkit-grabbing;
+            cursor: grabbing;
+        }
+
+        .active1 {
+            border: 1px solid red;
+        }
+
+        .pop-up {
+            width: 400px;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            -webkit-box-shadow: 3px 3px 3px 3px #fff;
+            -moz-box-shadow: 3px 3px 3px 3px #fff;
+            box-shadow: 3px 3px 3px 3px #fff;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -150px;
+            z-index: -1;
+            display: none;
+        }
+        .pop-up .lazyloading {
+            width: 80px;
+            height: 50px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<!--<body onclick="clickBody();">-->
+<body>
+
+<div id="refreshTime">
+    <button onclick="window.history.forward();">go forward</button>
+    <button onclick="window.history.back()">go back</button>
+
+</div>
+<div id="example">click me</div>
+
+<!--tab标签切换-->
+<div class="tab">
+    <ul class="ul1">
+        <li class="active nav">夏雨</li>
+        <li class="nav">姗姗</li>
+        <li class="nav">虫子</li>
+    </ul>
+    <div class="tabContent">
+        <div class="tabDiv contentActive">1111111111</div>
+        <div class="tabDiv">2222222222</div>
+        <div class="tabDiv">3333333333</div>
+    </div>
+</div>
+
+<!--无缝滚动-->
+<div class="scroll-no-gap">
+    <ul class="ul-scroll">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+</div>
+<button class="prev">prev</button>
+<button class="next">next</button>
+
+<!--DOM基础-->
+<div class="dom1">
+    <p>1111111111</p>
+
+    <p>222222222222</p>
+
+    <p>3333333</p>
+</div>
+
+<!--函数绑定-->
+<div id="function-bind">bind bind bind bind</div>
+
+<!-- cursor: zoom-in/zoom-out -->
+<a href="" class="zoom zoom-in">
+    <img src="../test/img/1.jpg" alt=""/>
+</a>
+
+<!--cursor: grab/ grabbing-->
+<div class="box">
+    <img src="../test/img/grab.jpg" alt="" class="grab"/>
+</div>
+
+<script src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+
+   /* cursor: zoom-in/zoom-out*/
+    var oZoom = document.getElementsByClassName('zoom')[0];
+    oZoom.onclick = function(e){
+        var oImg = this.getElementsByTagName('img')[0], cn = this.className;
+        if(cn.indexOf('in') != -1){
+            oImg.src = oImg.src.replace("jpg","large.jpg");
+            this.className = "zoom zoom-out";
+        }else{
+            oImg.src = oImg.src.replace("large.jpg","jpg");
+            this.className = "zoom zoom-in";
+        }
+        e.preventDefault();
+    };
+
+
+   /* cursor: grab/grabbing */
+   var oBox = document.getElementsByClassName("box")[0];
+   var grab = oBox.getElementsByTagName("img")[0];
+   var store = {move:false};
+   grab.addEventListener("mousedown", function(event){
+       this.className = "grabbing";
+       store.move = true;
+       store.startY = event.pageY + oBox.scrollTop;
+       event.preventDefault();
+   });
+   grab.addEventListener("mousemove", function(event){
+       store.y = event.pageY;
+       if(store.move){
+           oBox.scrollTop = store.startY - store.y;
+       }
+       event.preventDefault();
+   });
+   grab.addEventListener("mouseup", function(event){
+       console.log(store.startY+'----'+store.y+ '---'+oBox.scrollTop);
+       grab.className = "grab";
+       store.move = false;
+       event.preventDefault();
+   });
+
+
+    /* function sayHi(){
+     alert('<\/script>');
+     }
+     //sayHi();
+     //alert(typeof sayHi);
+     console.log(undefined == null);  // true  */
+
+
+    /*变量提升  and  函数声明提升
+     function Foo() {
+     getName = function () { alert (1); };
+     return this;
+     }
+     Foo.getName = function () { alert (2);};
+     Foo.prototype.getName = function () { alert (3);};
+     var getName = function () { alert (4);};
+     function getName() { alert (5);}
+
+     /*
+     var getName;  //变量提升
+     function getName() { alert (5);}  //函数声明提升
+     function Foo() {
+     getName = function () { alert (1); };
+     return this;
+     }
+     Foo.getName = function () { alert (2);};
+     Foo.prototype.getName = function () { alert (3);};
+     getName = function(){alert(4)};
+
+
+
+     getName();  // 4
+     Foo.getName();  // 2
+     Foo().getName();  // 1
+     getName(); // 1
+     new Foo().getName();  // 3    (new Foo()).getName()
+     new Foo.getName(); // 2     new (Foo.getName)()
+     new new Foo().getName();  // 3   new ((new Foo()).getName)()
+
+     */
+
+    /*  //不断刷新网页
+     var date = new Date();
+     document.getElementById('refreshTime').innerHTML = date.toLocaleString();
+     function fresh(){
+     window.location.reload();
+     }
+     setInterval(fresh, 1000);
+     */
+
+    /*  //1秒后不单击页面，将自动关闭窗口
+     var willclose = true;
+     function clickBody(){
+     willclose = false;
+     }
+     setInterval(function(){
+     if(willclose){
+     window.close();
+     }else {
+     willclose = true;
+     }
+     },5000);
+     */
+
+
+    //闭包
+
+   /* function test(){
+        var num = 1;
+        num2 = 2;
+        console.log(num);
+    }
+    test();
+    //console.log(num);  //error: num is not defined
+    console.log(num2);  //不使用var定义变量时，默认是全局变量
+*/
+
+    //闭包只能取得包含函数中任何变量的最后一个值
+    /* function test(){
+         var result = [];
+         for(var i=0; i<10; i++){
+             result[i] = function(){
+                alert (i);
+             };
+         }
+         return result;
+         console.log(i);
+     }
+     for(var i=0; i<test().length; i++){
+        console.log(test()[i]());  //  10,10,10,10,.....
+     }*/
+
+    /* //创建匿名函数来达到我们想要的结果
+     function test(){
+         var result = [];
+         for(var i=0; i<10; i++){
+             result[i] = function(num){
+                 return function(){
+                    alert(num);
+                 };
+            }(i);
+         }
+         return result;
+     }
+     for(var i=0; i<10; i++){
+     console.log(test()[i]());  // 0, 1, 2, 3, 4, ....
+     }*/
+
+
+    //闭包中关于this对象
+    //在全局函数中，this 等于window，而当函数被作为某个对象的方法调用时，this 等
+    //于那个对象。不过，匿名函数的执行环境具有全局性，因此其this 对象通常指向window
+    /* var name = "this window";
+     var object = {
+     name: "my obj",
+     getName: function(){
+     return function(){
+     return this.name;
+     }
+     }
+     };
+     alert(object.getName()());  //this window
+     */
+    /*
+     var name = "this window";
+     var object = {
+     name: "my obj",
+     getName: function(){
+     var _this = this;
+     return function(){
+     return _this.name;
+     }
+     }
+     };
+     alert(object.getName()());  // my obj
+     */
+
+    //内存泄露
+    /* function test(){
+     var element = document.getElementById('example');
+     element.onclick = function(){
+     alert(element.id);
+     };
+     }
+     test();*/
+
+    //改进
+    /*function test(){
+     var ele = document.getElementById('example');
+     var eleId = ele.id;
+     ele.onclick = function(){
+     alert(eleId);
+     };
+     ele = null;  //!!!
+     }
+     test();*/
+
+
+    /* function test(){
+     for(var i=0; i<10; i++){
+     alert(i);
+     }
+     alert("作用域"+i);
+     }
+     test();  // 0. 1.2.3.4...9         10  */
+
+     /*var oExample = document.getElementById('example');
+     console.log(oExample.style.width);  //获取不到值，因为style操作的是行间样式
+     //console.log(oExample.currentStyle.width);  //ie
+     console.log(getComputedStyle(oExample, null).width);  // chrome ff  ie9+
+        function getStyle(obj, name){
+            if(obj.currentStyle){
+                return obj.currentStyle[name];
+            }else{
+                return getComputedStyle(obj,false)[name];
+            }
+        }*/
+     //封装成函数如下
+    /*   function getStyle(obj, name){
+     if(obj.currentStyle){
+     return obj.currentStyle[name];
+     }else{
+     return getComputedStyle(obj,false)[name];
+     }
+     }
+
+        function getStyle(obj, name){
+            if(obj.currentStyle){ //ie
+                return obj.currentStyle[name];
+            }else{
+                return getComputedStyle(obj,false)[name]; //chrome ff ie9+
+            }
+        }
+
+     //console.log(getStyle(oExample,'width')); */
+
+
+
+
+    //数组的常用方法
+    /* var arr = [1,2,3,4];
+     arr.push(5);
+     console.log(arr); //[1,2,3,4,5]
+     arr.pop();
+     console.log(arr); //[1,2,3,4]
+     arr.shift();
+     console.log(arr); //[2,3,4]
+     arr.unshift(66);
+     console.log(arr);  //[66, 2, 3, 4]
+     console.log(arr.splice(2,1)); //[3]
+     arr.splice(1,0,10,20);
+     console.log(arr); //[66,10,20,2,4]
+
+     //数组操作
+     var arr1 = ['a','b','c'];
+     var arr2 = ['A','B','C'];
+     console.log(arr2.concat(arr1)); //["A", "B", "C", "a", "b", "c"]
+     console.log(arr1.concat(arr2)); //["a", "b", "c", "A", "B", "C"]
+     var str = arr1.join('-'); //a-b-c
+     var str2 = arr2.join('-'); //A-B-C
+     console.log(str); //a-b-c
+     var arr3 = str.split('-');
+     console.log(arr3); //[a,b,c]
+     //数组排序
+     //var arrNum = [1,9,14,0,-2];
+     //console.log(arrNum.sort(function(n1, n2){return n1-n2;})); //升序
+     //console.log(arrNum.sort(function(n1, n2){return n1-n2;}));
+*/
+
+
+     //日期时间
+     /*var date = new Date();
+     //console.log(date.getDate()+'---'+date.getDay()+'---'+
+     //date.getFullYear()+'---'+(date.getMonth()+1));
+     console.log(date.getDate()+'---'+date.getDay()+'---'+
+     date.getFullYear()+'---'+(date.getMonth()+1));*/
+
+
+
+
+     //定时器  setTimeout  setInterval
+     //这里需要注意的是：setTimeout中的延迟执行代码中的this永远指向window,
+     //所以这里需要在setTimeout外面单独保存一下this
+
+    /**没有定时器的时候的写法
+     var oUl = document.getElementsByClassName('ul1')[0];
+     var aLi = oUl.getElementsByTagName('li');
+     var oDiv = document.getElementsByClassName('tabContent')[0];
+     var aDiv = oDiv.getElementsByTagName('div');
+     for(var i in aLi){
+        aLi[i].index = i;
+        aLi[i].onclick = function(){
+            for(var j in aLi){
+                aLi[j].className = "";
+                aDiv[j].className = "";
+            }
+            aLi[this.index].className = "active";
+            aDiv[this.index].className = "contentActive";
+        };
+     }
+**/
+
+   /*onmouseover onmouseout时间， 给他一个缓存的空间，加上定时器
+   * 这里给ul下面的每个li都加了一个样式，所以不能直接用 aLi[j].className = "";来清除active样式了
+   * 刚开始一直报error: Cannot read property 'indexOf' of undefined
+   * 这个是for in 循环搞的鬼
+   * 建议不要对数组执行for in循环 因为它总是会访问该对象的原型
+   * 改进办法：
+   * 如果某个对象具有给定名称的属性,那么Object.prototype.hasOwnProperty(name)返回true。
+   * 如果该对象是从原型链中继承了该属性,或者根本没有这样的一个属性,则返回false。通过
+   * hasOwnProperty限定for in循环在当前中遍历,而不用去考虑它的原型属性。
+   * */
+   var oUl = document.getElementsByClassName("ul1")[0];
+    var aLi = oUl.getElementsByTagName("li");
+    var oDiv = document.getElementsByClassName("tabContent")[0];
+    var aDiv = oDiv.getElementsByTagName("div");
+    var timer = null;
+    for(var i=0; i<aLi.length; i++){
+       aLi[i].index = i;
+       aLi[i].onmouseover = function(){
+           var _this = this;
+           timer = setTimeout(function(){
+               for(var j=0; j<aLi.length; j++ ){
+                   console.log(j);
+                   if(aLi[j].className.indexOf("active") != -1){
+                       aLi[j].className = aLi[j].className.replace("active","");
+                   }
+                   if(aDiv[j].className.indexOf("contentActive") != -1){
+                       aDiv[j].className = aDiv[j].className.replace("contentActive","");
+                   }
+               }
+               _this.className += " active";
+               aDiv[_this.index].className += " contentActive";
+           },300);
+       };
+       aLi[i].onmouseout = function(){
+           clearTimeout(timer);
+       };
+   }
+
+
+   /*for in改进办法
+   * 通过hasOwnProperty限定for in循环在当前中遍历,而不用去考虑它的原型属性。
+   * */
+   /*var oUl = document.getElementsByClassName("ul1")[0];
+   var aLi = oUl.getElementsByTagName("li");
+   for(var i in aLi){
+       if(aLi.hasOwnProperty(i)){
+           console.log(i);
+       }
+
+   }*/
+
+
+
+
+
+     /*for(var i in aLi){
+     aLi[i].index = i;  //给每个li加一个index属性
+     aLi[i].onmouseover = function(){
+     var _this = this;
+     timer = setTimeout(function(){
+     //console.log(_this);
+     for(var j in aLi){
+     aLi[j].className = "";
+     aDiv[j].className = "";
+     }
+     _this.className += " "+'active';
+     aDiv[_this.index].className ='contentActive';
+     },1000);
+     aLi[_this.index].onmouseout = function(){
+     clearTimeout(timer);
+     }
+     };
+
+     }
+*/
+
+
+
+
+
+     //无缝滚动   取值：oDiv.offsetLeft(可读写)  ==>字符串    设置值： oDiv.style.left（只读） ==> 数值
+    /* var oUl = document.getElementsByClassName('ul-scroll')[0];
+     var aLi = oUl.getElementsByTagName('li');
+     //console.log(aLi.length);
+     oUl.style.width = aLi.length * 100 + 'px';
+     //console.log(oUl.offsetWidth);
+     var oPrev = document.getElementsByClassName('prev')[0];
+     var oNext = document.getElementsByClassName('next')[0];
+     var now = 0;
+     oNext.onclick = function(){
+         now = now + 1;
+         oUl.style.left = oUl.offsetLeft - 300 + 'px';
+         if(now == 3){
+             oUl.style.left = 0;
+             now = 0;
+         }
+     };
+     oPrev.onclick = function(){
+         now = now - 1;
+         oUl.style.left = oUl.offsetLeft + 300 + 'px';
+         if(now == -1){
+         now = 2;
+         oUl.style.left = -(aLi.length/3 - 1)*300 + 'px';
+         }
+     };*/
+
+
+
+
+
+    //DOM基础
+    /* var oDom1 = document.getElementsByClassName('dom1')[0];
+     console.log(oDom1.childNodes);
+     for(var i in oDom1.childNodes){
+     //1: 元素节点     3：文本节点
+     console.log(oDom1.childNodes[i].nodeType);
+     }
+     var oP1 = oDom1.firstElementChild;
+     oP1.style.color = 'red';
+     oP1.style.background = '#000';
+     */
+
+/*
+    var demo = {
+        msg: "hello bind",
+        show: function () {
+            alert(this.msg);
+        }
+    };
+
+    //全兼容的 事件绑定  and  阻止默认事件
+    var EventUtil = {
+        //Notice: type is not include 'on', for example: click mouseover mouseout and so on
+        addHandler: function(element, type, handler){
+            if (element.addEventListener){
+                element.addEventListener(type, handler, false);
+            } else if(element.attachEvent){
+                element.attachEvent('on'+type, handler);
+            } else {
+                element['on'+type] = handler;
+            }
+        },
+
+        preventDefault: function(event){
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+        }
+    };
+
+
+    var obj = document.getElementById('function-bind');
+
+    EventUtil.addHandler(obj, 'click', function(event){
+        demo.show();
+    });
+    */
+
+
+    //变量赋值---基本类型 and 引用类型
+   /* var num1 = 5;
+    var num2 = num1;
+    console.log(num2);  //5
+
+    var obj1 = new Object();
+    var obj2 = obj1;
+    obj1.name = "yuyu";
+    console.log(obj2.name); //yuyu
+    */
+    //访问变量---有按值和按引用两种方式， 而参数--只能按值传递
+   /* function addTen(num){
+        num += 10;
+        return num;
+    }
+    var count = 20;
+    var result = addTen(count);
+    alert(count);
+    alert(result);*/
+
+    /*function setName(obj){
+        obj.name = "yuyu";
+    }
+    var person = new Object();
+    setName(person);
+    alert(person.name); // yuyu */
+
+    /*
+    function setName(obj){
+        obj.name = "yuyu";
+        obj = new Object();
+        obj.name = "jessie";
+    }
+    var person = new Object();
+    setName(person);
+    alert(person.name); // yuyu 证明： 参数是按值传递的,不是按引用传递的
+    */
+
+
+    //检测类型
+    //1. typeof --- number string boolean null function object
+   /* function test(){
+        console.log('aaa');
+    }
+    var a = "111111";
+    var b = 1111;
+    var c = true;
+    var d = null;
+    var e;
+    var f = Date;  //function
+    var g = test;  // function
+    var h = new Date(); // object
+    console.log(typeof a +'---'+typeof b + '---'+typeof c +'---'+typeof d+ '---'+
+    typeof e+'---'+ typeof f+'---'+typeof g);
+    alert(f instanceof Object); // true  */
+
+
+    //变量提升
+    function Foo() {
+        getName = function () { alert (1); };
+        return this;
+    }
+    Foo.getName = function () { alert (2);};
+    Foo.prototype.getName = function () { alert (3);};
+    var getName = function () { alert (4);};
+    function getName() { alert (5);}
+    /*<==>
+    * var getName;
+    * function getName(){alert(5);}
+    * function Foo(){
+    *   getName = function(){alert(1);};
+    *   return this;
+    * }
+    * Foo.getName = function(){alert(2);};
+    * Foo.prototype.getName = function () { alert (3);};
+    * getName = function () { alert (4);};
+    * */
+
+     //result
+    /* Foo.getName();  //2
+     getName();  //4
+     Foo().getName(); //1
+     getName(); //1
+     new Foo.getName(); //2
+     new Foo().getName(); //3
+     new new Foo().getName(); //3*/
+
+
+
+
+   /*
+    //<==>
+    var getName;  //变量提升
+    function getName() { alert (5);}  //函数声明提升
+    function Foo() {
+        getName = function () { alert (1); };
+        return this;
+    }
+    Foo.getName = function () { alert (2);};
+    Foo.prototype.getName = function () { alert (3);};
+    getName = function () { alert (4);};
+
+    //result
+    Foo.getName();  //2
+    getName();  //4
+    Foo().getName();  //1
+    getName(); //1
+    new Foo.getName(); //2   new (Foo.getName)()
+    new Foo().getName();  // 3 (new Foo()).getName()
+    new new Foo().getName();  // 3 new ((new Foo()).getName) ()
+*/
+
+   //click body to close the search box
+
+   /* $('.search-box .getFullSearch').on('click', function(e) {
+       console.log('1');
+       $('.search-full').addClass("active1"); //you can list several class names
+       $('#analytics_searchKey').focus();
+       e.preventDefault();
+    });*/
+  /* $('body').on('click', function(e){
+       var target = e.target || window.event.srcElement;
+           if(target.id && (target.id === 'analytics_searchKey')){
+               e.stopPropagation();
+           }else if(target.closet('button').className()){
+               $('.search-full').addClass("active1"); //you can list several class names
+               $('#analytics_searchKey').focus();
+               e.preventDefault();
+           }else {
+               $('.search-full').removeClass("active1"); //you can list several class names
+               // remove search input value
+               $('.search-full .search-input').val("11111");
+           }
+
+   });*/
+  /* $(function(){
+       function setMarginTop(){
+           if($(window).width() > 960){
+               var mt = $('').height() - $('').height() - 52;
+               $().css('marginTop',mt+'px');
+           }else{
+               $().css('marginTop',0);
+           }
+       }
+       setMarginTop();
+       $(window).resize(function(){
+           setMarginTop();
+       });
+   });*/
+  /* var a;
+   var c = false;
+   var d = "";
+   var e = null;
+   function m(){}
+   var f = null;
+   console.log(typeof(a));
+   console.log(typeof(b));//
+   console.log(typeof(c)); //boolean
+   console.log(typeof(d)); // string
+   console.log(typeof(e)); //object
+   console.log(new Date());
+    console.log(typeof(m));
+   console.log(f);
+*/
+
+    /*var m = {'a':'111','b':'222'};*/
+   /* var m = [];*/
+   
+   //jQuery.isEmptyObject()函数用于判断指定参数是否是一个空对象。
+   /*function isEmptyObject(e) {
+       var t;
+       for (t in e)
+           return !1;
+       return !0
+   }
+   var m = {'a':'111','b':'222'};
+   var n = {};
+   console.log(isEmptyObject(m)); //false
+   console.log(isEmptyObject(n)); //true
+
+    /!*alert(m.length);*!/
+    if(isEmptyObject(m)){
+        console.log("bu kong");
+    }else{
+        console.log('kong');
+    }*/
+
+
+    
+    
+</script>
+
+<!--/*=== image lazy loading 原理：
+1、刚加载页面时只加载html,不加载图片，图片的src为空，把真实的图片路径放到data-original属性中，
+页面加载速度变快；
+2、在页面加载完成之后，js初始化，把有data-original属性的图片再加一个<div></div>在外面，再创建
+一个隐藏的<img />标签，并且根据原图片的大小和位置计算loading图片的位置，把loading图片显示在中间；
+3、判断window的scroll事件（滚动条变化），判断图片在不在可视区域内，如果在可视区域内，那么执行第
+4步，否则什么也不做。
+4、判断图片的src与data-original是不是相同，如果不相同（说明还没有加载），执行第5步，否则什么也不做。
+5、把图片的data-original赋值给隐藏的<img />标签的src，当隐藏的图片完全加载好之后（完成后会执行它
+的.load()事件），再把隐藏图片的src赋值给原图片的src(原因：保证loading图片消失后目标图片立即显示，
+如果一开始把data-original赋值给图片的src，那么还没加载完就会显示图片，网页中图片是一截一截显示的，
+非常难看).
+===*/-->
+<button class="load-btn">image lazy loading</button>
+<div class="pop-up">
+    <img src="" alt="" data-original="image/1.jpg" class="lazyloading"/>
+    <img src="" alt="" data-original="image/2.jpg" class="lazyloading"/>
+    <img src="" alt="" data-original="image/3.jpg" class="lazyloading"/>
+    <img src="" alt="" data-original="image/4.jpg" class="lazyloading"/>
+</div>
+
+<div style="width:500px;height:100px;background-color:pink;">
+        <input type="text" id="btn" placeholder="testtesttest"/>
+
+</div>
+<input placeholder="test" id="product_search" type="text" data-provide="typeahead"
+       data-source='["Deluxe Bicycle", "Super Deluxe Trampoline", "Super Duper Scooter"]'>
+
+<div onkeydown="divTest(event);" style="height:500px" tabindex="1">
+    keydown test
+</div>
+<input onkeydown="divTest(event);" type="text" placeholder="keydown test"/>
+
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<!--<script type="text/javascript" src="https://github.com/twitter/typeahead.js"></script>-->
+<script type="text/javascript">
+    function divTest(e){
+
+        if(!e)e=window.event;
+
+        console.log(e.which+"/"+e.keyCode+"/"+e.charCode);
+
+    }
+
+    $(function(){
+
+
+        /*$('body').unbind('click').on('click', myFun1 = function(e){
+            var target = e.target || window.event.srcElement;
+            var keycode = e.which;
+            if(target.id && target.id === 'btn'){
+                e.stopPropagation();
+            }else{
+                    alert('body');
+            }
+        });
+
+        $('body').keydown(function(e) {
+
+                // get the key code
+                var keyCode = e.which;
+                // do not close search bar exclusion list
+                if(e.keyCode === 13) {
+                    // keyCode 13 is 'Enter' key
+                    // do not close the search bar when click these elements
+                    e.stopPropagation();
+                    $('body').unbind('click',myFun1);
+                    alert('keydown');
+                }
+
+        });
+        function addHandler(element, type, handler){
+            if (element.addEventListener){
+                element.addEventListener(type, handler, false);
+            } else if(element.attachEvent){
+                element.attachEvent('on'+type, handler);
+            } else {
+                element['on'+type] = handler;
+            }
+        }
+*/
+
+
+
+    });
+    /*$(function(){
+        $(document).on('click','.load-btn', function(e){
+            e.target.blur();
+            $('.pop-up').css("z-index","10").show();
+            $('.pop-up .lazyloading').each(function(){
+                var _this = $(this);
+                var imgSrc = _this.attr("data-original");
+                _this.attr("src",imgSrc);
+            });
+            console.log('1');
+            e.stopPropagation();
+        });
+        $('body').on('click', function(e){
+            var target = e.target || window.event.srcElement;
+            if(target.className.indexOf('pop-up') != -1){ //click the open button
+                e.stopPropagation();
+            }else{
+                $('.pop-up').css("z-index","-1").hide();
+                $('.pop-up .lazyloading').each(function(){
+                    var _this = $(this);
+                    _this.attr("src","");
+                });
+            }
+        });
+
+    });*/
+
+    $(function(){
+        $.ajax({
+            url:"http://staging.ashford.com/us/home?locale=en_US&_requestid=335"
+        }).done(function(){
+            var imgOrigin = $('#imgOrigin');
+            if(imgOrigin){
+                var imgOriginSrc = imgOrigin.attr("src");
+                var dataOrigin = imgOrigin.attr("data-origin");
+                if(imgOriginSrc != dataOrigin){
+                    $('#imgHidden').attr("src",dataOrigin);
+                    $('#imgHidden').load(function(){
+                        //alert('1');
+                        var imgHiddenSrc = $('#imgHidden').attr("src");
+                        $('#imgOrigin').attr("src",imgHiddenSrc);
+                        console.log($('#imgOrigin').attr("src"));
+                        //alert('2');
+                    });
+                }
+                console.log('3');
+            }
+        });
+
+    });
+</script>
+
+
+<input type="text" id="analytics_searchKey"/>
+<div class="search-full" style="width:200px;height:200px;">serach-full</div>
+<div class="search-box">
+    <button class="getFullSearch">getFullSearch</button>
+</div>
+
+<img id="imgOrigin" src="" data-origin="http://staging.ashford.com/images/catalog/bulova-accutron/masella/65B142_FLA.jpg" alt=""/>
+<img id="imgHidden" style="display:none;" src="" alt=""/>
+
+
+
+</body>
+</html>
+
+

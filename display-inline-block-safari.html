@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+	<style>
+		.box {
+			display: inline-block;
+			width: 500px;
+			height: 200px;
+		}
+		.item {
+			width: 100px;
+			height: auto;
+			margin: 10px;
+			background-color: red;
+			float: left;  //这里用display: inline-block， 在safari会有问题
+			text-align: center;
+		}
+		.pic {
+			width: 100px;
+			height: 100px;
+			background-color: grey;
+		}
+		p {
+			width: 100px;
+			height: 40px;
+			line-height: 20px;
+			background-color: green;
+			word-break: keep-all;
+			overflow: hidden;
+			padding-bottom: 3px;
+		}
+	</style>
+</head>
+<body>
+    <div class="box">
+	<h1>dsfffffffffff</h1>
+		<div>
+			<div class="item">
+			<div class="pic">11111111</div>
+				2222222222222
+		</div>
+		<div class="item">
+			<div class="pic">11111111</div>
+			3333
+		</div>
+		<div class="item">
+			<div class="pic">11111111</div>
+			<p>2222</p>
+		</div>
+		
+	</div>
+	</div>
+</body>
+</html>

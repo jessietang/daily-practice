@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>back to top</title>
+    <!-- 回到顶部时是减速回去，向下滑动时，当滚动条高度超过可见区域高度时显示按钮 -->
+    <style>
+        .back_to_top {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: red;
+        }
+    </style>
+</head>
+<body style="height: 2000px;">
+<script src="../js/jquery-1.11.2.js"></script>
+<script>
+    /*window.onload = function(){
+        var clientHeight = document.documentElement.clientHeight;
+        window.onscroll = function(){
+            var backTop = document.documentElement.scrollTop || document.body.scrollTop;
+            var oDiv = document.createElement('div');
+            if(backTop > clientHeight){
+                oDiv.innerHTML = '<div>1111</div>';
+                document.body.appendChild(oDiv);
+            }
+        };
+    };*/
+    $(function(){
+        $('body').append('<a href="javascript:void(0);" class="back_to_top" style="display: none;">back to top</a>');
+        $(document).on('click', '.back_to_top', function(){
+            $('body, html').animate({
+                "scrollTop": 0
+            }, 500);
+        });
+        $(window).on('scroll', function(){
+            if($(document).scrollTop() >= 50){
+                $('.back_to_top').fadeIn();
+            }else{
+                $('.back_to_top').fadeOut();
+            }
+        });
+    });
+</script>
+</body>
+</html>

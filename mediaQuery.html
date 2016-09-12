@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    //全兼容的 事件绑定  and  阻止默认事件
+    var EventUtil = {
+        //Notice: type is not include 'on', for example: click mouseover mouseout and so on
+        addHandler: function(element, type, handler){
+            if (element.addEventListener){
+                element.addEventListener(type, handler, false);
+            } else if(element.attachEvent){
+                element.attachEvent('on'+type, handler);
+            } else {
+                element['on'+type] = handler;
+            }
+        },
+
+        preventDefault: function(event){
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+        }
+    };
+    var mediaQuery = {
+        init:function(){
+            var _this = this;
+            _this.outputSize();
+            EventUtil.addHandler(window,"resize",function(){
+                _this.outputSize(); //前面的this要单独保存，否则在这里this指的是window
+            });
+        },
+        outputSize:function(){
+            var result1 = window.matchMedia('(min-width:1200px)');
+            var result2 = window.matchMedia('(min-width:992px)');
+            var result3 = window.matchMedia('(min-width:768px)');
+            //console.log(window.innerWidth);
+            //console.log(result.matches);
+            if(result1.matches) {
+                console.log(">=1200 大型设备 大台式电脑");
+            }else if(result2.matches){
+                console.log("992=< <=1200 中型设备 台式电脑");
+            }else if(result3.matches){
+                console.log("768<= <=992 小型设备 平板电脑");
+            }else{
+                console.log("<=768 超小设备 手机");
+            }
+        }
+    };
+    window.onload = function(){
+        mediaQuery.init();
+    };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #af-page-loading {
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:99999;
+            background: rgba(0,0,0,0.1);
+        }
+        #af-page-loading img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top:-8px;
+            margin-left:-8px;
+        }
+
+        .popup {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 200px;
+            height: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+            background-color: #eee;
+            display: none;
+        }
+    </style>
+</head>
+<body style="height:900px;">
+
+
+
+
+
+
+
+
+
+
+
+    <div id="newContent"></div>
+    <button class="myBtn">start task</button>
+    <button class="clickBtn">click me to toggle the popup</button>
+    <div class="popup">
+
+    </div>
+    <script src="../js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            function ajaxLoader(){
+                var pageLoadingDom = '<div id="af-page-loading"><img src="https://www.ashford.com/images/ashford/ajax-loader.gif" /></div>';
+                $('body').append(pageLoadingDom);
+            }
+
+            function ajaxLoadComplete(){
+                $('body').find('#af-page-loading').remove();
+            }
+
+            function startMyTask(){
+                ajaxLoader();
+                $.ajax({
+                    dataType: "html",
+                    url:"filterIndex.html",
+                    success:function(data){
+                        ajaxLoadComplete();
+                        $('#newContent').html($(data).find('#myContent'));
+                        console.log('load success');
+                    },
+                    error: function(data){
+                        ajaxLoadComplete();
+                        console.log('load failed');
+                    }
+                });
+            }
+
+            $('.myBtn').unbind('click').bind('click', function(){
+                startMyTask();
+            });
+
+            var data = '[{"id":"12", "name":"aaa"}, {"id":"22","name":"bbb"}]';
+            var _data = eval("("+data+")"); //当时zalman的问题就是获得到的data是一个json字符串，
+            // 应该还要转成json数组
+            console.log(typeof data); // string
+            console.log(typeof _data); // object
+            console.log(_data);
+            console.log(eval(data));
+            $.each(_data, function(index, item){
+                console.log(index); // 0, 1
+                console.log(item); // {"id":"12", "name":"aaa"}, {"id":"22","name":"bbb"}
+                console.log(item.id); // 12  22
+                console.log(_data[index].id); // 12  22
+            });
+
+            $(document).on('click', '.clickBtn', function(){
+                $('.popup').toggle();
+            });
+
+            $('body').on('click', function(e){
+                var target = $(e.target);
+                console.log(target);
+                // 如果点击的既不是 .clickBtn, 也不是 .popup
+                if(target.closest('.clickBtn').length == 0 && target.closest('.popup').length == 0){
+                    $('.popup').fadeOut();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

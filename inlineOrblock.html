@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>the differen of inline and block element</title>
+</head>
+<body>
+    <span style="height:100px;padding:20px;margin-left: 100px;background-color:red;">111</span>
+    <div id="child" style="margin-top:100px;">1111</div>
+    <a id="clickA"  href="https://www.baidu.com" onclick="window.location.href='http://www.cuit.edu.cn';return false;">click me</a>
+    <a id="clickA1" target="_blank" href="https://www.baidu.com">ddd</a>
+    <input type="text" id="input1" disabled/>
+    <input type="text" id="input2" onfocus="this.blur();"/> <!--防止用户对文本框中输入文本-->
+    <p class="font-p">12345</p>
+    <script>
+        window.onload = function(){
+            /*window.confirm('are you sure?');
+            window.prompt('请输入密码：');
+            window.location.href="https://www.baidu.com";*/
+            var newLi = document.createElement('li');
+            var oChild = document.getElementById('child');
+            newLi.appendChild(oChild);
+            document.body.appendChild(newLi);
+            document.getElementById('input1').tabIndex = -1;  // or 1
+            console.log(screen.availWidth);
+            console.log(screen.width);
+            console.log(screen.availHeight);
+            console.log(screen.height);
+            console.log(document.getElementById('clickA').tabIndex);
+            console.log(document.getElementById('clickA1').tabIndex);
+            console.log(document.getElementById('input2').tabIndex);
+            window.focus();
+            console.log(document.getElementsByTagName('input').length);
+            if(window.confirm('are you sure?')){
+                alert('ok');
+            }else{
+                alert('cancel');
+            }
+
+            document.getElementsByClassName('font-p')[0].style.color = 'red';
+
+
+        };
+    </script>
+</body>
+</html>

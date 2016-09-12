@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    alert(x);
+    var x = "111";
+    alert(x);
+    x="222";
+    function x(){return x};
+    alert(x);
+    /*
+        result:
+     function x(){return x}
+     111
+     222
+    */
+
+    //等价于
+    var x; //变量提升
+    function x(){return x}; //函数声明提升
+    alert(x);
+    x = "111";
+    alert(x);
+    x = "222";
+    alert(x);
+
+
+    var a = 1;
+    function b() {
+        a = 10;
+        return;
+        function a() {}
+        var a;
+        function a(){}
+        a = 10;
+        return;
+    }
+    b();
+    alert(a);
+</script>
+</body>
+</html>

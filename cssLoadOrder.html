@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css加载顺序</title>
+    <style>
+        .blue{
+            background-color: blue;
+        }
+
+        .red{
+            background-color: red;
+        }
+
+
+        #red{
+            background-color: red;
+        }
+        .black{
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+   <!-- 1. 对于相同类型选择器制定的样式，在样式表文件中，越靠后的优先级越高-->
+    <div class="red blue">1111</div>  <!-- result:  red -->
+
+    <!--2. 样式表的元素选择器选择越精确，则其中的样式优先级越高：
+   id选择器指定的样式 > 类选择器指定的样式 > 元素类型选择器指定的样式-->
+   <div id="red" class="black">2222</div> <!-- result:  red -->
+
+   <!--3. 如果要让某个样式的优先级变高，可以使用!important来指定-->
+</body>
+</html>

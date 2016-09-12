@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>正则表达式</title>
+</head>
+<body>
+<script>
+    var str1 = 'abcdef';
+    console.log(str1.search('b')); // 1
+
+    console.log(str1.substring(2, 5)); // cde
+
+    console.log(str1.substring(2)); // cdef
+
+    console.log(str1.charAt(3)); // d
+
+    var str2 = '12-14-2106';
+    console.log(str2.split('-').join('/')); // ["12", "14", "2106"]   12/14/2106
+
+    var str3 = 'g.5i3n.673uf3';
+    var re3 = /\d/;
+    console.log(str3.search(re3)); // 1 找到第一个数字出现的位置
+
+
+    //从字符串中截取浮点数
+    //match 把所有匹配的东西全部提取出来 ,返回一个数组
+    // replace 字符串替换
+    //i : ignore  g: global
+
+    var str3 = 'g.5M3n.673uf3';
+    var re3_1 = /[\d,{.}]/ig;
+    console.log(str3.match(re3_1).join('')); // [".", "5", "3", ".", "6", "7", "3", "3"]  .53.6733
+
+    var re3_2 = /[^\d,{.}]/ig; // 既不是数字，也不是. 注意写法
+    console.log(str3.replace(re3_2,'')); // .53.6733
+
+    var re3_3 = /\d\d/g; // 两个数字连着的
+    console.log(str3.match(re3_3)); // ["67"]
+
+    var re3_4 = /\d+/g;  //  + 若干个
+    console.log(str3.match(re3_4)); // ["5", "3", "673", "3"]
+
+
+    var str4 = 'gj8T2KlFpO1';
+    var re4_1 = /[^a-z]/g;
+    console.log(str4.match(re4_1)); // ["8", "T", "2", "K", "F", "O", "1"]
+
+    var re4_2 = /[^0-9]/g;
+    console.log(str4.replace(re4_2,'*'));  // **8*2*****1
+
+    var re4_3 = /[^A-Z0-9]/g; // 除了大写字母和数字以外的
+    console.log(str4.replace(re4_3,''));  // 8T2KFO1
+
+    var re4_4 = /[^A-Z]/g; // 除了大写字母
+    console.log(str4.replace(re4_4,''));  // TKFO
+
+</script>
+</body>
+</html>

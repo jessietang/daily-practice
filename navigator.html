@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        有个js的 navigator 对象， 他有个userAgent属性， 好像可以用来判断客户端是在mobile端还是pc端。
+    </title>
+</head>
+<body>
+<script>
+    var isMobile = function() {
+        //console.log("Navigator: " + navigator.userAgent);
+        return /(iphone|ipod|ipad|android|blackberry|windows ce|palm|symbian)/i.test(navigator.userAgent);
+    };
+
+
+    if (isMobile()) {  //mobile
+
+    }else{ // pc
+
+    }
+</script>
+</body>
+</html>

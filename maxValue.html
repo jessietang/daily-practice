@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>求给定的若干个值中的最大的值---arguments的应用</title>
+</head>
+<body>
+<script>
+    function max(a,b){
+        return a>b ? a : b;
+    }
+    function max1(){
+        var maxValue = arguments[0];
+        for(var i=1; i<arguments.length; i++){
+            maxValue = max(maxValue,arguments[i]);
+        }
+        return maxValue;
+    }
+    alert(max1(1,2,3,-10,11));
+</script>
+</body>
+</html>

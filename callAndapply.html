@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>call()  apply()
+        共同作用： 改变对象的this指向的内容
+    </title>
+</head>
+<body>
+<input type="text" id="myText" value="this is the input text"/>
+<script>
+    function obj(){
+        this.value = '对象';
+    }
+    var value = "global变量";
+    function Fun1(){
+        alert(this.value);
+    }
+    window.Fun1();  // global变量
+    Fun1.call(window); // global变量
+    Fun1.call(document.getElementById("myText")); //this is the input text
+    Fun1.call(new obj()); // 对象
+
+</script>
+
+</body>
+</html>
