@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        function checkTime(n){
+            if(n<10){
+                n = '0'+n;
+            }
+            return n;
+        }
+        var timer = null;
+        function startTime(){
+            var d = new Date();
+            var h = d.getHours();
+            var m = d.getMinutes();
+            var s = d.getSeconds();
+            //var time = d.getFullYear();
+            //console.log(time);
+            var t1 = d.toLocaleString();
+            var t2 = d.toLocaleDateString();
+            var t3 = d.toLocaleTimeString();
+            console.log(t2);
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('div1').innerHTML = '现在是:'+h+':'+m+':'+s;
+            timer = setTimeout(function(){
+                startTime();
+            },1000);
+        }
+    </script>
+</head>
+<body onload="startTime();">
+<div id="div1"></div>
+</body>
+</html>

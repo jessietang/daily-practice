@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script>
+        $(function(){
+            $('#input2').click(function(){
+                var t = $('#input1').val();
+                //获取焦点后重新把自己复制粘贴一下
+                $('#input1').val("").focus().val(t);
+            });
+        });
+    </script>
+</head>
+<body>
+<input type="text" id="input1" value="我是文字"/>
+<input type="button" id="input2" value="点击获取焦点"/>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin:0;padding:0;}
+        .a1{position:relative;display:block;background-color:darkgrey;width:100px;height:30px;line-height:30px;text-align:center;margin:300px;color:red;text-decoration:none;}
+        .a1 div{position:absolute;top:-60px;left:50%;margin-left:-150px;height:30px;background-color: #003300;color:#fff;width:300px;}
+        .a1 div .span1{position:absolute;left:50%;margin-left:-30px;bottom:-30px;width:0;height:0;
+            border-top:30px solid red;border-left:30px solid transparent;border-right:30px solid transparent;}
+    </style>
+    <script>
+        window.onload = function(){
+            var oDiv = document.getElementsByTagName('div')[0];
+            var oA = document.getElementsByTagName('a')[0];
+            oA.onmouseover = function(){
+                oDiv.style.display = 'block';
+            };
+            oA.onmouseout = function(){
+                oDiv.style.display = 'none';
+            };
+        };
+    </script>
+</head>
+<body>
+    <a class="a1" href="javascript:void(0);">放上来试试
+        <div style="display:none;">
+            <em>哈哈哈，看到我了吧！</em>
+            <span class="span1"></span>
+        </div>
+    </a>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin:0;padding:0;}
+        body{width:100%;min-width:1200px;}
+        .myContainer{width:50%;margin:150px;background-color: darkgrey;}
+        .div1{position:relative;width:90%;margin:0 auto;height:250px;overflow:hidden;}
+        #ul1{position:absolute;list-style:none;left:0;top:0;width:500%;height:100%;}
+        #ul1 li{width:20%;height:100%;float:left;}
+        #ul1 li img{width:100%;height:100%;}
+         #point{list-style:none;width:200px;height:30px;line-height:30px;z-index:1;position:absolute;left:50%;
+             margin-left:-100px;bottom:10px;}
+        #point li{width:30px;height:30px;line-height:30px;text-align:center;margin-left:8px;
+            background-color:#e38d13;color:#fff;border-radius:50%;float:left;cursor:pointer;}
+        #prev,#next{width:80px;height:50px;line-height:50px;text-align:center;background-color:red;
+            z-index:1;position:absolute;opacity: 0.5;filter: alpha(opacity:50);color:#fff;
+            top:50%;margin-top:-25px;cursor:pointer;}
+        #prev{left:10px;}
+        #next{right:10px;}
+        #prev:hover,#next:hover{opacity: 1;}
+
+        #point .pointCurrent{background-color:red;}
+    </style>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script>
+        $(function(){
+            var w = $('#ul1>li').eq(0).width();
+            var len = $('#ul1>li').length;
+            function tab(n){
+                $('#ul1').animate({
+                    "left":-w*n+'px'
+                },300);
+            }
+
+            var now = 0;
+            function next(){
+                tab(now);
+                now++;
+                if(now == len){
+                    now = 0;
+                }
+                $('#point>li').eq(now-1).addClass('pointCurrent').siblings('li').removeClass('pointCurrent');
+
+            }
+            var timer = null;
+            //自动播放
+            $('.div1').hover(function(){
+                clearInterval(timer);
+            },function(){
+                timer = setInterval(next,2000);
+            }).trigger('mouseleave');
+            $('#point>li').each(function(index){
+               $(this).click(function(){
+                   $(this).addClass('pointCurrent').siblings('li').removeClass('pointCurrent');
+                   tab(index);
+               });
+            });
+
+            $('#next').click(function(){
+                now = now + 1;
+                if(now == len){
+                    now = 0;
+                }
+                tab(now);
+                $('#point>li').eq(now).addClass('pointCurrent').siblings('li').removeClass('pointCurrent');
+            });
+            $('#prev').click(function(){
+                now = now - 1;
+                if(now == -1){
+                    now = len - 1;
+                }
+                tab(now);
+                $('#point>li').eq(now).addClass('pointCurrent').siblings('li').removeClass('pointCurrent');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="myContainer">
+        <div class="div1">
+            <ul id="ul1">
+                <li><a href="#"><img src="img/1.jpg" alt=""/></a></li>
+                <li><a href=""><img src="img/2.jpg" alt=""/></a></li>
+                <li><a href=""><img src="img/3.jpg" alt=""/></a></li>
+                <li><a href=""><img src="img/4.jpg" alt=""/></a></li>
+                <li><a href=""><img src="img/5.jpg" alt=""/></a></li>
+            </ul>
+            <div id="prev">prev</div>
+            <div id="next">next</div>
+            <ol id="point">
+                <li class="pointCurrent">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

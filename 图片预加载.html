@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script>
+        function preloadImg(list,imgs) {
+            var def = $.Deferred(),
+                    len = list.length;
+            $(list).each(function(i,e) {
+                var img = new Image();
+                img.src = e;
+                if(img.complete) {
+                    imgs[i] = img;
+                    len--;
+                    if(len == 0) {
+                        def.resolve();
+                    }
+                }
+                else {
+                    img.onload = (function(j) {
+                        return function() {
+                            imgs[j] = img;
+                            len--;
+                            if(len == 0) {
+                                def.resolve();
+                            }
+                        };
+                    })(i);
+                    img.onerror = function() {
+                        len--;
+                        console.log('fail to load image');
+                    };
+                }
+            });
+            return def.promise();
+        }
+        var list = ['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg'];  //此处省略一万个字符
+        var imgs = [];
+        $.when(preloadImg(list, imgs)).done(
+                function() {
+                    //预加载结束
+                    //do something here
+
+
+                }
+        );
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

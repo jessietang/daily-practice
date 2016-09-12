@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var arr = [1,2,3,4,5];
+        var arrT = [10,20,30];
+        arr.push(0);
+        console.log(arr);
+        arr.pop(0);
+        console.log(arr);
+        arr.shift(1);
+        console.log(arr);
+        arr.unshift(0);
+        console.log(arr);
+        arr.reverse();
+        console.log(arr);
+        arr.sort(function(n1,n2){return n1-n2;});
+        console.log(arr);
+        console.log(arr.concat(arrT));
+        console.log(Math.random());  //0-1之间的随机数
+        console.log(Math.random()*10);  //1-10
+        console.log(parseInt(Math.random()*10)); //1-10的整数
+        console.log(window.location.href);
+        test();
+        var j = 10;
+        function test(){
+            if(false){
+                var i= 10;
+                alert('s');
+            }else{
+                var t =10;
+            }
+            console.log(j);
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

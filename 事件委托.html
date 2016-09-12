@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        window.onload = function(){
+            var oUl = document.getElementById('ul1');
+            myAddEvent(oUl,'click',function(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if(target.nodeName == 'LI'){
+                    target.style.background = 'red';
+                }
+            });
+        };
+        function myAddEvent(obj,event,fun){
+            if(obj.attachEvent){
+                obj.attachEvent('on'+event,fun);
+            }else{
+                obj.addEventListener(event,fun,false);
+            }
+        }
+    </script>
+</head>
+<body>
+<ul id="ul1">
+    <li>11111111111</li>
+    <li>22222222222</li>
+    <li>23333333333333</li>
+    <li>4444444444444</li>
+    <li>555555555555</li>
+</ul>
+</body>
+</html>

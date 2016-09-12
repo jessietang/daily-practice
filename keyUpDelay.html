@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .result, .result2 {
+            width: 600px;
+            height: 300px;
+            border: 1px solid #000;
+        }
+        .search-result li {
+            width: 300px;
+            background-color: green;
+            height: 30px;
+            line-height: 30px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+<body>
+    <input id="input" type="text"/>
+    <div class="result"></div>
+
+    <ul class="search-result">
+        <li>111111111</li>
+        <li>222222222</li>
+        <li>333333333</li>
+        <li>444444444</li>
+    </ul>
+    <div class="result2"></div>
+
+
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+    var timer = null,
+            timer2 = null;
+    function delay(){
+        clearTimeout(timer);
+        timer  = setTimeout(function(){
+            $('.result').html($('#input').val());
+        },1000);
+    }
+
+
+    $(function(){
+        $(document).on('keyup', '#input', function(){
+            delay();
+         });
+
+
+        $(document).on('mouseover','.search-result li', function(){
+            var _this = $(this);
+            clearTimeout(timer2);
+            timer2 = setTimeout(function(){
+                $(".result2").html(_this.html());
+            }, 1000);
+        });
+    });
+</script>
+
+</body>
+</html>

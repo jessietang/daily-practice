@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <style>
+        *{margin:0;padding:0;}
+        html{width:100%;}
+        body{width:100%;min-width:1200px;}
+        .bigDiv{width:600px;min-height:50px;background-color: #00b3ee;}
+        .smallDiv{width:150px;height:300px;background-color:lightpink;float:left;margin-left:20px;}
+        .nextDiv{width:300px;height:200px;background-color: #00CC00;}
+        .clearfix:after{visibility: hidden;display: block;font-size: 0;content:'';clear:both;height:0;}
+        .clearfix{zoom:1;}
+
+        .me{position:relative;left:100px;display:block;width:500px;text-align:center;background-color: #00b3ee;}
+        .tip{position:absolute;font-size: 20px;height:35px;line-height:35px;width:260px;background-color: red;
+           left:50%;top:-65px;margin-left:-130px;display:none;}
+        .tip span{
+            width:0;height:0;border-top:30px solid red;
+            border-left:30px solid transparent;
+            border-right:30px solid transparent;
+            font-size:0;
+            line-height:0;
+            position:absolute;
+            bottom:-30px;
+            left:50%;
+            margin-left:-15px;
+        }
+        .tab{width:400px;height:500px;margin-top: 20px;margin-left:100px;}
+        .tab .nav{background-color:blue;list-style: none;font-size:0;}
+        .tab .nav>li{display:inline-block;padding:5px 10px;background-color: #00b3ee;font-size:16px;
+            letter-spacing: normal;word-spacing: normal;cursor:pointer;}
+        .tab .content{width:400px;background-color: #003300;}
+        .tab .content>div{display:none;background:red;color:#fff;width:400px;height:200px;}
+        .tab .nav .liCurrent{background-color:red;color:#fff;}
+        .tab .content .divCurrent{display:block;}
+
+
+        table{border-collapse: collapse;border:1px solid red;width:80%;text-align: center;}
+        table th,td{border:1px solid red;}
+
+        .image{width:auto;height:auto;margin:5px;text-align: center;
+            border:1px solid #eee;border-radius:5px;box-shadow: 5px 5px 3px #fefefe;}
+        .image img{margin:5px;}
+        .image .text{margin-bottom:5px;}
+    </style>
+
+    <script src="js/jquery-1.11.2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        /*$(function(){
+            alert('1');
+            setTimeout(function(){
+               alert('2');
+            });
+            alert('3');
+
+        });*/
+        $(function(){
+            $('.me').hover(function(){
+                $('.tip').show();
+            },function(){
+                $('.tip').hide();
+            });
+
+           /* var timer = null;
+            $('.nav>li').each(function(index){
+                var _this = $(this);
+                /!*_this.click(function(){
+                    _this.addClass('liCurrent').siblings('li').removeClass('liCurrent');
+                    _this.parent().siblings('.content').children().eq(index).show().siblings('div').hide();
+                });*!/
+                _this.mouseover(function(){
+                    timer = setTimeout(function(){
+                        _this.addClass('liCurrent').siblings('li').removeClass('liCurrent');
+                        _this.parent().siblings('.content').children().eq(index).show().siblings('div').hide();
+                    },300);
+                }).mouseout(function(){
+                    clearTimeout(timer);
+                });
+            });*/
+           $('#div1').mouseenter(function(){
+                $(this).css("background-color","red");
+            }).mouseleave(function(){
+                $(this).css("background-color","blue");
+            });
+            /*$('#div2').mouseenter(function(){
+             $(this).css("background-color","orange");
+             }).mouseleave(function(){
+             $(this).css("background-color","yellow");
+            });*/
+            /*$('#div1').mouseover(function(){
+                $(this).css("background-color","red");
+            }).mouseout(function(){
+                $(this).css("background-color","blue");
+            });*/
+
+           /* $('#div2').mouseover(function(){
+                $(this).css("background-color","orange");
+            }).mouseout(function(){
+                $(this).css("background-color","yellow");
+            });*/
+
+
+
+
+
+
+            $('#sub').click(function(){
+                /*var o = {};
+                //var data = $('form').serialize();
+                var a = $('form').serializeArray();
+                //console.log(data);
+                $.each(a, function() {
+
+                    if (o[this.name]) {
+
+                        if (!o[this.name].push) {
+
+                            o[this.name] = [o[this.name]];
+
+                        }
+
+                        o[this.name].push(this.value || '');
+
+                    } else {
+
+                        o[this.name] = this.value || '';
+
+                    }
+
+                });
+                //return o;
+                console.log(o);*/
+                console.log($('form').serializeJson());  // Object { username="yuyu2222",  email="11111111111111111111"}
+            });
+
+
+
+            //表格开启编辑模式
+            $('table').on('click','.edit',function(){
+                $(this).parent().siblings('.canEdit').attr("contenteditable",true).focus();
+            });
+        });
+        (function($){
+            $.fn.serializeJson=function(){
+                var serializeObj={};
+                var array=this.serializeArray();
+                var str=this.serialize();
+                $(array).each(function(){
+                    if(serializeObj[this.name]){
+                        if($.isArray(serializeObj[this.name])){
+                            serializeObj[this.name].push(this.value);
+                        }else{
+                            serializeObj[this.name]=[serializeObj[this.name],this.value];
+                        }
+                    }else{
+                        serializeObj[this.name]=this.value;
+                    }
+                });
+                return serializeObj;
+            };
+        })(jQuery);
+
+        window.onload = function(){
+            var oUl = document.getElementsByClassName('nav')[0];
+            var aLi = oUl.getElementsByTagName('li');
+            var oDiv = document.getElementsByClassName('content')[0];
+            var aDiv = oDiv.getElementsByTagName('div');
+            for(var i=0; i<aLi.length;i++){
+                aLi[i].index = i;
+                aLi[i].onclick = function(){
+                    for(var i=0; i<aLi.length; i++){
+                        aLi[i].className = '';
+                        aDiv[i].className = '';
+                    }
+                    this.className = 'liCurrent';
+                    aDiv[this.index].className = 'divCurrent';
+                };
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="bigDiv clearfix">
+        <div class="smallDiv">1</div>
+        <div class="smallDiv">2</div>
+        <div class="smallDiv">3</div>
+    </div>
+    <div class="nextDiv"></div>
+    <div style="width:800px;height:300px;background-color: #003300;">
+
+        <span style="padding:20px;margin-left:20px;margin-right:100px;">women</span><!--不加background-color时，padding-->
+        <a href="#" style="padding:20px;margin-top:20px;margin-left:20px;background-color: #33AAAA;">women</a>
+        <div style="padding:20px;margin-left:20px;margin-right:100px;">块级元素</div>
+    </div>
+    <a class="me" href="#">放上来试试
+        <div class="tip">
+            <em>哈哈哈，看到我了吧,嘻嘻嘻</em>
+            <span></span>
+        </div>
+    </a>
+    <div style="width:200px;height:200px;background-color:orange;position: fixed;_position:fixed;right:0;top:0;"></div>
+
+    <div class="tab">
+        <ul class="nav">
+            <li class="liCurrent">班长</li>
+            <li>团支书</li>
+            <li>学习委员</li>
+        </ul>
+        <div class="content">
+            <div class="divCurrent">1111111111</div>
+            <div>2222222222</div>
+            <div>333333333333</div>
+        </div>
+    </div>
+
+
+    <div id="div1" style="width:200px;height:200px;border:1px solid red;">
+        <div id="div2" style="margin-top:-150px;width:100px;height:100px;border:1px solid green;"></div>
+    </div>
+
+
+    <form action="">
+        name:<input type="text" name="username" id="username"/><br/>
+        email:<input type="text" name="email" id="email"/><br/>
+        <select multiple="multiple" name="interest" size="2">
+            <option value ="interest1">interest1</option>
+            <option value ="interest2">interest2</option>
+            <option value="interest3">interest3</option>
+            <option value="interest4">interest4</option>
+        </select>
+        <input type="checkbox" name="vehicle" value="Bike" /> I have a bike
+        <input type="checkbox" name="vehicle" value="Car" /> I have a car
+        <input type="button" value="提交" id="sub"/>
+    </form>
+    <span style="display:block;width:100px;height:300px;border:1px solid red;
+    ">
+        i am a girl,what are you doing now?
+    </span>
+<div style="width:100px;height:300px;border: 1px dashed green;border-right-color:red;word-wrap:normal;">
+        i am a girl,what are you doing now?
+    </div>
+<table>
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>学号</th>
+            <th>操作/修改</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="canEdit">yuyuu</td>
+            <td>12345</td>
+            <td><a class="edit" href="javascript:void(0);">编辑姓名</a></td>
+        </tr>
+        <tr>
+            <td class="canEdit">uu</td>
+            <td>345</td>
+            <td><a class="edit" href="javascript:void(0);">编辑姓名</a></td>
+        </tr>
+    </tbody>
+</table>
+<div style="width:100px;height:35px;line-height:35px;text-align:center;color:#fff;background-color: #00CC00;
+border-radius:5px;">按钮</div>
+<div style="width:300px;height:400px;border:1px solid royalblue;line-height:20px;">
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+</div>
+
+<div class="image">
+    <a href="#">
+        <img src="1.jpg" alt=""/>
+    </a>
+    <div class="text">风景图</div>
+</div>
+
+<div style="width:100%;height:500px;-webkit-column-count: 3;-webkit-column-gap: 10px;-webkit-column-rule: 3px outset #333;
+-moz-column-count: 3;-moz-column-gap: 10px;-moz-column-rule: 3px outset #333;">
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+    每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+</div>
+    <div style="display:flex;flex-flow: row nowrap;justify-content: center;">
+        <div style="margin:5px;">
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+        </div>
+        <div style="margin:5px;">
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+        </div>
+        <div style="margin:5px;">
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+            每个孩子，都渴望被宠爱，他们是我们的未来。这是最好的未来，我们用爱铸造完美现在！
+        </div>
+    </div>
+<ul style="list-style: none;display: inline-flex;justify-content: center;width:300px;height:50px;
+background-color:silver;">
+    <li>白天</li>
+    <li>黑夜</li>
+    <li>拜拜</li>
+</ul>
+
+<!--双飞翼布局-->
+<div style="width:100%;overflow:hidden;">
+    <div style="width:100%;float:left;background-color:red;margin-bottom:-9999px;padding-bottom:9999px;">
+        <div style="padding-left:31%;padding-right:21%;">中间</div>
+    </div>
+    <div style="float:left;width:30%;margin-left:-100%;background-color:orange;margin-bottom:-9999px;padding-bottom:9999px;">左</div>
+    <div style="width:20%;float:left;margin-left:-20%;background-color:pink;margin-bottom:-9999px;padding-bottom:9999px;">右</div>
+</div>
+
+<div class="container-fluid" >
+    <div class="row">
+        <div class="col-sm-4 col-md-3" style="background-color: #00CC00;">左边</div>
+        <div class="col-sm-4 col-md-7">中间内容部分</div>
+        <div class="col-sm-4 col-md-2" style="background-color: royalblue;">右边</div>
+    </div>
+</div>
+</body>
+</html>

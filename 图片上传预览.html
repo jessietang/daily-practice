@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin:0;padding:0;border:none;}
+
+        #div1{
+            width:600px;height:500px;background:#000000;opacity: 0.5;position: absolute;left:100px;top:0;
+            z-index:1;
+        }
+        #ul1{list-style: none;width:600px;height:400px;}
+        #ul1 li{float:left;}
+        ul li img{width:200px;height:200px;}
+        #button1{width:100px;height:30px;line-height:30px;background-color:chartreuse;border-radius: 5px;
+        position:absolute;bottom:0;left:100px;}
+    </style>
+    <script>
+        window.onload = function(e){
+            var oUl = document.getElementById('ul1');
+            var oDiv1 = document.getElementById('div1');
+            var oButton = document.getElementById('button1');
+            //alert(oUl);
+            document.ondragover = function(e){
+                var e = e || window.event;
+                e.preventDefault();
+
+            };
+            document.ondrop = function(e){
+                e.preventDefault();
+                oDiv1.style.display = 'block';
+                var fs = e.dataTransfer.files;
+                for(var i=0; i<fs.length; i++){
+                    if(fs[i].type.indexOf('image') != -1){
+                        var fd = new FileReader();
+                        fd.readAsDataURL(fs[i]);
+                        fd.onload = function(){
+                            var oLi = document.createElement('li');
+                            var oImg = document.createElement('img');
+                            oImg.src = this.result;
+                            oLi.appendChild(oImg);
+                            oUl.appendChild(oLi);
+                        };
+                    }else{
+                        alert('亲，请上传图片类型');
+                    }
+                }
+            };
+            oButton.onclick = function(){
+                oDiv1.style.opacity = '1';
+            };
+        };
+    </script>
+</head>
+<body>
+<div id="div1">
+    <ul id="ul1"></ul>
+    <button id="button1">确认上传</button>
+</div>
+</body>
+</html>

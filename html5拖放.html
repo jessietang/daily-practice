@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1,#div2{width:400px;height:300px;border:1px solid red;}
+    </style>
+    <script>
+        function preventDefault(e){
+            var e = e || window.event;
+            if(e.preventDefault){
+                e.preventDefault();
+            }else{
+                e.returnValue = false;
+            }
+        }
+        //拖动什么ondragstart
+        function drag(e){
+            var e = e || window.event;
+            e.dataTransfer.setData("Text", e.target.id);
+        }
+
+        //放到何处 ondragover
+        function allowDrop(e){
+            var e = e || window.event;
+           // e.preventDefault();  //允许放置
+            preventDefault(e);
+        }
+
+        //进行放置ondrop
+        function drop(e){
+            var e = e || window.event;
+            //e.preventDefault(); //避免浏览器对数据的默认处理
+            preventDefault(e);
+            var data = e.dataTransfer.getData("Text");
+            e.target.appendChild(document.getElementById(data));
+        }
+
+    </script>
+</head>
+<body>
+<p>请把图片放到矩形中</p>
+    <div id="div1" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+<div id="div2" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+<img id="img1" src="img/1.jpg" alt="" draggable="true" ondragstart="drag(event)"/>
+</body>
+</html>

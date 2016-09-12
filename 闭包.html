@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        /*function aa(){
+            a = 10;
+        }
+        aa();
+        console.log(a);  10*/
+
+        /*function aa(){
+            var a = 10;
+        }
+        aa();
+        console.log(a);  //js中的垃圾回收机制  a is not defined*/
+
+        window.onload = function(){
+            var aLi = document.getElementsByTagName('li');
+            for(var i=0; i<aLi.length; i++){
+                /*alert(i);*/
+                /*aLi[i].onclick = function(){
+                    alert(i);
+                };*/
+                (function(i){
+                    aLi[i].onclick = function(){
+                        alert(i);
+                    };
+                })(i);
+            }
+        };
+
+    </script>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+</ul>
+</body>
+</html>

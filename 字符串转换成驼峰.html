@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>如：border-left-color  =>  borderLeftColor </title>
+    <script>
+        /*function test(str){
+            var arr = str.split('-');
+            for(var i=1; i<arr.length; i++){
+                arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substring(1);
+            }
+            return arr.join('');
+        }*/
+
+
+        //方法二：用正则表达式
+        function test(str){
+            var re = /-(\w)/g;   //通过正则找到-b  -l  -r  -c  -s  -r  -m
+            return str.replace(re,function($0,$1){   //$0代表正则，$1代表指向
+                return $1.toUpperCase();
+            });
+        }
+        var str = 'border-left-right-color-style-red-me';
+        console.log(test(str));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

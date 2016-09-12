@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*重置*/
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+        table{border-collapse:collapse;border-spacing:0;}
+        fieldset,img{border:0;}
+        address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+        ol,ul{list-style:none;}
+        caption,th{text-align:left;}
+        h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+        q:before,q:after{content: '';}
+        abbr,acronym{border:0;}
+        body{color:#666; background-color:#fff;font: 14px/1.5 '微软雅黑',tahoma,arial,'Hiragino Sans GB',宋体,sans-serif;}
+        .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+        .clearfix {zoom:1;}
+
+        .myContainer{width:100%;}
+        .myContainer header{width:100%;height:100px;line-height:100px;border-bottom:1px solid #333;text-align: center;}
+        .myContainer header a{padding:5px 10px;color:chartreuse;text-decoration: none;font-size: 30px;}
+        .myContainer header .aCurrent{color:darkgoldenrod;}
+        .myContent{width:95%;margin:10px auto;}
+        .myContent .myUl .list-l-o{float:left;margin:5px;padding:5px;text-align: center;border:1px solid #eee;border-radius: 5px;}
+        .myContent .myUl .list-l-o img{width:300px;height:200px;}
+        .myContent .myUl .list-l-v{margin:5px;padding:5px;text-align: center;border:1px solid #eee;border-radius: 5px;}
+        .myContent .myUl .list-l-v img{width:400px;height:300px;}
+    </style>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script>
+        $(function(){
+           $('header').on('click','.myO',function(){
+               $(this).addClass('aCurrent').siblings('a').removeClass('aCurrent');
+               $('.myContent .myUl>li').removeClass('list-l-v').addClass('list-l-o');
+           });
+            $('header').on('click','.myV',function(){
+                $(this).addClass('aCurrent').siblings('a').removeClass('aCurrent');
+                $('.myContent .myUl>li').removeClass('list-l-o').addClass('list-l-v');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="myContainer">
+        <header>
+            <a class="aCurrent myO" href="javascript:void(0);">水平排列</a>
+            <a class="myV" href="javascript:void(0);">垂直排列</a>
+        </header>
+        <div class="myContent">
+            <ul class="myUl">
+                <li class="list-l-o"><img src="img/1.jpg" alt=""/><p>第一期</p></li>
+                <li class="list-l-o"><img src="img/2.jpg" alt=""/><p>第二期</p></li>
+                <li class="list-l-o"><img src="img/3.jpg" alt=""/><p>第三期</p></li>
+                <li class="list-l-o"><img src="img/4.jpg" alt=""/><p>第四期</p></li>
+                <li class="list-l-o"><img src="img/5.jpg" alt=""/><p>第五期</p></li>
+                <li class="list-l-o"><img src="img/6.jpg" alt=""/><p>第六期</p></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

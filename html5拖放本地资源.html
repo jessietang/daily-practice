@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{width:600px;height:300px;border:1px solid royalblue;}
+    </style>
+    <script>
+        window.onload = function(){
+            var div1 = document.getElementById('div1');
+            div1.ondragover = allDrop;
+            div1.ondrop = function(e){
+                var e= e || window.event;
+                e.preventDefault();
+                var f = e.dataTransfer.files[0];
+                var fileReader = new FileReader();
+                fileReader.onload = function(e){
+                    div1.innerHTML = "<img src=\""+fileReader.result+"\"/>";
+                };
+                fileReader.readAsDataURL(f);
+            }
+        };
+        function allDrop(e){
+            var e = e || window.event;
+            e.preventDefault();
+        }
+        function drag(e){
+            var e = e || window.event;
+            e.dataTransfer.setData("text", e.target.id);
+        }
+
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+</body>
+</html>

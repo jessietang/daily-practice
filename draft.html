@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<base href="<%=basePath%>">
+
+	<title>拖拽有点小问题，好像ie不兼容</title>
+
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<style>
+		#div1{width:200px;height:200px;position:absolute;background:red;left:200px;top:100px;}
+	</style>
+
+	<script>
+		window.onload = function(){
+			var oDiv = document.getElementById('div1');
+			var disX=0;
+			var disY=0;
+			oDiv.onmousedown = function(ev){
+				var oEvent = ev || window.event;
+				//FF和IE的offsetX、offsetY的差别。在FF下需要用layerX、layerY来代替offsetX、offsetY
+
+				//console.log(oEvent.clientX);
+				//console.log(oEvent.layerX);
+				//console.log(oEvent.offsetX);
+				disX = oEvent.layerX;
+				disY = oEvent.layerY;
+				//disX = oEvent.clientX-oDiv.offsetLeft;
+				//disY = oEvent.clientY-oDiv.offsetTop;
+				if(oDiv.setCapture){
+					oDiv.setCapture();
+				}
+				document.onmousemove = function(ev){
+					var oEvent = ev || window.event;
+					var l = oEvent.clientX-disX;
+					var t = oEvent.clientY-disY;
+					//5表示;自动吸附，当距离边侧5px时，自动吸附到边侧
+					if(l<5){   //左边
+						l=0;
+					}else if(l>document.documentElement.clientWidth-oDiv.offsetWidth-5){  //右边
+						l=document.documentElement.clientWidth-oDiv.offsetWidth;
+					}
+					if(t<5){  //上
+						t=0;
+					}else if(t>document.documentElement.clientHeight-oDiv.offsetHeight-5){  //下
+						t=document.documentElement.clientHeight-oDiv.offsetHeight;
+					}
+					oDiv.style.left = l+'px';
+					oDiv.style.top = t+'px';
+				};
+				document.onmouseup = function(){
+					document.onmousemove=null;
+					document.onmouseup=null;
+					if(oDiv.releaseCapture){
+						oDiv.releaseCapture();
+					}
+				};
+				return false;
+			};
+		};
+	</script>
+</head>
+
+<body>
+<div id="div1"></div>
+</body>
+</html>

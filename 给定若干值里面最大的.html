@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        function max(){
+            var maxValue = arguments[0];
+            for(var i=1; i<arguments.length; i++){
+                if(maxValue < arguments[i]){
+                    maxValue = arguments[i];
+                }
+            }
+            return maxValue;
+        }
+        console.log(max(1,2,3,0,-1));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>侧边栏固定</title>
+    <style>
+        /*重置*/
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+        table{border-collapse:collapse;border-spacing:0;}
+        fieldset,img{border:0;}
+        address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+        ol,ul{list-style:none;}
+        caption,th{text-align:left;}
+        h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+        q:before,q:after{content: '';}
+        abbr,acronym{border:0;}
+        body{color:#666; background-color:#fff;font: 14px/1.5 '微软雅黑',tahoma,arial,'Hiragino Sans GB',宋体,sans-serif;}
+        .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+        .clearfix {zoom:1;}
+        .myContainer{width:100%;}
+        .myContainer header{width:100%;height:100px;line-height:100px;background-color:darkgrey;text-align:center;}
+        .myContainer .myContent{width:100%;height:4000px;background-color: #e4b9b9;position: relative;}
+        .myContainer .myContent .leftD{float:left;width:30%;height:500px;background-color: #00CC00;}
+        .myContainer .myContent .realContent{float:right;width:70%;height:100%;background-color: #00CCFF;}
+        .myContainer footer{width:100%;height:100px;line-height:100px;text-align:center;}
+    </style>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script>
+        $(function(){
+
+        });
+        $(window).scroll(function(){
+            var scrollHeight = $(window).scrollTop();
+            var contentHeight = $('.realContent').height() - $('.leftD').height();
+            var titleHeight = $('.title').height();
+            if(scrollHeight>titleHeight && scrollHeight<contentHeight+titleHeight){
+                $('.leftD').css({
+                    "position":"absolute",
+                    "left":0,
+                    "top":scrollHeight-titleHeight+'px'
+                });
+            }else if(scrollHeight<titleHeight){
+                $('.leftD').css({
+                    "position":"absolute",
+                    "left":0,
+                    "top":0
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+<div class="myContainer">
+    <header class="title">我是标题</header>
+    <article class="myContent clearfix">
+        <aside class="leftD">我是侧边栏</aside>
+        <article class="realContent">内容区域</article>
+    </article>
+    <footer>我是底部</footer>
+</div>
+</body>
+</html>

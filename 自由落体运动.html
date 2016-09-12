@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{width:50px;height:50px;border-radius:50%;background-color:red;position: absolute;}
+    </style>
+    <script>
+        window.onload = function(){
+            var btn1 = document.getElementById('btn1');
+            var div1 = document.getElementById('div1');
+            var timer = null;
+            var speed = 0;
+            btn1.onclick = function(){
+                move();
+            };
+            function move(){
+                clearInterval(timer);
+                timer = setInterval(function(){
+                    speed += 3;
+                    var T = div1.offsetTop + speed;
+                    if(T > document.documentElement.clientHeight - div1.offsetHeight){
+                        T = document.documentElement.clientHeight - div1.offsetHeight;
+                        speed *= -1;
+                        speed *= 0.75;
+                    }
+                    div1.style.top = T + 'px';
+                },30);
+            }
+        };
+
+    </script>
+</head>
+<body>
+<input id="btn1" type="button" value="点击自由落体"/>
+<div id="div1"></div>
+</body>
+</html>

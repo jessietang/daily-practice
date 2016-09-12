@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{width:300px;heght:200px;border:1px solid red;text-overflow: ellipsis;white-space: nowrap;overflow:hidden;}
+        .clearfix:after{visibility: hidden;display:block;
+            content: '';clear: both;font-size:0;height:0;}
+        .clearfix{zoom:1;}
+    </style>
+</head>
+<body>
+    <div id="div1">css文本换行属性word-wrap和white-space使用总结_CSS教..._脚本之家</div>
+<div style="width:100%;" class="clearfix">
+    <div  style="width:20%;height:30px;float:right;">按钮</div>
+    <div>
+        <div style="width:50%;background-color:red;float:left;height:200px;">左</div>
+        <div style="width:50%;background-color:blue;float:left;height:200px;">右</div>
+    </div>
+</div>
+</body>
+</html>

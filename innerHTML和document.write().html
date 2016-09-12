@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{width:100%;height:300px;background-color: #00CC00;}
+    </style>
+    <script>
+        window.onload = function(){
+            var oDiv = document.getElementById('div1');
+            document.write('<div style="width:100%;height:30px;background-color:red;">我是write</div>');
+            oDiv.innerHTML = '<div>我是innerHTML</div>';
+        };
+    </script>
+
+</head>
+<body>
+    <div id="div1">
+
+    </div>
+
+
+</body>
+</html>

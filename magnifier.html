@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现放大镜效果</title>
+    <style>
+        .magnify {
+            position: relative;
+            left:100px;
+            top: 50px;
+        }
+        .magnify .small {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            left: 0;
+            top: 0;
+            border: 1px solid #000;
+        }
+        .magnify .hander {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 80px;
+            height: 80px;
+            cursor: move;
+            opacity: 1;
+            background-color: #fff;
+        }
+        .magnify .mask {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 400px;
+            height: 300px;
+            opacity: 0.5;
+            background-color: #fff;
+        }
+
+        .magnify .large {
+            position: absolute;
+            left: 450px;
+            top: 0;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            border: 1px solid #000;
+        }
+
+        .magnify .largeImg {
+            position: absolute;
+        }
+    </style>
+    <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+
+    <!--自定义jquery插件-->
+   <!-- <script src="myjs/jquery.imagezoom.js"></script>-->
+
+    <script>
+        $(function(){
+            $('.small').mousemove(function(e){
+                var e = e || window.event;
+                var $small = $('.small');
+                var mx = e.pageX - $small.offset().left,
+                        my = e.pageY - $small.offset().top;
+                if(mx < 40){
+                    $(".hander").css("left",0);
+                }else if(my < 40){
+                    $(".hander").css("top",0);
+                }else{
+                    $(".hander").css({"left":mx-40+"px", "top":my-40+"px"});
+                }
+
+
+                //console.log($(".hander").css("left"));
+
+
+
+                if($(".hander").position().left < 0){
+                    $(".hander").css("left",0);
+                }
+                if($(".hander").position().top < 0){
+                    $(".hander").css("top",0);
+                }
+
+                console.log($(".hander").position().left + '===='+ ($(".small").width()-$(".hander").width()));
+                if($(".hander").position().left > ($(".small").width()-$(".hander").width())){
+                    $(".hander").css("left",($(".small").width()-$(".hander").width()));
+                    console.log("right==="+$(".hander").css("right"));
+                }
+                if($(".hander").position().top > ($(".small").height()-$(".hander").height())){
+                    $(".hander").css("top",($(".small").height()-$(".hander").height()));
+                }
+                //console.log(mx + ',' + my);
+                var rx = mx / 400 * 1920,
+                        ry = my / 300 * 1080;
+                var bL = 400 / 2 - rx + 'px',
+                        bT = 300 / 2 - ry + 'px';
+                $('.largeImg').css({
+                    "left": bL,
+                    "top": bT
+                });
+                if($('.largeImg').position().left > 0){
+                    $('.largeImg').css({
+                        "left": 0
+                    });
+                }
+                if($('.largeImg').position().top > 0){
+                    $('.largeImg').css({
+                        "top": 0
+                    });
+                }
+                if($('.largeImg').position().left < $('.large').width()-$('.largeImg').width()){
+                    console.log('aaaaaaaaaa');
+                    $('.largeImg').css({
+                        "left": $('.large').width()-$('.largeImg').width()
+                    });
+                }
+                if($('.largeImg').position().top < $('.large').height()-$('.largeImg').height()){
+                    $('.largeImg').css({
+                        "top": $('.large').height()-$('.largeImg').height()
+                    });
+                }
+            });
+        });
+    </script>
+    <!--
+         放大镜效果的实现方式：
+
+    方法一：准备一张高像素的大图，当鼠标放到原图上，加载显示大图的对应位置。
+
+    方法二：对原图片进行放大，也就是调整原图的长和宽。
+    -->
+</head>
+<body>
+
+    <div class="magnify">
+        <div class="small">
+            <img class="samllImg" src="img/8.jpg" width="400" height="300"/>
+            <div class="hander"></div>
+            <!--<div class="mask"></div>-->
+        </div>
+        <div class="large">
+            <img class="largeImg" src="img/8.large.jpg" width="1920" height="1080">
+        </div>
+    </div>
+	
+	<input type="text" auto/>
+</body>
+</html>

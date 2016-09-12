@@ -1,0 +1,1253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulsar Event</title>
+
+    <style type="text/css">
+        /* Client-specific Styles */
+        #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+        body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+        /* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
+        .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.*/
+        .backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+        img {outline:none; text-decoration:none; border:none; -ms-interpolation-mode: bicubic; height:auto; display:block;}
+        a img {border:none;}
+        .image_fix {display:block;}
+        p {margin: 0px 0px !important;}
+        table td {border-collapse: collapse;}
+        table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+        a {color: #420f7c;text-decoration: none;}
+
+        .subheadcopy {font-size:16px; color:#000000; font-family:arial,sans-serif; line-height:19px;}
+        .pricecopy   {color:#420f7c; font-size:18px; font-weight:bold; font-family:arial,sans-serif; line-height:21px;}
+        .productcopy {font-family:arial,sans-serif; font-size:14px; line-height:16px;}
+        .discountcopy{ font-size:18px; font-family:arial,sans-serif; color:#a50055; font-weight:bold; line-height:20px;}
+        .discountsec {padding: 5px 0 4px 0; font-size:20px; font-weight:bold; font-family:arial,sans-serif;}
+        .cta img       {margin-bottom: 25px;}
+
+        .devicewidthwrapper  { width: 180px; margin-right: 20px; display: inline-block; vertical-align: top; }
+        .devicewidthwrapper2 { width: 140px; display: inline-block; vertical-align: top; }
+        .rightborder		 { border-right-color: #b7b7b7; border-right-width: 1px; border-right-style: solid; }
+        .withoutmargin		 { margin-right: 0px; }
+
+        .right-align-adj   	 { text-align: right; }
+        .left-align-adj         { text-align: left; }
+        /*STYLES*/
+        table[class=full] { width: 100%; clear: both; }
+
+        .mobile,
+        div[class=mobile] { display: none !important; overflow:hidden;}
+
+        /*IPAD STYLES*/
+        @media all and (max-width: 640px) {
+            td[class=right-align-adj],
+            td[class=left-align-adj],
+            .right-align-adj,
+            .left-align-adj			 { text-align: center; }
+            .nomobile,
+            table[class=nomobile] { display: none; }
+            .mobile,
+            div[class=mobile] {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 0 15px 0 !important;
+                overflow : visible !important;
+                width: auto !important;
+                max-height: inherit !important;
+                color:#515151 !important; font-size:12px !important; font-weight:bold !important;
+                font-family:arial,helvetica,sans-serif !important;
+            }
+            a[href^="tel"], a[href^="sms"] {
+                text-decoration: none;
+                color: #0a8cce; /* or whatever your want */
+                pointer-events: none;
+                cursor: default;
+            }
+            .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+                text-decoration: default;
+                color: #0a8cce !important;
+                pointer-events: auto;
+                cursor: default;
+            }
+            div[class=devicewidthwrapper]  { width: 200px !important; margin-right: 12px !important; }
+            div[class=devicewidthwrapper2] { width: 120px !important; text-align: left !important; }
+            table[class=devicewidth],
+            table[class=devicewidth2]     {width: 440px!important;text-align:center!important;}
+            table[class=devicewidthinner] {width: 420px!important;text-align:center!important;}
+            .rightborder,
+            table[class=rightborder]      {border: 0px;}
+            img[class=colimg2]            {width: 440px!important;}
+            td[class=pricecopy]      {font-size:22px; line-height:24px;}
+            td[class=productcopy]    {font-size:15px; line-height:17px;}
+            td[class=discountcopy]   {font-size:20px; line-height:22px;}
+        }
+        /*IPHONE STYLES*/
+        @media all and (max-width: 480px) {
+            a[href^="tel"], a[href^="sms"] {
+                text-decoration: none;
+                color: #0a8cce; /* or whatever your want */
+                pointer-events: none;
+                cursor: default;
+            }
+            .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+                text-decoration: default;
+                color: #0a8cce !important;
+                pointer-events: auto;
+                cursor: default;
+            }
+            div[class=devicewidthwrapper],
+            div.devicewidthwrapper  	   { width: 300px !important; margin: 0px auto !important; }
+            div[class=devicewidthwrapper2] { width: 100px; text-align: left; }
+            table[class=devicewidth] {width: 360px!important;text-align:center!important;}
+            table[class=devicewidth2] {width: 360px!important;text-align:center!important;}
+            table[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
+            img[class=colimg2] {width: 295px!important;}
+            td[class=mobile-hide], span[class=mobile-hide] {display:none!important;}
+            td[class="padding-bottom25"]{padding-bottom:25px!important;}
+        }
+        /*IPHONE STYLES*/
+        @media all and (max-width: 413px) {
+            div[class=devicewidthwrapper],
+            div.devicewidthwrapper   { width: 250px; }
+            div[class=devicewidthwrapper2] { width: 120px; }
+            table[class=devicewidth] {width: 295px!important;text-align:center!important;}
+            table[class=devicewidth2] {width: 296px!important;text-align:center!important;}
+            table[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
+        }
+    </style>
+</head>
+<body>
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="15" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+<!-- START two column (logo) -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="274" valign="top" class="left-align-adj">
+                                                            <a href="http://www.ashford.com?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/logo.gif" style="display:inline-block !important; margin:0px; padding:0px;" width="166" height="58" border="0" alt="Ashford"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="274" valign="top" class="right-align-adj" style="font-size:11px;font-family:arial,sans-serif;color:#6f6f6f; padding-top:17px;">Shop Easy Style, On The Go, Traditional and More<!-- DEALS END DATE -->
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="274" valign="top" class="right-align-adj" style="font-size:11px;font-family:arial,sans-serif;color:#6f6f6f; padding-top:8px;">View on a <a href="%%!message_url%%" target="_blank" style="color:#6f6f6f; text-decoration:underline !important;">web browser</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- END two column -->
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="15" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+
+<!-- Start of nav -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center">
+                        <table width="100%" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth nomobile">
+                            <tbody>
+                            <tr>
+                                <td align="center" valign="middle">
+                                    <a href="http://www.ashford.com/us/info/brands.jsp?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/nav_shop-by-brand.gif" width="123" height="40" border="0" alt="SHOP BY BRAND" style="display:inline;"></a><a href="http://www.ashford.com/us/watches/mens/cat5001.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/nav_mens.gif" width="123" height="40" border="0" alt="MEN'S WATCHES" style="display:inline;"></a><a href="http://www.ashford.com/us/watches/womens/cat5002.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/nav_womens.gif" width="143" height="40" border="0" alt="WOMEN'S WATCHES" style="display:inline;"></a><a href="http://www.ashford.com/us/watches/WeeklyDeals/cat680070.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/nav_deals.gif" width="111" height="40" border="0" alt="WEEKLY DEALS" style="display:inline;"></a><a href="http://www.ashford.com/us/watches/clearance/cat690030.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/nav_clearance.gif" width="97" height="40" border="0" alt="CLEARANCE" style="display:inline;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ccc; padding-top:3px;"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div align="center" class="devicewidth mobile" style="text-align: center; display:none; margin:0; padding:0; width:0px; max-height:0px; overflow:hidden; font-size:0; line-height:0;">
+                            <a href="http://www.ashford.com/us/info/brands.jsp?source=2121030Pulsar" target="_blank" style="color:#515151; text-decoration:none;">BRANDS</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.ashford.com/us/watches/mens/cat5001.cid?source=2121030Pulsar" target="_blank" style="color:#515151; text-decoration:none;">MENS</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="http://www.ashford.com/us/watches/womens/cat5002.cid?source=2121030Pulsar" target="_blank" style="color:#515151; text-decoration:none;">WOMENS</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="http://www.ashford.com/us/watches/WeeklyDeals/cat680070.cid?source=2121030Pulsar" target="_blank" style="color:#515151; text-decoration:none;">DEALS</a>
+                                        <span class="nomobile">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="http://www.ashford.com/us/watches/clearance/cat690030.cid?source=2121030Pulsar" target="_blank" style="color:#ed1717; text-decoration:none;">CLEARANCE</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of nav -->
+<!-- Start of top -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%" align="center">
+                        <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <div class="imgpop">
+                                        <!-- **MAIN HERO IMAGE & LINK -- Add alt tag value if desired -->
+                                        <a href="http://www.ashford.com/us/watches/Pulsar/cat680064.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/main.jpg" border="0" width="100%" height="auto" alt="Bulgari"></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- END of top -->
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+<!-- START two column -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **MENS WATCHES BANNER-- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/Pulsar/cat680064.cidm?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/1.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Mens"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **WOMEN'S WATCHES -- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/Pulsar/cat680064.cidw?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/2.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Womens"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- END two column -->
+
+
+<!-- **DELETE THIS ENTIRE BLOCK OF CODE TO REMOVE A ROW -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **GOLD WATCHES BANNER-- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/pulsar/cat680064.cid?source=2121030Pulsar&N=13515+4294706263&catId=cat680064" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/3.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Gold Watches"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **DRESS WATCHES BANNER -- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/calvin-klein-sale/cat680064.cid?N=13515+4294512328+4294512316&catId=cat680064&source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/4.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Dress Watches"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- **END DELETE BLOCK OF CODE TO REMOVE A ROW -->
+<!-- **DELETE THIS ENTIRE BLOCK OF CODE TO REMOVE A ROW -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **GOLD WATCHES BANNER-- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/pulsar/cat680064.cid?source=2121030Pulsar&N=13515+4294441018&catId=cat680064" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/5.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Diamonds"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **DRESS WATCHES BANNER -- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/calvin-klein-sale/cat680064.cid?N=13515+4294441030+4294441021&catId=cat680064&source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/6.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Concord"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- **END DELETE BLOCK OF CODE TO REMOVE A ROW -->
+<!-- **DELETE THIS ENTIRE BLOCK OF CODE TO REMOVE A ROW -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **GOLD QATCHES BANNER-- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/Pulsar/cat680046.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/7.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="DIOR. UP TO 46% OFF. Ends 08/23."></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="290" align="center" valign="top"><!-- **DRESS WATCHES BANNER -- Add alt tag value if desired -->
+                                                            <a href="http://www.ashford.com/us/watches/Pulsar/cat680046.cid?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/2015/Promotions/November/Pulsar/8.jpg" style="display:block; margin:0px; padding:0px;" width="295" height="182" border="0" alt="Concord"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- **END DELETE BLOCK OF CODE TO REMOVE A ROW -->
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="600" align="center" height="1" bgcolor="#b7b7b7" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" height="30" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+<!--START of 4 column -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="left">
+                        <img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_top-brands.gif" style="display:block; margin:0px; padding:0px;" width="112" height="15" border="0" alt="TOP BRANDS">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" height="25"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                        <![endif]-->
+                        <table class="container" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px;">
+                            <tr>
+                                <td style="text-align: left; vertical-align: top; font-size: 0;">
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper2">
+                                        <!-- col 1 -->
+                                        <table width="140" align="left" border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="140" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/Pulsar/cat6008.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">BULGARI</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/chopard/cat6012.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">CHOPARD</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 1 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper2">
+                                        <!-- col 2 -->
+                                        <table width="140" align="left" border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="140" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/hamilton/cat6032.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">HAMILTON</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/rado/cat6054.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">RADO</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 2 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper2">
+                                        <!-- col 3 -->
+                                        <table width="140" align="left" border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="140" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/corum/cat6018.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">CORUM</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/zenith/cat6071.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">ZENITH</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 3 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper2">
+                                        <!-- col 4 -->
+                                        <table width="140" align="left" border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="140" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/seiko/cat6058.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">SEIKO</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:15px; letter-spacing:0.8px; text-decoration:none;"><a href="http://www.ashford.com/us/watches/christian-dior/cat1090032.cid?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">DIOR</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="20"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 4 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                    </td></tr>
+                <tr>
+                    <td width="100%" height="10"></td>
+                </tr>
+                </tbody></table></td></tr></tbody></table>
+<!-- END of 3 column -->
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="600" align="center" height="1" bgcolor="#b7b7b7" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" height="30" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Start of 3 column -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td>
+                        <!--[if (gte mso 9)|(IE)]>
+                        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                        <![endif]-->
+                        <table class="container" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px;">
+                            <tr>
+                                <td style="text-align: center; vertical-align: top; font-size: 0;">
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    <table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper" style="width:180px;  margin-right: 20px; display: inline-block; vertical-align: top;">
+                                        <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" style="margin-right:20px;">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="98%" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td height="10"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center" valign="top" style="border-top-style:solid; border-top-color:#b7b7b7; border-top-width:1px; border-right-style:solid; border-right-color:#b7b7b7; border-right-width:1px; border-bottom-style:solid; border-bottom-color:#b7b7b7; border-bottom-width:1px; border-left-style:solid; border-left-color:#b7b7b7; border-left-width:1px; padding-top:37px; padding-right:20px; padding-bottom:40px; padding-left:20px;">
+                                                                <table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                    <tr>
+                                                                        <td align="center" valign="top"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_30-day.gif" style="display:block; margin:0px; padding:0px;" width="103" height="53" border="0" alt="30-Day Money-Back Guarantee"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td height="90" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:12px; line-height:18px; letter-spacing:0.5px;">HASSLE FREE RETURNS. REFUNDS FOR UNUSED / UNWORN ITEMS.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center"><a href="http://www.ashford.com/us/info/returns.jsp?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/btn_guarantee.gif" width="104" height="38" border="0" alt="Guarantee"></a></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 1 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper" style="width:180px; margin-right: 20px; display: inline-block; vertical-align: top;">
+                                        <!-- col 2 -->
+                                        <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0" style="margin-right:20px;">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="98%" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td  height="10"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center" valign="top" style="border-top-style:solid; border-top-color:#b7b7b7; border-top-width:1px; border-right-style:solid; border-right-color:#b7b7b7; border-right-width:1px; border-bottom-style:solid; border-bottom-color:#b7b7b7; border-bottom-width:1px; border-left-style:solid; border-left-color:#b7b7b7; border-left-width:1px; padding-top:37px; padding-right:20px; padding-bottom:40px; padding-left:20px;">
+                                                                <table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                    <tr>
+                                                                        <td align="center" valign="top"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_warranty.gif" style="display:block; margin:0px; padding:0px;" width="87" height="53" border="0" alt="2 Year Warranty"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td height="90" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:12px; line-height:18px; letter-spacing:0.5px;">WE STAND BY EVERY PRODUCT WE SELL.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center"><a href="http://www.ashford.com/us/info/warranty.jsp?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/btn_warranty.gif" width="104" height="38" border="0" alt="WARRANTY"></a></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 2 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    <td>
+                                    <![endif]-->
+                                    <div class="devicewidthwrapper withoutmargin" style="width:180px; margin-right: 20px; display: inline-block; vertical-align: top;">
+                                        <!-- col 3 -->
+                                        <table width="100%" align="left" border="0" cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <!-- start of text content table -->
+                                                    <table width="98%" align="center" border="0" cellpadding="0" cellspacing="0">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td height="10"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center" valign="top" style="border-top-style:solid; border-top-color:#b7b7b7; border-top-width:1px; border-right-style:solid; border-right-color:#b7b7b7; border-right-width:1px; border-bottom-style:solid; border-bottom-color:#b7b7b7; border-bottom-width:1px; border-left-style:solid; border-left-color:#b7b7b7; border-left-width:1px; padding-top:37px; padding-right:20px; padding-bottom:40px; padding-left:20px;">
+                                                                <table cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                    <tr>
+                                                                        <td align="center" valign="top"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_questions.gif" style="display:block; margin:0px; padding:0px;" width="103" height="53" border="0" alt="Comments &amp; Questions"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td height="90" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:12px; line-height:18px; letter-spacing:0.5px;">CALL US AT <a href="" style="text-decoration:none;border:none;color:#000000;">18662743673</a>. WE ARE HERE FOR YOU.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td align="center"><a href="http://www.ashford.com/us/info/contactUs.jsp?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/btn_contact.gif" width="104" height="38" border="0" alt="Contact Us"></a></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <!-- end of text content table -->
+                                            </tbody>
+                                        </table>
+                                        <!-- end of col 3 -->
+                                    </div>
+                                    <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    <![endif]-->
+                                </td>
+                            </tr>
+                        </table>
+                        <!--[if (gte mso 9)|(IE)]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                    </td></tr></tbody></table></td></tr></tbody></table>
+<!-- END of 3 column -->
+<!-- Start of seperator -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="30" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of seperator -->
+<!-- START two column -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" bgcolor="#f4f4f2" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%">
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <!-- start of left column -->
+                                    <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top">
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="254" align="center" valign="top" style="padding-top:48px; padding-right:18px; padding-left:18px;">
+                                                            <table width="254" cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                <tr>
+                                                                    <td width="254" align="center" valign="top"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_outstanding-service.gif" style="display:block; margin:0px; padding:0px;" width="154" height="46" border="0" alt="Outstanding Service"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="254" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;">THINK OF US AS YOUR<br>PERSONAL SHOPPERS.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="254" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;">Mon-Thurs 9:00am - 6:00pm EST<br>Friday 9:00am - 1:00pm EST</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                            </table>
+                                                            <table width="254" cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                <tr>
+                                                                    <td width="66" align="left" valign="top" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                    <td width="25" align="left" valign="top"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/icon_call.gif" width="14" height="19" border="0" alt="" style="display:block; margin:0px; padding:0px;"></td>
+                                                                    <td width="163" align="left" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;">+1 (866) 274-3673</td>
+                                                                </tr>
+                                                            </table>
+                                                            <table width="254" cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                <tr>
+                                                                    <td align="center" height="5" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="254" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;">+1 (646) 205-1500 (Interational)</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="38" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="254" align="center" valign="top"><a href="https://www.bbb.org/new-york-city/business-reviews/watches-dealers/ashford-com-in-brooklyn-ny-105456/#bbbonlineclick" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/logo_bbb.gif" style="display:block; margin:0px; padding:0px;" width="93" height="38" border="0" alt="BBB Accredited Business"></a></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="7" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    <!-- end of Content -->
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of left column -->
+                                    <!-- start of right column -->
+                                    <table width="290" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <!-- start of text content table -->
+                                                <table width="290" align="left" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="224" align="center" valign="top" style="padding-top:48px; padding-right:20px; padding-bottom:45px; padding-left:20px;">
+                                                            <table width="224" cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                <tr>
+                                                                    <td width="224" height="46" align="center" valign="middle"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/hdr_quick-links.gif" style="display:block; margin:0px; padding:0px;" width="133" height="18" border="0" alt="Outstanding Service"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="22" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="224" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;"><a href="http://www.ashford.com/us/myaccount/login.jsp?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">MY ACCOUNT</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="16" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="224" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;"><a href="http://www.ashford.com/us/ordersearch/orderSearch.jsp" target="_blank" style="color:#000000; text-decoration:none;">ORDER HISTORY</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="16" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="224" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;"><a href="http://www.ashford.com/us/myaccount/myWishList.jsp?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">WISH LIST</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="16" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="224" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;"><a href="http://www.ashford.com/us/info/contactUs.jsp?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">CONTACT US</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="16" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="224" align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#000000; font-size:13px; line-height:19px; letter-spacing:0.5px;"><a href="http://www.ashford.com/us/info/contactUs.jsp?source=2121030Pulsar" target="_blank" style="color:#000000; text-decoration:none;">LIVE CHAT</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" height="42" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                                </tr>
+                                                            </table>
+                                                            <table width="224" cellpadding="0" cellspacing="0" border="0" style="font-size:0px;">
+                                                                <tr>
+                                                                    <td width="35" align="left" valign="middle"><a href="https://www.facebook.com/AshfordOnline" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/social_fb.gif" width="14" height="28" border="0" alt="Facebook"></a></td>
+                                                                    <td width="52" align="left" valign="middle"><a href="https://twitter.com/ashfordtweets" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/social_twitter.gif" width="33" height="28" border="0" alt="Twitter"></a></td>
+                                                                    <td width="46" align="left" valign="middle"><a href="#" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/social_instagram.gif" width="27" height="28" border="0" alt="Instagram"></a></td>
+                                                                    <td width="45" align="left" valign="middle"><a href="https://www.youtube.com/user/AshfordLuxuryWatches" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/social_youtube.gif" width="27" height="32" border="0" alt="Youtube"></a></td>
+                                                                    <td width="46" align="left" valign="middle"><a href="https://pinterest.com/AshfordWatches" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/social_pinterest.gif" width="24" height="32" border="0" alt="Pinterest"></a></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" height="7" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <!-- end of text content table -->
+                                        </tbody>
+                                    </table>
+                                    <!-- end of right column -->
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- END two column -->
+<!-- Start of footer -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td align="center" height="35" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="600" align="center" valign="top"><a href="http://www.ashford.com?source=2121030Pulsar" target="_blank"><img src="http://hosting-source.bronto.com/17215/public/Email-Templates/logo_2.gif" style="display:block; margin:0px; padding:0px;" width="33" height="30" border="0" alt="Ashford"></a></td>
+                </tr>
+                <tr>
+                    <td align="center" height="10" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" style="font-family:arial,helvetica,sans-serif; color:#595959; font-size:11px; line-height:18px;"><span style="color:#ed0a0a;">&copy; 2015 Ashford.com.</span><br> This email was sent to %%!contact_email%% by %%!account_organization%%<br>%%!account_address1%% %%!account_city%%, %%!account_state%% %%!account_zip%%<br><a href="mailto:sales@ashford.com" target="_blank" style="color:#595959; text-decoration:none;">sales@ashford.com</a><br><a href="%%!unsubscribe_url%%" style="color:#595959;text-decoration:none;" target="_blank">Click here to Unsubscribe</a></td>
+                </tr>
+                <tr>
+                    <td align="center" height="45" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of footer -->
+<!-- Start of red border -->
+<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" class="backgroundTable">
+    <tbody>
+    <tr>
+        <td>
+            <table width="100%" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+                <tbody>
+                <tr>
+                    <td width="100%" align="center" height="3" bgcolor="#ed1717" style="font-size:1px; line-height:1px;">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<!-- End of red border -->
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        /*var a = 10;
+        function aa(){
+            alert(a);
+        }
+        function bb(){
+            var a = 20;
+            aa();
+        }
+        bb();    =>  10*/
+
+//        function aaa(){
+//            a = 10;  解析成全局变量
+//        };
+//        aaa();
+//        alert(a);    =>  10
+
+
+        /*function aa(){
+            var a = b = 10;
+        }
+        aa();
+       // alert(a);   a is not defined
+        alert(b);  => 10*/
+
+
+        /*var a= 10;
+        function aa(){
+            a = 20;
+            alert(a);
+        }
+        aa();   20
+*/
+
+        /*var a = 10;
+        function aa(){
+            alert(a);
+            a = 20;
+        }
+        aa();    10*/
+
+        var a = 10;
+        function aa(){
+            alert(a);
+            var a = 20;  //变量提升
+        }
+        aa();  //undefined
+    </script>
+</head>
+<body>
+
+</body>
+</html>
