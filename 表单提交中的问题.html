@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单提交中的问题</title>
+</head>
+<body>
+<form action="" id="myForm">
+    <input type="text" value="default text" autofocus/>
+    <button type="submit" name="submit-btn">submit form</button>
+</form>
+
+<div style="margin-top: 20px;">
+    please input number:
+    <input id="number-input" type="text"/>
+</div>
+
+<p style="margin-top: 20px;">input/textarea 获取焦点后，内容被选中</p>
+<input type="text" id="input-focus-select-all" value="initial value">
+<textarea name="" id="textarea-focus-select-all" cols="30" rows="10">focus me and select me</textarea>
+<script>
+    var EventUtil = {
+        //Notice: type is not include 'on', for example: click mouseover mouseout and so on
+        addHandler: function(element, type, handler){
+            if (element.addEventListener){
+                element.addEventListener(type, handler, false);
+            } else if(element.attachEvent){
+                element.attachEvent('on'+type, handler);
+            } else {
+                element['on'+type] = handler;
+            }
+        },
+
+        preventDefault: function(event){
+            if(event.preventDefault){
+                event.preventDefault();
+            }else{
+                event.returnValue = false;
+            }
+        }
+    };
+
+    function getSelectedText(textbox){
+        if (typeof textbox.selectionStart == "number"){ // IE9+、Firefox、Safari、Chrome 和Opera
+            return textbox.value.substring(textbox.selectionStart,
+                    textbox.selectionEnd);
+        } else if (document.selection){ // IE8 及之前版本
+            return document.selection.createRange().text;
+        }
+    }
+
+    // 例如，在页面
+    //加载完毕后，将焦点转移到表单中的第一个字段。为此，可以侦听页面的load 事件，并在该事件发生
+    //时在表单的第一个字段上调用focus()方法
+    //HTML5 为表单字段新增了一个autofocus 属性。在支持这个属性的浏览器中，只要设置这个属性，
+    //不用JavaScript 就能自动把焦点移动到相应字段。
+    //for example: <input type="text" autofocus/>
+    EventUtil.addHandler(window, "load", function(event){
+        var element = document.forms[0].elements[0];
+        if(element.autofocus !== true){
+            element.focus();
+        }
+    });
+
+
+    window.onload = function(){
+        var oMyForm = document.getElementById("myForm");
+        var oBtn = oMyForm.getElementsByTagName('button')[0];
+        var oInput = oMyForm.getElementsByTagName('input')[0];
+        EventUtil.addHandler(oMyForm, 'submit', function(e){
+            var e = e || window.event;
+            EventUtil.preventDefault(e);
+            /*
+             var target = e.target;*/
+            //var target = e.target || window.event.target;
+            //var oBtn = target.elements["submit-btn"];
+
+            console.log(oBtn);
+            oBtn.disabled = true;
+        });
+
+
+        //对于<input>和<textarea>元素，在它们失去焦点且value 值改变时触发；对于
+        //<select>元素，在其选项改变时触发。
+        EventUtil.addHandler(oInput, 'change', function(){
+            alert("input has changed");
+        });
+
+
+
+        //
+        var oNumInput = document.getElementById("number-input");
+        EventUtil.addHandler(oNumInput, 'change', function(e){
+            var target = e.target || window.event.target;
+            if(/[^\d]/.test(target.value)){
+                target.style.backgroundColor = "red";
+            }else{
+                target.style.backgroundColor = "";
+            }
+        });
+
+
+        var oInput_focus_select_all = document.getElementById("input-focus-select-all");
+        EventUtil.addHandler(oInput_focus_select_all, 'focus', function(e){
+            var target = e.target || window.event.target;
+            target.select();
+            alert(getSelectedText(oInput_focus_select_all));
+        });
+        var oTextarea_focus_select_all = document.getElementById("textarea-focus-select-all");
+        EventUtil.addHandler(oTextarea_focus_select_all, 'focus', function(e){
+            var target = e.target || window.event.target;
+            target.select();
+        });
+
+
+
+    };
+
+</script>
+</body>
+</html>

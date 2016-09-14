@@ -6,7 +6,7 @@
 (function($){  //’‚—˘”√£∫ console.log($('form').serializeJson());
     $.fn.serializeJson=function(){
         var serializeObj={};
-        var array=this.serializeArray();[obje]
+        var array=this.serializeArray();//[obje]
         var str=this.serialize();
         $(array).each(function(){
             if(serializeObj[this.name]){
