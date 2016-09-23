@@ -632,6 +632,107 @@
         Traverse(oDiv,function(){alert('i am call back fun');});
         //console.log(oDiv.children);
 
+
+
+
+
+        /*25.编写一个函数，去掉数组的重复元素*/
+        function unique(arr){
+            var result = [], isRepeated;
+            for (var i=0; i<arr.length; i++){
+                isRepeated = false;
+                for(var j=0; j<result.length; j++){
+                    if(arr[i] === result[j]){
+                        isRepeated = true;
+                        break;
+                    }
+                }
+                if(!isRepeated){
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+
+        }
+        var unUnique = [1,2,3,2,3,1,4];
+        console.log(unique(unUnique));
+
+
+
+
+        /*26.如何深度克隆 ---[js对象引用]*/
+        function deepClone(obj){
+            var newObj = {};
+            if(typeof obj != 'object'){
+                return obj;
+            }
+            for(var i in obj){
+                newObj[i] = deepClone(obj[i]);
+                return newObj;
+            }
+        }
+        var obj1 = {
+            a:{
+                b:10
+            }
+        };
+        var obj2 = deepClone(obj1);
+        obj2.a.b = 20;
+        console.log(obj1.a.b); // 10
+
+
+        /*27.冒泡排序 函数*/
+        function sortBubble(arr){
+            var temp;
+            for(var i=0; i<arr.length; i++){
+                for(var j=0; j<arr.length; j++){
+                    if(arr[j] > arr[j+1]){
+                        temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+
+                    }
+                }
+            }
+            return arr;
+        }
+        var bubbleArr = [1,2,3,4,0,-2,20];
+        console.log(sortBubble(bubbleArr));
+
+
+        /*28.快速排序 */
+        function quickSort(arr){
+            if(arr.length <= 1){
+                return arr;
+            }
+            var leftArr = [],
+                    middle= [],
+                    rightArr = [];
+            var midNum = arr[Math.floor(arr.length / 2)];
+            for(var i=0; i<arr.length; i++){
+                if(arr[i] < midNum){
+                    leftArr.push(arr[i]);
+                }else if(arr[i] > midNum){
+                    rightArr.push(arr[i]);
+                }else{
+                    middle.push(arr[i]);
+                }
+            }
+            return [].concat(quickSort(leftArr),middle,quickSort(rightArr));
+        }
+        var quickArr = [1,2,-1];
+        console.log(quickSort(quickArr));
+
+
+        /*29.平年闰年算法函数*/
+        function isLeapYear(nowYear){
+            if((nowYear % 4 == 0 && nowYear % 100 != 0) || (nowYear % 100 == 0 && nowYear % 400 == 0)){
+                console.log('nowYear is 闰年');
+            }else{
+                console.log('nowYear is 平年');
+            }
+        }
+        isLeapYear(2016);
     </script>
 
 
