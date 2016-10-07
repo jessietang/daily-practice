@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="../js/browser.min.js"></script>
+<script type="text/babel">
+    /*1. let声明的变量只在它所在的代码块有效。*/
+    /*for循环的计数器，就很合适使用let命令。*/
+    for (let i=0; i<10; i++){
+
+    }
+    for(var j=0; j<10; j++){
+
+    }
+    //console.log(i); // Uncaught ReferenceError: i is not defined
+    //console.log(j); // 10
+
+    /*example 1: 闭包只能取得包含函数中任何变量的最后一个值*/
+    var a = [];
+    for(var i=0; i<10; i++){
+        a[i] = function(){
+            console.log(i);
+        };
+    }
+    a[6](); // 10
+
+    /*example2:变量i是let声明的，当前的i只在本轮循环有效，所以每一次循环的i其实
+    都是一个新的变量，所以最后输出的是6。*/
+    var b = [];
+    for(let i=0; i<10; i++){
+        b[i] = function(){
+            console.log(i);
+        };
+    }
+    b[6](); // 6
+
+
+    /*2.let不像var那样会发生“变量提升”现象。所以，变量一定要在声明后使用，否则报错。*/
+    console.log(bar);
+    console.log(foo);
+    var bar = 2;
+    let foo = 2;
+    function func() {
+        // let先使用后声明，报语法错
+        alert(val);
+        let val;
+    }
+    //func();
+
+    /*3.es6 函数参数的默认值*/
+    function log3(x,y){
+        y = y || 'world';
+        console.log(x,y);
+    }
+    log3('hello'); // hello world
+    log3('hello','china'); // hello china
+    log3('hello',''); // hello world
+    /*上面代码检查函数log的参数y有没有赋值，如果没有，则指定默认值为World。
+    这种写法的缺点在于，如果参数y赋值了，但是对应的布尔值为false，则该赋值不
+    起作用。就像上面代码的最后一行，参数y等于空字符，结果被改为默认值。*/
+
+    function log2(x,y){
+        if(typeof y === 'undefined'){
+            y = 'world';
+        }
+        console.log(x,y);
+    }
+    log2('hello'); // hello world
+    log2('hello','china'); // hello china
+    log2('hello',''); // hello
+
+    function log(x,y='world'){
+        console.log(x,y);
+    }
+    log('hello'); // hello world
+    log('hello','china'); // hello china
+    log('hello',''); // hello
+
+
+    /*4.箭头函数*/
+    /*example1:*/
+    var f = v => v;
+    console.log(f(2)); // 2
+    /*上面的箭头函数等价于：*/
+    var f = function(v){
+        return v;
+    }
+
+    /*example2: 如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。*/
+    var f1 = () => 5;
+    /*等价于：*/
+    var f1 = function(){
+        return 5;
+    };
+
+    /*example3：*/
+    var sum = (num1,num2) => num1 + num2;
+    console.log(sum(1,2)); // 3
+    /*等价于：*/
+    var sum = function(num1,num2){
+        return num1 + num2;
+    };
+
+
+    /*example4: 如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，
+    并且使用return语句返回。*/
+    var sum2 = (num1, num2) => {num1++;num2++;return num1+num2;}
+    console.log(sum2(1,1)); // 4
+
+    /*由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号。*/
+    var getTempItem = id => ({id:id,name:'temp'});
+    console.log(getTempItem(25));
+</script>
+</body>
+</html>
