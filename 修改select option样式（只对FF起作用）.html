@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        option:checked, option:hover {
+            color: #000;
+            background:url("bg-option.gif"); /*用一个1px X 1px 的图片颜色
+            只有Firefox起作用，chrome不起作用*/
+        }
+        option { /*只有Firefox起作用，chrome不起作用*/
+            height: 30px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<select>
+    <option>test1</option>
+    <option>test2</option>
+    <option>test3</option>
+    <option>test4</option>
+</select>
+</body>
+</html>

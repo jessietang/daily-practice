@@ -10,7 +10,7 @@
     <script src="../react-15.2.1/build/react-dom.min.js"></script>
     <script src="../react-15.2.1/build/browser.min.js"></script>
     <script type="text/babel">
-        const Counter = React.createClass({
+        /*const Counter = React.createClass({
             render: function({value}){
                 return (
                         <h1>{value}</h1>
@@ -22,7 +22,50 @@
                 document.getElementById('root')
         );
         store.subscribe(myRender);
-        myRender();
+        myRender();*/
+
+
+
+       var CalculatorApp = React.createClass({
+                getInitialState: function(){
+            return {
+                nowIndex: 0,
+                text: "123"
+            };
+        },
+        add: function(){
+            this.setState({
+                nowIndex: this.state.nowIndex + 1
+            });
+        },
+        sub: function(){
+            this.setState({
+                nowIndex: this.state.nowIndex - 1
+            });
+        },
+        render: function(){
+            return (
+                    <SubApp add={this.add} sub={this.sub} nowState={this.state.nowIndex}/>
+
+        );
+        }
+        });
+        var SubApp = React.createClass({
+                render: function(){
+            var nowState = this.props.nowState;
+            return (
+                    <div>
+                    <button onClick={this.props.add}>+</button>
+        <button onClick={this.props.sub}>-</button>
+        <p> result: {nowState}</p>
+        </div>
+        );
+        }
+        });
+        ReactDOM.render(
+        <CalculatorApp/>,
+                document.getElementById('root')
+        );
     </script>
 </body>
 </html>

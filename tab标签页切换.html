@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-box .tab-content, .content-box .tab-content .tab-item {
+            list-style: none;
+        }
+
+        .content-box .tab-content {
+            font-size: 0;
+            letter-spacing: -4px;
+            word-spacing: 0;
+        }
+
+        .content-box .tab-content .tab-item {
+            display: inline-block;
+            zoom: 1;
+            *display: inline;
+            padding: 3px 5px;
+            background-color: #abcdef;
+            font-size: 14px;
+            letter-spacing: normal;
+            word-spacing: normal;
+            border:1px solid #eee;
+        }
+
+        .content-box .tab-content .tab-item:hover {
+            cursor: pointer;
+        }
+
+        .content-box .tab-content .tab-item.activeItem {
+            background-color: red;
+            color: #fff;
+        }
+
+        .item-content {
+            width: 254px;
+            height: 100px;
+            background-color: #e3e3e3;
+            display: none;
+        }
+
+        .item-content.currentContent {
+            display: block;
+        }
+
+        #secondBox {
+            margin-top: 100px;
+            position: relative;
+
+        }
+
+        #secondBox .tab-content2, #secondBox .tab-content2 .tab-item2 {
+            list-style: none;
+        }
+
+        #secondBox .tab-content2 {
+            font-size: 0;
+            letter-spacing: -4px;
+            word-spacing: 0;
+        }
+
+        #secondBox .tab-content2 .tab-item2 {
+            display: inline-block;
+            zoom: 1;
+            *display: inline;
+            padding: 3px 5px;
+            border: 1px solid green;
+            background-color: #abcdef;
+            font-size: 14px;
+            letter-spacing: normal;
+            word-spacing: normal;
+        }
+
+        #secondBox .tab-content2 .tab-item2:hover {
+            cursor: pointer;
+        }
+
+        #secondBox .tab-content2 .tab-item2.activeItem2 {
+            background-color: red;
+            color: #fff;
+            border-bottom: 0;
+        }
+
+        #secondBox .item-content2 {
+            width: 256px;
+            height: 100px;
+            border: 1px solid green;
+            margin-top: -2px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <ul class="tab-content">
+            <li class="tab-item activeItem">item one</li>
+            <li class="tab-item">item two</li>
+            <li class="tab-item">item three</li>
+            <li class="tab-item">item four</li>
+        </ul>
+        <div class="item-content currentContent">111</div>
+        <div class="item-content">222</div>
+        <div class="item-content">333</div>
+        <div class="item-content">444</div>
+    </div>
+
+
+
+    <div id="secondBox">
+        <ul class="tab-content2">
+            <li class="tab-item2 activeItem2">item one</li>
+            <li class="tab-item2">item two</li>
+            <li class="tab-item2">item three</li>
+            <li class="tab-item2">item four</li>
+        </ul>
+        <div class="item-content2 currentContent2">111</div>
+    </div>
+
+    <script src="js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            /*$('.tab-content .tab-item').each(function(index){
+                var _this = $(this);
+                _this.click(function(){
+                    _this.addClass('activeItem').siblings().removeClass('activeItem');
+                    $('.item-content').eq(index).addClass('currentContent').siblings().removeClass('currentContent');
+                });
+            });*/
+
+            $('.tab-content .tab-item').each(function(index){
+                var _this = $(this);
+                var timer = null;
+                _this.hover(function(){
+                    //setTimeout 中的延迟执行代码中的this永远都是指向window
+                    timer = setTimeout(function(){
+                        _this.addClass('activeItem').siblings().removeClass('activeItem');
+                        $('.item-content').eq(index).addClass('currentContent').siblings().removeClass('currentContent');
+                    },300);
+                },function(){
+                    clearTimeout(timer);
+                });
+            });
+
+
+
+
+
+
+            $('#secondBox .tab-content2 .tab-item2').each(function(index){
+                var _this = $(this);
+                _this.click(function(){
+                    _this.addClass('activeItem2').siblings().removeClass('activeItem2');
+                    $('.item-content2').html(index);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

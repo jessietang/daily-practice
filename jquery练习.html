@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #target {
+            width:200px;
+            height:100px;
+            overflow: auto;
+        }
+
+        #target p {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        #target p:nth-child(odd) {
+            background-color:red;
+        }
+
+        #target p:nth-child(even) {
+            background-color:yellow;
+        }
+
+        #widthTest1 {
+            width: 200px;
+            height: 200px;
+            background-color: #00CCFF;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 5px solid red;
+        }
+
+        #widthTest2 {
+            margin-top: 30px;
+            width: 200px;
+            height: 200px;
+            background-color: #00CCFF;
+            /*-webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;*/
+            padding: 10px;
+            border: 5px solid red;
+        }
+
+        #animateTest {
+            width: 100px;
+            height: 100px;
+            background-color: #abcdef;
+        }
+
+        #imgTest {
+            display: none;
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+    <div id="target">
+        <p>1</p>
+
+        <p>2</p>
+
+        <p>3</p>
+
+        <p>4</p>
+
+        <p>56</p>
+
+        <p>66</p>
+        <p>1</p>
+
+        <p>2</p>
+
+        <p>3</p>
+
+        <p>4</p>
+
+        <p>56</p>
+
+        <p>66</p>
+    </div>
+    <div id="other">trigger the handler</div>
+    <div id="log"></div>
+    <div id="conf"></div>
+
+    <div id="widthTest1">width test1</div>
+    <div id="widthTest2">width test2</div>
+
+    <div class="afterTest">after test</div>
+    <div class="afterTest">after test</div>
+    <div class="afterTest">after test</div>
+
+    <div class="beforeTest">before test</div>
+    <div class="beforeTest">before test</div>
+    <div class="beforeTest">before test</div>
+
+    <div id="detachTest">detach div</div>
+    <button id="detachToggle">detach test</button>
+
+    <div id="animateTest"></div>
+
+    <button id="fadeTest">click it to fadeIn the pic</button>
+    <div id="imgTest">i am img box</div>
+    <img id="imgTest2" src="image/1.jpg" style="display: none;" alt=""/>
+    <p id="imgP"></p>
+
+
+
+    <div id="slideTest">click me to slide</div>
+    <div id="slide1" style="width:100px;height:100px;background-color:darkred;display:none;"></div>
+
+    <input type="text" id="text1"/>
+    <input id="textBtn" type="button" value="submit" />
+    <div id="clickTest" style="width:50px;height:50px;background-color: red;" onClick="this.style.width='100px'"></div>
+
+
+    <script src="js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        /*$(function(){
+            <!--浏览器事件：scroll  resize-->
+           /* $('#target').scroll(function(){
+                $('#log').append('<div>handler for .scroll() called.</div>');
+            });
+
+            $(document).on('click', '#other', function(){
+                $('#target').scroll();
+            });
+
+            $(window).scroll(function(){
+                $('#target').fadeOut('slow');
+            });
+
+
+
+        });*/
+
+
+        // 解决jQuery与其他$库冲突
+       /* var j = $.noConflict();//给jQuery起个别名
+        j('#conf').append('<div>111111111111</div>');
+        //下面 Do something with another library's $()---然后操作其他的$库
+        $('content').append('<div>222222222222</div>');*/
+
+
+
+       /* $.noConflict();
+        jQuery(document).ready(function(jq){
+            jq('#conf').append('<div>这里有个技巧对于解决冲突特别有效。.ready() 方法' +
+                    '可以给 jQuery 对象取个别名，这样就能够在传给 .ready() 的回调函数的内' +
+                    '部继续使用 $ 而不用担心冲突（注：原因：.ready()是一个闭包)</div>');
+        });
+        */
+
+        /*$(function(){
+            // .width()总是返回内容宽度,不管CSS box-sizing属性值.
+            // 截至jQuery 1.8，这可能需要检索的CSS的宽度加加上box-sizing的属性，
+            // 然后当元素有 box-sizing: border-box时候，减去个元素上任何潜在border和padding值。
+            // 为了避免这种问题，使用.css( "width" )而非.width()。
+            console.log('widthTest1 .width()'+$('#widthTest1').width()); // 170
+            console.log('widthTest2 .width()'+$('#widthTest2').width()); // 200
+
+            // innerWidth()  包括padding，但是不包括border。
+            console.log('widthTest1 .width()'+$('#widthTest1').innerWidth()); // 190 = 200 - 5*2
+            console.log('widthTest1 .width()'+$('#widthTest2').innerWidth()); // 220 = 200 + 20
+
+
+            console.log('widthTest1 css("width")'+$('#widthTest1').css('width')); // 200px
+            console.log('widthTest2 css("width")'+$('#widthTest2').css('width')); // 200px
+        });*/
+
+
+        /*$(function(){
+            /!*after()  insertAfter()  before()  insertBefore()  作为其兄弟节点*!/
+            $('.afterTest').after('<p style="background-color: red;">afterTest 1111</p>');
+            $('<p style="background-color: orange;">afterTest 2222</p>').insertAfter('.afterTest');
+
+            /!* append() appendTo() prepend() prependTo()作为其兄弟节点*!/
+
+            /!*clone() *!/
+
+            $('#detachToggle').click(function(){
+                var $p = $('.detachP');
+                if($p.size() > 0){
+                    $p.detach();
+                }else{
+                    $('#detachTest').append('<p class="detachP">0000000</p>');
+                }
+            });
+
+            /!*.offset()   .position() .offset()方法允许我们检索一个元素相对于
+            文档（document）的当前位置。和.position()的差别在于：.position()
+            是相对于相对于父级元素的位移。当通过全局操作（特别是通过拖拽操作）
+            将一个新的元素放置到另一个已经存在的元素的上面时，若要取得这个新的
+            元素的位置，那么使用 .offset() 更合适。
+             .offset()返回一个包含top 和 left属性的对象*!/
+
+        });*/
+
+
+        /*$(function(){
+            /!*show() hide() toggle()*!/
+
+            /!*animate()*!/
+            $('#animateTest').hover(function(){
+                $(this).animate({
+                    "opacity":"0.5",
+                    "width":"+=200",
+                    "height":"200px"
+
+                },1000, 'linear', function(){
+                    $(this).css("background-color","red");
+                });
+            },function(){
+                $(this).animate({
+                    "width":"100px",
+                    "height":"100px"
+                },'500', 'linear', function(){
+                    $(this).css("background-color","#abcdef");
+                });
+            });
+
+            /!*渐变 fadeIn()  fadeOut()  fadeTo()  fadeToggle()*!/
+            $(document).on('click','#fadeTest', function(){
+                $('#imgTest').fadeIn('slow', function(){
+                    $('#imgP').text('img has fadeIn');
+                });
+
+                $('#imgTest2').fadeToggle();
+            });
+
+            /!*滑动 slideDown()  slideUp()  slideToggle()*!/
+            $(document).on('click', '#slideTest', function(){
+                $('#slide1').slideToggle('slow', function(){
+                    $('#slide1').text('test');
+                });
+            });
+        });*/
+
+        $(function(){
+           /* $(document).on('click','#textBtn', function(){
+                $('#text1').val('has been clicked!');
+            });*/
+
+            $('#textBtn').click(function(){
+                $('#text1').val('has been clicked!');
+            });
+        });
+
+    </script>
+</body>
+</html>

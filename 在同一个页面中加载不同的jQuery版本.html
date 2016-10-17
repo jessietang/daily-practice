@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>在同一个页面中加载多个不同的jQuery版本</title>
+
+    <!--在同一个页面施用多个不同的jQuery版本而不冲突的方法
+jQuery自诞生以来，版本越来越多，而且jQuery官网的新版本还在不断的更新和发布中，
+现已经达到了1.6.4版本，但是我们在以前的项目中就已经使用了旧版本的jQuery，比如
+已经出现的：1.3.X、1.4.X、1.5.X、1.6.2等等。
+之前在修改前台页面的时候，就碰到过这样的问题，我用的是最新的jQuery版本，之前程
+序用的是老的jQuery库，因为这次是修改不是重做，所以我们弄了好久两个版本都没办法共
+存，最后只能二选一，修改写好的js，今天在网上看到一个让不同jQuery版本共存不冲突的方法，分享一下。
+其实，利用jQuery.noConflict()特性，我们不仅可以让jQuery与其他的JS库并存，
+比如Prototype。也可以与jQuery本身的其他不同版本并存而不冲突。-->
+
+    <!-- 从谷歌服务器加载jQuery最新版本 -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script type="text/javascript">
+        var jQuery_New = $.noConflict(true);
+    </script>
+    <!-- 加载jQuery1.6.2版本 -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_6_2 = $.noConflict(true);
+    </script>
+    <!-- 加载jQuery1.5.2版本 -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_5_2 = $.noConflict(true);
+    </script>
+    <!-- 加载jQuery1.4.2版本 -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_4_2 = $.noConflict(true);
+    </script>
+    <!-- 加载jQuery1.3.2版本 -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        var jQuery_1_3_2 = $.noConflict(true);
+    </script>
+    <script type="text/javascript">
+        //alert(jQuery_New.fn.jquery);
+        //alert(jQuery_1_6_2.fn.jquery);
+        //alert(jQuery_1_5_2.fn.jquery);
+        //alert(jQuery_1_4_2.fn.jquery);
+        //alert(jQuery_1_3_2.fn.jquery);
+
+        jQuery_New(function($){
+            $('<p>我是最新的'+$.fn.jquery+'版本添加进来的。</p>').appendTo('body');
+        });
+        jQuery_1_6_2(function($){
+            $('<p>我是'+$.fn.jquery+'版本添加进来的。</p>').appendTo('body');
+        });
+        jQuery_1_5_2(function($){
+            $('<p>我是'+$.fn.jquery+'版本添加进来的。</p>').appendTo('body');
+        });
+        jQuery_1_4_2(function($){
+            $('<p>我是'+$.fn.jquery+'版本添加进来的。</p>').appendTo('body');
+        });
+        jQuery_1_3_2(function($){
+            $('<p>我是'+$.fn.jquery+'版本添加进来的。</p>').appendTo('body');
+        });
+    </script>
+</head>
+<body>
+在同一个页面中加载多个不同的jQuery版本
+<br>
+<div id="t1"></div>
+</body>
+</html>
