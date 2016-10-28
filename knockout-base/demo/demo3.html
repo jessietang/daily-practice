@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分解用户的输入</title>
+</head>
+<body>
+<ul>
+    <li>first name: <span data-bind="text: firstName"></span></li>
+    <li>last name: <span data-bind="text: lastName"></span></li>
+    <li>hello, your new name is: <span data-bind="text: fullName"></span></li>
+
+</ul>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var viewModel = {
+        firstName: ko.observable('cassie'),
+        lastName: ko.observable('yang')
+    };
+    viewModel.fullName = ko.dependentObservable({
+        read: function(){
+            return this.firstName() + " " + this.lastName();
+        },
+        write: function(value){
+            var lastSpacePos = value.lastIndexOf(" ");
+            if(lastSpacePos > 0){
+                this.firstName(value.substring(0,lastSpacePos)); // update firstName
+                this.lastName(value.substring(lastSpacePos+1)); // update lastName
+            }
+        },
+        owner: viewModel
+    });
+
+    viewModel.fullName("jessie tang");
+
+    ko.applyBindings(viewModel);
+</script>
+</body>
+</html>

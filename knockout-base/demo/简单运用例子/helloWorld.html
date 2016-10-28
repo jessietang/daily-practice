@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>
+    <label for="">FirstName: <input type="text" data-bind="value: firstName"/></label>
+</p>
+
+<p>
+    <label for="">LastName: <input type="text" data-bind="value: lastName"/></label>
+</p>
+<h2>Hello, <span data-bind="text: fullName"></span></h2>
+<script src="../../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        firstName: ko.observable('Jessie'),
+        lastName: ko.observable('Tang')
+    };
+    myViewModel.fullName = ko.dependentObservable(function(){
+        return myViewModel.firstName() + " " + myViewModel.lastName();
+    },myViewModel);
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

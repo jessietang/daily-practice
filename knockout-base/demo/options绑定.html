@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--options绑定控制什么样的options在drop-down列表里（例如：<select>）
+    或者 multi-select 列表里 （例如：<select size='6'>）显示。此绑定不能
+    用于<select>之外的元素。关联的数据应是数组（或者是observable数组），
+    <select>会遍历显示数组里的所有的项。-->
+</head>
+<body>
+<div>
+    <select name="" id="" data-bind="options: availableCountry"></select>
+</div>
+
+<div>
+    choose some countries you'd like to visit:
+    <select name="" id="" data-bind="options: availableCountry" size="5" muitiple="true"></select>
+</div>
+
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        availableCountry: ko.observableArray(['France','German','Spain'])
+    };
+    myViewModel.availableCountry.push('China');
+    ko.applyBindings(myViewModel);
+
+
+
+
+</script>
+</body>
+</html>

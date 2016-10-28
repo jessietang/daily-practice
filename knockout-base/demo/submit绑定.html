@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <form action="" data-bind="submit: doSth">
+        <input type="text"/>
+        <button type="submit">submit</button>
+    </form>
+</div>
+
+
+<!--为什么不在submit按钮上使用click绑定？
+在form上，你可以使用click绑定代替submit绑定。不过submit可以handle其它的submit行为，
+比如在输入框里输入回车的时候可以提交表单。-->
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        doSth: function(){
+            window.location.href="http://www.baidu.com";
+        }
+    };
+
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

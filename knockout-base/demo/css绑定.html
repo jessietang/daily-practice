@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .profitWarning {
+            color: red;
+            font-size: 20px;
+        }
+        .profitServe {
+            background-color: #000;
+        }
+        .profitHigh {
+            color: #ffff00;
+            font-weight: 600;
+            height: 200px;
+            line-height: 200px;
+        }
+        .my-class {
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+<!-- 非布尔值会被解析成布尔值。例如， 0和null被解析成false，21和非null对象被解析成true。-->
+<!-- 因为my-class不是一个合法的命名。解决方案是：在my-class两边加引号作为一个字符串使用。
+这是一个合法的JavaScript 对象 文字（从JSON技术规格说明来说，你任何时候都应该这样使用，虽然不是必须的）-->
+<div data-bind="css: {profitWarning: currentProfit() < 0, profitServe: isServe,
+profitHigh: isHigh, 'my-class': someValue}">Profit Information</div>
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        currentProfit: ko.observable(1000),
+        isServe: ko.observable(1),
+        isHigh: ko.observable(0),
+        someValue: ko.observable(-9)
+    };
+
+    myViewModel.currentProfit(-20);
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

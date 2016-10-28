@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .myBox1, .myBox2 {
+            width: 300px;
+            height: 500px;
+            border: 1px solid #eee;
+            float: left;
+        }
+
+        .myBox2 {
+            border: 1px solid #00CCFF;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="myBox1">
+    <h2>buyer:</h2>
+    <div data-bind="template: {name: 'person-template', data: buyer}"></div>
+</div>
+<div class="myBox2">
+    <h2>seller:</h2>
+    <div data-bind="template: {name: 'person-template', data: seller}"></div>
+</div>
+
+<script src="../knockout.js"></script>
+
+<script type="text/html" id="person-template">
+    <ul>
+        <li>name: <span data-bind="text: name"></span></li>
+        <li>price: <span data-bind="text: price"></span></li>
+    </ul>
+</script>
+
+<script type="text/javascript">/*这个需要在页面上所有的加载完成之后，所以放到最后，
+或者写在$(function(){})里面*/
+    var myViewModel = {
+        buyer: ko.observable({name: "amy", price: 200}),
+        seller: ko.observable({name: "cassie", price: 300})
+    };
+    ko.applyBindings(myViewModel);
+</script>
+
+</body>
+</html>

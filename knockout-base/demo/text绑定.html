@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>text绑定</title>
+</head>
+<body>
+<div>the message is: <span data-bind="text: myMessage"></span></div>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        myMessage: ko.observable('hehe')
+    };
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

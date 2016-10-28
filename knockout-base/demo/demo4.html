@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Value转换器</title>
+</head>
+<body>
+<p>the price is : <span data-bind="text: price"></span></p>
+<p>the whole price is : <span data-bind="text: formattedPrice"></span></p>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        price: ko.observable(11)
+    };
+    myViewModel.formattedPrice = ko.dependentObservable({
+        read: function(){
+            return "$" + this.price().toFixed(2);
+        },
+        write: function(value){
+            value = parseFloat((value.replace(/[^/[0-9],{.}]/g,"")));
+            this.price(isNaN(value) ? 0 : value);
+        },
+        owner: myViewModel
+    });
+    myViewModel.formattedPrice("10.235");
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

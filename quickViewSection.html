@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <style>
+        #quickViewContainer {
+            width: 100%;
+            height:auto;
+            border-top: 1px solid #dddddd;
+            border-bottom: 1px solid #dddddd;
+            position: relative;
+            padding:20px 0;
+            margin-top: 50px;
+        }
+
+        .prevNextLink {
+            width: 100%;
+        }
+
+        .prevNextLink .visioner-prev, .prevNextLink .visioner-next {
+            background: transparent url('image/home_slide_prev.png') 4px 0px no-repeat;
+            opacity: 1;
+            width: 50px;
+            height: 50px;
+            top: 50%;
+            margin-top: -25px;
+            z-index: 10;
+            position: absolute;
+            font-size: 70px;
+        }
+
+        .prevNextLink .visioner-prev {
+            -moz-transform: rotate(-90deg);
+            -webkit-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            left: 0;
+        }
+
+        .prevNextLink .visioner-next {
+            -moz-transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            right: 0;
+        }
+
+        #myCarousel {
+            margin: 20px auto;
+        }
+
+        #myCarousel .carousel-inner .item > img {
+            margin: 0 auto;
+        }
+
+        .carousel-indicators li {
+            width: 8px;
+            height: 8px;
+            background-color: #000;
+            border-radius: 0;
+            border-color: #000;
+        }
+
+        #myCarousel .carousel-indicators .active {
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+        }
+
+        #myCarousel .carousel-indicators {
+            bottom: -40px;
+        }
+
+        .column2 .qv-close {
+            float: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .column2 .product-name {
+            color: #000;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            line-height: 1.2;
+            margin: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .column2 .product-detail {
+            max-height: 140px;
+            overflow: hidden;
+            padding: 0;
+            text-align: center;
+        }
+
+        .product-price {
+            text-align: center;
+        }
+
+        .size-select {
+            width: 150px;
+            margin: 0 auto;
+        }
+
+        .buy-detail-btn .btn {
+            padding: 6px 60px;
+            border-radius: 0;
+        }
+
+        .buy-detail-btn {
+            margin: 20px auto;
+            text-align: center;
+        }
+        .buy-detail-btn .btn-buy {
+            background-color: #5e5e5e;
+            border: 1px solid #eee;
+            color: #fff !important;
+        }
+
+        .buy-detail-btn .btn-buy:hover {
+            background-color: #006648;
+            border: 1px solid #006648;
+            color: #fff !important;
+        }
+
+        .buy-detail-btn .btn-detail {
+            border: 1px solid #5e5e5e;
+            background-color: #fff;
+        }
+
+        .buy-detail-btn .btn-detail:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+
+                <!--start-->
+                <div id="quickViewContainer" class="row">
+                    <div class="prevNextLink">
+                        <a href="javascript:void(0)" class="visioner-prev"></a>
+                        <a href="javascript:void(0)" class="visioner-next"></a>
+                    </div>
+                    <div class="column1 col-md-6">
+
+                        <div id="myCarousel" class="carousel slide">
+                            <!-- 轮播（Carousel）指标 -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
+                            <!-- 轮播（Carousel）项目 -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="image/1.jpg" alt="First slide">
+                                </div>
+                                <div class="item">
+                                    <img src="image/1.jpg" alt="Second slide">
+                                </div>
+                                <div class="item">
+                                    <img src="image/1.jpg" alt="Third slide">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="column2 col-md-6">
+                        <button type="button" class="qv-close close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h1 class="product-name">100MM BOX | DEEP RED</h1>
+                        <p class="product-detail">Hand crafted in Italy, the iconic 100MM high-top sneaker in box leather, the finest part of the calf. Artfully constructed with hand painted edges and signature heel handle. The shoe comes with raw brass hardware featuring a three-piece closure and lock. 100 millimeters in height.</p>
+                        <h2 class="product-price">¥138,700</h2>
+                        <div class="size-select form-group">
+                            <select class="form-control">
+                                <option>Select a size</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="buy-detail-btn">
+                            <button class="btn btn-buy">buy</button>
+                            <button class="btn btn-detail">detail</button>
+                        </div>
+                    </div>
+                </div><!--end-->
+
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-1.11.2.js"></script>
+    <script src="bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

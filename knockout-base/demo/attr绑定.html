@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--因为data-something 不是一个合法的命名。解决方案是：在data-something两边加引号作为
+一个字符串使用。这是一个合法的JavaScript 对象 文字（从JSON技术规格说明来说，你任何时候
+都应该这样使用，虽然不是必须的）-->
+<div>our school's site is : <a href="" data-bind="attr: {href: url, title: detail,
+'data-myCart': someValue}">cuit</a></div>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        url: ko.observable('/http://www.cuit.edu.cn'),
+        detail: ko.observable('成信大官网'),
+        someValue: ko.observable('myData')
+    };
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

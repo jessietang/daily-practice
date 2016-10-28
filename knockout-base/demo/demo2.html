@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--
+    但是KO一个重要的功能是当你的view model改变的时候能自动更新你的界面。
+    当你的view model部分改变的时候KO是如何知道的呢？答案是：你需要将你的
+    model属性声明成observable的, 因为它是非常特殊的JavaScript objects，
+    能够通知订阅者它的改变以及自动探测到相关的依赖。
+    -->
+</head>
+<body>
+<div>this name is <span data-bind="text: personName"></span>, age is
+    <span data-bind="text: personAge"></span></div>
+<div>the first name is <span data-bind="text: firstName"></span></div>
+<div>the full name is <span data-bind="text: fullName"></span></div>
+<script src="../knockout.js"></script>
+<script>
+    var myViewModel = {
+        personName: ko.observable('Bob'),
+        personAge: ko.observable(22),
+        firstName: ko.observable('jessie'),
+        lastName: ko.observable('tang')
+    };
+
+    myViewModel.personName('Amy').personAge(23);
+
+    // fullName有问题
+    myViewModel.fullName = ko.dependentObservable(function(){
+        return this.firstName();
+    }, myViewModel);
+
+    ko.applyBindings(myViewModel); //
+
+</script>
+</body>
+</html>

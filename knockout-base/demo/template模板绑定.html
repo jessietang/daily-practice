@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .color_red {
+            color: red;
+        }
+
+        .color_blue {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<div data-bind="template: {name: 'data-template', data: dataInfo}"></div>
+<script src="../knockout.js"></script>
+<script src="../../js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var myViewModel = {
+            dataInfo: ko.observable({name: "abcd", value: 123})
+        };
+        ko.applyBindings(myViewModel);
+    });
+
+</script>
+
+<!--模板被包裹在 <script type="text/html">标记中,type 属性是必须的，
+用于区别正常的javascript代码, 不会被Knockout 当作标记来绑定.
+命名模板并不常用，但有的时候能派上用场.-->
+
+<script type="text/html" id="data-template">
+    <ul>
+        <li class="color_red" data-bind="text: name"></li>
+        <li class="color_blue" data-bind="text: value"></li>
+    </ul>
+</script>
+</body>
+</html>

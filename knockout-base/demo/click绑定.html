@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>you have clicked <span data-bind="text:numOfClick"></span> times.</div>
+<button data-bind="click: incrementClickCounter">click me</button>
+
+<!--传参数给你的click 句柄-->
+<button data-bind="click: function(){myViewModel.myFunction('param1','param2')}">click</button>
+
+<!--访问事件源对象-->
+<button data-bind="click: function(event){myViewModel.myFunction2(event,'param1','param2')}">click 2</button>
+
+<!--允许执行默认事件： 默认情况下，Knockout会阻止冒泡，防止默认的事件继续执行。
+例如，如果你点击一个a连接，在执行完自定义事件时它不会连接到href地址。这特别有用
+是因为你的自定义事件主要就是操作你的view model，而不是连接到另外一个页面。
+当然，如果你想让默认的事件继续执行，你可以在你click的自定义函数里返回true。-->
+
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        numOfClick: ko.observable(0),
+        incrementClickCounter: function(){
+            var preCount = this.numOfClick();
+            this.numOfClick(preCount + 1);
+        },
+        myFunction: function(){
+            console.log(this.numOfClick());
+        },
+        myFunction2: function(event){
+            if(event.shiftKey){
+                alert(this.numOfClick);
+            }else{
+                console.log(this.numOfClick());
+            }
+        }
+    };
+
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

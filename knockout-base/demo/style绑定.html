@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div data-bind="style: {color: currentProfit() < 0 ? 'red' : 'black', fontWeight: isServe() ? 'bold' : '400'}">profit information</div>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        currentProfit: ko.observable(200),
+        isServe: ko.observable(100)
+    };
+    myViewModel.currentProfit(-100);
+    myViewModel.isServe(false);
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

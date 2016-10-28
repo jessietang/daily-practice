@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="icon" type="image/x-icon" href="http://qac.alliancetime.com/images/ashford/favicon.ico">
+</head>
+<body>
+<select name="" id="mySelect" onchange="selectOptions(this);">
+    <option value="11">a</option>
+    <option value="22">b</option>
+    <option value="33">c</option>
+</select>
+
+<select name="" id="mySelect2" onchange="selectOptions(this);">
+    <option value="11">a</option>
+    <option value="22">b</option>
+    <option value="33">c</option>
+</select>
+<script src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+    // javascript获取select 当前选中的值
+    // var selDom = document.getElementById('mySelect');
+    // var index = selDom.selectedIndex;  // 选中索引
+    // var value = selDom.options[index].value;  // 当前选中的值
+    function selectOptions(selectObj){
+        var selectValue = selectObj.options[selectObj.selectedIndex].value;
+        console.log(selectValue);
+    }
+
+
+    // jquery获取select当前选中的值
+    $(function(){
+        $(document).on('change', '#mySelect2', function(){
+            console.log($(this).val()); // 22
+            //获取select选中的 value
+            console.log($(this).find('option:selected').val()); // 22 22
+            //获取select 选中的 text
+            console.log($(this).find('option:selected').text()); // 22 b
+        });
+    });
+</script>
+</body>
+</html>

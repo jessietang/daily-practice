@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <input type="checkbox" data-bind="checked: hasCellPhone"/>i have a cellPhone
+</div>
+<div>
+    your cellphone number:
+    <input type="text" data-bind="value: cellPhoneNumber, enable: hasCellPhone"/>
+</div>
+
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        hasCellPhone: ko.observable(false),
+        cellPhoneNumber: ko.observable('18383838383')
+    };
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

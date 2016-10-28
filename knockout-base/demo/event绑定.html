@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--event绑定在DOM元素上添加指定的事件句柄以便元素被触发的时候执行定义的JavaScript 函数。
+大部分情况下是用在keypress，mouseover和mouseout上。-->
+
+<div data-bind="event: {mouseover: enableDetails, mouseout: disableDetail}">mouse over me</div>
+<div data-bind="visible: showDetail">Details</div>
+
+<!--默认情况下，Knockout会【阻止冒泡】，防止默认的事件继续执行。-->
+<!--注5：防止事件冒泡: 默认情况下，Knockout【允许】event事件继续在更高一层的事件句柄上冒泡执行。-->
+<div data-bind="event: {mouseover: myDivHandler}">
+    <button data-bind="event: {mouseover: myButtonHandler}, mouseoverBubble: false">click me</button>
+</div>
+<div>the mouse over element is <span data-bind="text: detailNum"></span>.</div>
+<!--默认情况下，myButtonHandler会先执行，然后会冒泡执行myDivHandler。但一旦你设置了mouseoverBubble
+为false的时候，冒泡事件会被禁止。-->
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        showDetail: ko.observable(false),
+        detailNum: ko.observable('null'),
+        enableDetails: function(){
+            this.showDetail(true);
+        },
+        disableDetail: function(){
+            this.showDetail(false);
+        },
+        myButtonHandler: function(){
+            this.detailNum('button');
+        },
+        myDivHandler: function(){
+            this.detailNum('div');
+        }
+    };
+
+    ko.applyBindings(myViewModel);
+</script>
+
+</body>
+</html>

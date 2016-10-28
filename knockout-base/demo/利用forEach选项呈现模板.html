@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div data-bind="template: {name: 'person-template', foreach: people}"></div>
+<script src="../knockout.js"></script>
+<script type="text/html" id="person-template">
+    <h3 data-bind="text: name"></h3>
+    <div>the price is: <span data-bind="text: price"></span></div>
+</script>
+<script type="text/javascript">
+    var myViewModel = {
+        people: ko.observableArray([{name: "cassie", price: 100}, {name: "aini", price: 200}])
+    };
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

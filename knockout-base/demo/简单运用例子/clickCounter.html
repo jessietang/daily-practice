@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这个例子展示的创建一个view model并且绑定各种绑定到HTML元素标记上，
+        以便展示和修改view model的状态。</title>
+</head>
+<body>
+<div>
+    <p>you have clicked <span data-bind="text: numberOfClicks"></span> times.</p>
+    <button data-bind="click: registerClick, enable: !hasClickManyTimes()">click me</button>
+    <p data-bind="visible: hasClickManyTimes">there are too many clicks! Please click
+        <button data-bind="click: resetClick">me</button> to stop!</p>
+
+</div>
+<script src="../../knockout.js"></script>
+<script type="text/javascript">
+    var clickCounterViewModel = {
+        numberOfClicks: ko.observable(0),
+        registerClick: function(){
+            this.numberOfClicks(this.numberOfClicks()+1);
+        },
+        resetClick: function(){
+            this.numberOfClicks(0);
+        }
+    };
+
+    clickCounterViewModel.hasClickManyTimes = ko.dependentObservable(function(){
+        return this.numberOfClicks() >= 3;
+    },clickCounterViewModel);
+
+    ko.applyBindings(clickCounterViewModel);
+</script>
+</body>
+</html>

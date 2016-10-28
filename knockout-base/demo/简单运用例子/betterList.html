@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--这个例子是在上个例子的基础上添加remove item功能（multi-selection）和排序功能。
+    “remove”和“sort”按钮在不能用的时候会变成disabled状态（例如，没有足够的item来排序）。
+    参考HTML代码是如何实现这些功能的，另外这个例子也展示了如何使用匿名函数来实现排序。-->
+</head>
+<body>
+<form data-bind="submit: addItem" action="">
+    <div>
+        <label for="">add item: <input type="text" data-bind="value: addToItem, valueUpdate: 'afterkeydown'"/></label>
+        <button type="submit" data-bind="enable: addToItem().length > 0">add</button>
+    </div>
+</form>
+<div>
+    your items:
+    <select name="" id="" multiple="multiple" width="50" data-bind="options: items, selectedOptions: selectedItems"></select>
+    <div>
+        <button data-bind="click: removeItem, enable: selectedItems().length > 0">remove</button>
+        <button data-bind="click: sortItem, enable: items().length > 1">sort</button>
+    </div>
+</div>
+
+<script src="../../knockout.js"></script>
+<script type="text/javascript">
+    var viewModel = {};
+    viewModel.items = ko.observableArray(["cassie","jessie","amy"]);
+    viewModel.addToItem = ko.observable("");
+    viewModel.addItem = function(){
+        if(viewModel.addToItem() != ""){
+            viewModel.items.push(viewModel.addToItem());
+            viewModel.addToItem("");
+        }
+    };
+    viewModel.selectedItems = ko.observableArray(["amy"]);
+    viewModel.removeItem = function(){
+        this.items.removeAll(this.selectedItems());
+    };
+    viewModel.sortItem = function(){
+        this.items.sort();
+    };
+
+    ko.applyBindings(viewModel);
+</script>
+</body>
+</html>

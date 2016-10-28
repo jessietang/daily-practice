@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>send me email: <input type="checkbox" data-bind="checked: needEmail"/></p>
+
+<!--Checkbox关联到数组-->
+<p>send me email: <input type="checkbox" data-bind="checked: needEmail"/></p>
+<div data-bind="visible: needEmail">
+    people of send email:
+    <div><input type="checkbox" value="cherry" data-bind="checked: emailFlavor"/>cherry</div>
+    <div><input type="checkbox" value="cassie" data-bind="checked: emailFlavor"/>cassie</div>
+    <div><input type="checkbox" value="amy" data-bind="checked: emailFlavor"/> Monosodium Glutamate</div>
+</div>
+
+<!--添加radio button-->
+<p>send me email: <input type="checkbox" data-bind="checked: needEmail"/></p>
+<div data-bind="visible: needEmail">
+    people of send email:
+    <div><input type="radio" name="flavorGroup" value="cherry" data-bind="checked: emailFlavor2"/>cherry</div>
+    <div><input type="radio" name="flavorGroup" value="almond" data-bind="checked: emailFlavor2"/>almond</div>
+    <div><input type="radio" name="flavorGroup" value="msg" data-bind="checked: emailFlavor2"/>Monosodium Glutamate</div>
+</div>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        needEmail: ko.observable(false),
+        emailFlavor: ko.observableArray(["cherry","cassie"]),
+        emailFlavor2: ko.observable("almond")
+    };
+    myViewModel.needEmail(true);
+    //myViewModel.emailFlavor.push('amy');
+    myViewModel.emailFlavor2('msg');
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>visible绑定</title>
+    <!--
+        当参数设置为一个假值时（例如：布尔值false， 数字值0， 或者null， 或者undefined） ,
+        该绑定将设置该元素的style.display值为none，让元素隐藏。它的优先级高于你在CSS里定
+        义的任何display样式。
+
+        当参数设置为一个真值时（例如：布尔值true，或者非空non-null的对象或者数组） ,
+        该绑定会删除该元素的style.display值，让元素可见。然后你在CSS里自定义的display
+        样式将会自动生效。
+    -->
+</head>
+<body>
+<div data-bind="visible: isShowMsg">
+    you will see this message when isShowMsg is true.
+</div>
+
+<div data-bind="visible: myValues.length > 0">
+    you will see this message when myValues array's length > 0.
+</div>
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        isShowMsg: ko.observable(true),
+        myValues: ko.observable([])
+    };
+    myViewModel.isShowMsg(false);
+    myViewModel.isShowMsg(true);
+    myViewModel.isShowMsg(0);
+    myViewModel.isShowMsg(1);
+
+    myViewModel.myValues.push("some value");
+    ko.applyBindings(myViewModel);
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .colorChange {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        /*min-width: 小的写在前面， 从小到大*/
+        @media (min-width: 768px) { /*>=768px*/
+            .colorChange {
+                background-color: blue;
+            }
+        }
+
+        @media (min-width: 992px) { /*>=992px*/
+            .colorChange {
+                background-color: purple;
+            }
+        }
+
+        @media (min-width: 1200px) { /*>=1200px*/
+            .colorChange {
+                background-color: black;
+            }
+        }
+
+        /*max-width:  大的写在前面， 从大到小*/
+        /*@media (max-width: 1199px) {/!*<=1199*!/
+            .colorChange {
+                background-color: red;
+            }
+        }
+        @media (max-width: 991px) {/!*<=767*!/
+            .colorChange {
+                background-color: orange;
+            }
+        }
+        @media (max-width: 767px) {/!*<=767*!/
+            .colorChange {
+                background-color: green;
+            }
+        }*/
+
+
+    </style>
+</head>
+<body>
+    <div class="colorChange"></div>
+</body>
+</html>

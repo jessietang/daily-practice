@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="quickView.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="realContent">
+                    <button class="btn btn-primary qv-btn">qv</button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            if(window.innerWidth >= 768){
+                $('.qv-btn').each(function(index){
+                    var _this = $(this);
+                    var itemWidth = _this.parent().parent().width();
+                    var rowNum = Math.round((_this.parent().parent().parent().width()) / itemWidth);
+                    console.log(rowNum);
+                    _this.click(function(){
+                        $('.content_wrapper').remove();
+                        _this.parent().parent().parent().after('<div class="content_wrapper clearfix">111111</div>');
+                        $.ajax({
+                            url: 'quickViewSection.html'
+                        }).done(function(data){
+                            $('.content_wrapper').prepend(data);
+                        });
+                        $('.content_wrapper').slideDown('slow');
+                    });
+
+                });
+
+               $(document).on('click', '.qv-close', function(){
+                   $('.content_wrapper').slideUp('slow');
+               });
+            }
+
+            function nextPreviousLink(){
+
+            }
+
+        });
+    </script>
+</body>
+</html>

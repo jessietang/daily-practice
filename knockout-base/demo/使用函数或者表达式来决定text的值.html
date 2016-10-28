@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--如果你想让你的text更可控，那选择是创建一个依赖监控属性（dependent observable），
+然后在它的执行函数里编码，决定应该显示什么样的text文本。-->
+<div>the price of this product is <span data-bind="text: priceRating"></span> for me</div>
+
+<!--然而，如果有类似需求的话其实没有必要再声明一个依赖监控属性（dependent observable），
+你只需要按照如下代码写JavaScript表达式就可以了-->
+<div>the price of this product is <span data-bind="text: realPrice > 100 ? 'expensive' : 'affordable'"></span></div>
+
+<!--关于html encoding
+它不会显示斜体字，而是原样输出标签。如果你需要显示HTML内容，请参考html绑定.-->
+<div data-bind="text: myMessage"></div>
+
+<!--关于IE 6的白空格whitespace
+IE6有个奇怪的问题，如果 span里有空格的话，它将自动变成一个空的span。
+-->
+<div>the userName is <span data-bind="text: userName"> </span></div>
+<!--IE6 将不会显示span中间的那个空格，你可以通过下面这样的代码避免这个问题-->
+<div>the userName is <span data-bind="text: userName">&nbsp;</span></div>
+
+<script src="../knockout.js"></script>
+<script type="text/javascript">
+    var myViewModel = {
+        myPrice: ko.observable(110),
+        realPrice: ko.observable(150),
+        myMessage: ko.observable("<i>this is a test</i>"),
+        userName: ko.observable('cassie')
+    };
+
+    myViewModel.priceRating = ko.dependentObservable(function(){
+        var _this = myViewModel;
+        return _this.myPrice() > 50 ? "expensive" : "affordable";
+    });
+    ko.applyBindings(myViewModel);
+
+</script>
+</body>
+</html>
