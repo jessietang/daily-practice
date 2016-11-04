@@ -1,0 +1,86 @@
+@import "base";
+@for $i from 1 to 5 {
+  .border-#{$i} {
+    border: #{$i}px solid red;
+  }
+}
+
+
+/* all the var is started of $ */
+$blue: blue;
+div {
+  color: $blue;
+}
+
+/*  */
+$side: left;
+.div1 {
+  border-#{$side}-radius: 5px;
+}
+
+div {
+  h1 {
+    color: $blue;
+  }
+}
+
+a{
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.class1 {
+  border: 1px solid #ddd;
+}
+
+.class2 {
+  @extend .class1;
+  font-size: 30px;
+}
+
+@mixin myLeft {
+  float: left;
+  margin-left: 10px;
+}
+
+.myDiv {
+  @include myLeft;
+}
+
+ @mixin myRight ($value: 10px) {
+   float: right;
+   margin-right: $value;
+ }
+
+.myDiv2 {
+  @include myRight(30px);
+}
+
+@mixin rounded($radius: 10px){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+.myDiv3 {
+  @include rounded(5px);
+}
+
+.p1 {
+  color: lighten(#333, 10%);
+}
+
+.p2 {
+  color: darken(#333, 10%);
+}
+
+.p3 {
+  color: grayscale(#cc3);
+}
+
+.p4 {
+  color: complement(#cc3);
+}
+

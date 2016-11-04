@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>People</h2>
+<ul data-bind="template: {name: 'peopleTemplate', foreach: people, as: 'myPeople'}"></ul>
+
+<script src="../../knockout.js"></script>
+
+<script type="text/html" id="peopleTemplate">
+    <li>
+        <span data-bind="text: name"></span> has <span data-bind="text: myPeople.children().length"></span> children:
+        <a href="" data-bind="click: addChild">add child</a>
+            <span data-bind="visible: showRenderTimes">
+                 (person rendered at <span data-bind="text: new Date().getSeconds()"></span>)
+            </span>
+        <ul data-bind="template: {name: 'childrenTemplate', foreach: children, as: 'myChild'}"></ul>
+    </li>
+</script>
+
+<script type="text/html" id="childrenTemplate">
+    <li data-bind="text: myChild"></li>
+</script>
+
+<script type="text/javascript">
+    var person = function(name, children){
+        this.name = name;
+        this.children = ko.observableArray(children);
+        this.addChild = function(){
+            this.children.push('New child');
+        }.bind(this);
+    };
+
+    var myViewModel = {
+        people: [
+                new person("AAA", ["Aini", "Amy", "Adom"]),
+                new person("BBB", ["Bob", "Bit", "Boy"]),
+                new person("CCC", ["Cassie", "Club", "Cut"])
+        ],
+        showRenderTimes: ko.observable(false)
+    };
+
+    /*var myViewModel = {
+        people: ko.observableArray([
+            { name: "Spring", children: ['March', 'April', 'May']},
+            { name: 'Summer', children: [ 'June', 'July', 'August' ] },
+            { name: 'Autumn', children: [ 'September', 'October', 'November' ] },
+            { name: 'Winter', children: [ 'December', 'January', 'February' ] }
+        ])
+    };*/
+    ko.applyBindings(myViewModel);
+
+</script>
+</body>
+</html>
