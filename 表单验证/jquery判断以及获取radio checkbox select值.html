@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="" id="myForm">
+    <input type="radio" name="sex" value="male"/>male
+    <input type="radio" name="sex" value="female"/>female
+
+    <input type="checkbox" name="hobby" value="eat"/>eat
+    <input type="checkbox" name="hobby" value="drink"/>drink
+    <input type="checkbox" name="hobby" value="la"/>la
+    <input type="checkbox" name="hobby" value="sa"/>sa
+
+    <select name="city" id="mySelect">
+        <option value="">请选择你所在的城市</option>
+        <option value="chengdu">成都</option>
+        <option value="shanghai">上海</option>
+        <option value="beijing">北京</option>
+    </select>
+</form>
+
+<button id="test-btn">click me</button>
+
+<script src="../js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click','#test-btn', function(){
+            //radio
+            console.log("you sex is: "+$('#myForm input:radio:checked').val());
+            //判断radio是否选中，通过值是否等于null来判断 ===>  $('#myForm input:radio:checked').val() == null
+
+            //checkbox
+            console.log("you hobbies are: "+$('#myForm input:checkbox:checked').length);
+            console.log($('#myForm input:checkbox:checked'));
+            //判断checkbox是否选中，通过length来判断 ===> $('#myForm input:checkbox:checked').length == 0
+
+            //selected
+            console.log("you city is: "+$('#mySelect').val());
+            // 判断select是否选中，通过判断值是否等于“”（空）来判断 ===> $('#mySelect').val() == ""
+
+        });
+
+    });
+</script>
+</body>
+</html>

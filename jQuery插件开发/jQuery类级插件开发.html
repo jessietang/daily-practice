@@ -8,5 +8,14 @@
 <input type="button" value="click me" id="input1"/>
 <script src="../js/jquery-1.11.2.js"></script>
 <script src="demo.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click', '#input1', function(){
+            $.myAlert1("test test test");
+        });
+
+        $.log('heheda');
+    });
+</script>
 </body>
 </html>

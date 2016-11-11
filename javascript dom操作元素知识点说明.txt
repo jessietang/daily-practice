@@ -1,0 +1,129 @@
+为了确保跨浏览器兼容，最好还是将nodeType 属性与数字值进行比较，如下所示：
+if (someNode.nodeType == 1){ //适用于所有浏览器
+alert("Node is an element.");
+}
+1).document类型：
+JavaScript 通过Document 类型表示文档。在浏览器中，document 对象是HTMLDocument（继承
+自Document 类型）的一个实例，表示整个HTML 页面。而且，document 对象是window 对象的一个
+属性，因此可以将其作为全局对象来访问。Document 节点具有下列特征：
+? nodeType 的值为9；
+? nodeName 的值为"#document"；
+? nodeValue 的值为null；
+? parentNode 的值为null；
+? ownerDocument 的值为 null；
+? 其子节点可能是一个DocumentType（最多一个）、Element（最多一个）、ProcessingInstruction
+或Comment。
+
+2).
+Element类型
+除了Document 类型之外，Element 类型就要算是Web 编程中最常用的类型了。Element 类型用
+于表现XML或HTML元素，提供了对元素标签名、子节点及特性的访问。Element 节点具有以下特征：
+? nodeType 的值为1；
+? nodeName 的值为元素的标签名；
+? nodeValue 的值为null；
+? parentNode 可能是Document 或Element；
+? 其子节点可能是Element、Text、Comment、ProcessingInstruction、CDATASection 或
+EntityReference。
+
+3).
+Text
+类型
+? nodeType 的值为3；
+? nodeName 的值为"#text"；
+? nodeValue 的值为节点所包含的文本；
+? parentNode 是一个Element；
+? 不支持（没有）子节点。
+
+<!-- 没有内容，也就没有文本节点 -->
+<div></div>
+<!-- 有空格，因而有一个文本节点 -->
+<div> </div>
+<!-- 有内容，因而有一个文本节点 -->
+<div>Hello World!</div>
+可以使用以下代码来访问这些文本子节点：
+var textNode = div.firstChild; //或者div.childNodes[0]
+在取得了文本节点的引用后，就可以像下面这样来修改它了。
+div.firstChild.nodeValue = "Some other message";
+
+元素中指定的所有信息，都可以通过下列JavaScript 代码取得：
+var div = document.getElementById("myDiv");
+alert(div.id); //"myDiv""
+alert(div.className); //"bd"
+alert(div.title); //"Body text"
+alert(div.lang); //"en"
+alert(div.dir); //"ltr"
+当然，像下面这样通过为每个属性赋予新的值，也可以修改对应的每个特性：
+div.id = "someOtherId";
+div.className = "ft";
+div.title = "Some other text";
+div.lang = "fr";
+div.dir ="rtl";
+
+取得特性：
+var div = document.getElementById("myDiv");
+alert(div.getAttribute("id")); //"myDiv"
+alert(div.getAttribute("class")); //"bd"
+alert(div.getAttribute("title")); //"Body text"
+alert(div.getAttribute("lang")); //"en"
+alert(div.getAttribute("dir")); //"ltr"
+
+设置特性：
+div.setAttribute("id", "someOtherId");
+div.setAttribute("class", "ft");
+div.setAttribute("title", "Some other text");
+div.setAttribute("lang","fr");
+div.setAttribute("dir", "rtl");
+因为所有特性都是属性，所以直接给属性赋值可以设置特性的值，如下所示。
+div.id = "someOtherId";
+div.align = "left";
+不过，像下面这样为DOM元素添加一个自定义的属性，该属性不会自动成为元素的特性。
+div.mycolor = "red";
+alert(div.getAttribute("mycolor")); //null（IE 除外）
+这个例子添加了一个名为mycolor 的属性并将它的值设置为"red"。在大多数浏览器中，这个属
+性都不会自动变成元素的特性，因此想通过getAttribute()取得同名特性的值，结果会返回null。
+可是，自定义属性在IE 中会被当作元素的特性，反之亦然。
+最后一个方法是removeAttribute()，这个方法用于彻底删除元素的特性。调用这个方
+法不仅会清除特性的值，而且也会从元素中完全删除特性，如下所示：
+div.removeAttribute("class");
+这个方法并不常用，但在序列化DOM 元素时，可以通过它来确切地指定要包含哪些特性。
+
+创建元素：
+var div = document.createElement("div");
+在使用createElement()方法创建新元素的同时，也为新元素设置了ownerDocuemnt 属性。此
+时，还可以操作元素的特性，为它添加更多子节点，以及执行其他操作。来看下面的例子。
+div.id = "myNewDiv";
+div.className = "box";
+在新元素上设置这些特性只是给它们赋予了相应的信息。由于新元素尚未被添加到文档树中，因此
+设置这些特性不会影响浏览器的显示。要把新元素添加到文档树，可以使用appendChild()、insertBefore()
+或replaceChild()方法。下面的代码会把新创建的元素添加到文档的<body>元素中。
+document.body.appendChild(div);
+
+元素的子节点：
+<ul id="myList">
+<li>Item 1</li>
+<li>Item 2</li>
+<li>Item 3</li>
+</ul >
+如果是IE 来解析这些代码，那么<ul>元素会有3 个子节点，分别是3 个<li>元素。但如果是在其
+他浏览器中，<ul>元素都会有7 个元素，包括3 个<li>元素和4 个文本节点（表示<li>元素之间的空
+白符）。
+
+如果需要通过childNodes 属性
+遍历子节点，那么一定不要忘记浏览器间的这一差别。这意味着在执行某项操作以前，通常都要先检查
+一下nodeTpye 属性，如下面的例子所示。
+for (var i=0, len=element.childNodes.length; i < len; i++){
+if (element.childNodes[i].nodeType == 1){
+//执行某些操作
+}
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet/text" href="javascript dom操作元素知识点说明.txt"/>
+    <style>
+        #table-test {
+            border: 1px solid #eee;
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #table-test .table1, #table-test .table2 {
+            width: 100%;
+            border: 1px solid #eee;
+            border-collapse: collapse;
+            vertical-align: top;
+        }
+
+        #table-test .table1 tr th, #table-test .table2 tr th,
+        #table-test .table1 tr td, #table-test .table2 tr td {
+            border: 1px solid #eee;
+        }
+
+        #table-test .tool-table {
+            width: 100%;
+        }
+
+        #table-test .table1 tr td, #table-test .table2 tr td, #table-test .tool-table tr td {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <table id="table-test" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="width: 40%;">
+                <table class="table1">
+                    <tr>
+                        <th>Element</th>
+                        <th>content</th>
+                    </tr>
+                    <tr class="test">
+                        <td>
+                            <input type="radio" name="pro"/>
+                        </td>
+                        <td>
+                            第一个产品
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" name="pro"/>
+                        </td>
+                        <td>
+                            第二个产品
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="radio" name="pro"/>
+                        </td>
+                        <td>
+                            第三个产品
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 20%;">
+                <table class="tool-table">
+                    <tr>
+                        <th>tools</th>
+                    </tr>
+
+                    <tr>
+                        <td><button class="add-btn">移入>></button></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><button class="remove-btn"><<移出</button></td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 40%;" >
+                <table class="table2">
+                    <tr>
+                        <th>Element</th>
+                        <th>Content</th>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var oTable_test = document.getElementById("table-test");
+            var oAdd_btn = document.getElementsByClassName("add-btn")[0];
+            var oRemove_btn = document.getElementsByClassName("remove-btn")[0];
+            var oTable1 = oTable_test.getElementsByClassName("table1")[0];
+            var oTable2 = oTable_test.getElementsByClassName("table2")[0];
+            var oProInput = oTable1.getElementsByTagName("input");
+            var oCartInput = oTable2.getElementsByTagName("input");
+            var table1_childs = oTable1.childNodes;
+
+            // test
+            var oTest = document.getElementsByClassName("test")[0];
+            //oTable1.removeChild(oTest); // 为什么这个不得行，
+            //oTest.parentNode.removeChild(oTest); // 下面这个就行？为什捏？？？
+
+
+            /*for(var i=0; i<table1_childs.length; i++){
+                if(table1_childs[i].nodeType == 1){
+                    oTable1.removeChild(table1_childs[i]);
+                }
+            }*/
+            oAdd_btn.onclick = function(){
+                var radioChecked = null;
+                console.log(oProInput); // ??? [input, input, input, pro: input]
+                for(var i=0; i<oProInput.length; i++){
+                    console.log(oProInput[i]+i);
+                    if(oProInput[i].checked){
+                        radioChecked = oProInput[i];
+                        console.log(radioChecked);
+                        if(radioChecked.parentNode.nextSibling.nodeType == 1){ //这里是通过右边移过来的input
+                            var radioContent = radioChecked.parentNode.nextSibling.innerHTML;
+                        }else{ //把文本节点也算进来了，怎么去除？ (第一次)
+                            /*var radioContent = radioChecked.parentNode.nextSibling.nextSibling.nodeValue;*/
+                            var radioContent = radioChecked.parentNode.nextSibling.nextSibling.innerHTML;
+                        }
+                        console.log(radioContent);
+                        var oInput = document.createElement("input");
+                        oInput.type = "radio";
+                        oInput.name = "cart_pro";
+                        console.log(oInput);
+                        var oTd1 = document.createElement("td");
+                        var oTr = document.createElement("tr");
+                        oTd1.appendChild(oInput);
+                        // td append to tr
+                        oTr.appendChild(oTd1);
+                        var oTd2 = document.createElement("td");
+                        /*oTd2.innerHTML = radioContent;*/
+                        oTd2.innerHTML = radioContent;
+                        // td append to tr
+                        oTr.appendChild(oTd2);
+                        // tr append to table2
+                        oTable2.appendChild(oTr);
+                        // remove now tr from table1
+                        var thisTr = radioChecked.parentNode.parentNode;
+                        console.log('111');
+                        console.log(thisTr);
+                        //oTable1.removeChild(thisTr);
+                        thisTr.parentNode.removeChild(thisTr); // 注意写法 哎， 坑大了。。
+                    }
+                }
+            };
+
+            oRemove_btn.onclick = function(){
+                var cartRadioChecked = null;
+                for(var i=0; i<oCartInput.length; i++){
+                    if(oCartInput[i].checked){
+                        cartRadioChecked = oCartInput[i];
+
+                            /*var cartText = cartRadioChecked.parentNode.nextSibling.innerHTML;*/
+                            var cartText = cartRadioChecked.parentNode.nextSibling.innerHTML;
+
+                        console.log(cartText);
+                        var oInput = document.createElement("input");
+                        oInput.type = "radio";
+                        oInput.name = "pro";
+                        var oTd1 = document.createElement("td");
+                        var oTr = document.createElement("tr");
+                        oTd1.appendChild(oInput);
+                        oTr.appendChild(oTd1);
+                        var oTd2 = document.createElement("td");
+                        /*oTd2.innerHTML = cartText;*/
+                        oTd2.innerHTML = cartText;
+                        oTr.appendChild(oTd2);
+                        oTable1.appendChild(oTr);
+                        // remove now tr form table2
+                        var thisTr = cartRadioChecked.parentNode.parentNode;
+                        console.log(thisTr);
+                        thisTr.parentNode.removeChild(thisTr); // 注意写法
+                    }
+                }
+            };
+        };
+    </script>
+</body>
+</html>

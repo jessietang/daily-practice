@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul,li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myTab .tabNav {
+            font-size: 0;
+            letter-spacing: -4px;
+            word-spacing: 0;
+        }
+
+        #myTab .tabNav > li {
+            display: inline-block;
+            zoom: 1;
+            *display: inline;
+            padding: 3px 5px;
+            background-color: #00CCFF;
+            font-size: 14px;
+            letter-spacing: normal;
+            word-spacing: normal;
+            border: 1px solid #eee;
+        }
+
+        #myTab .tabNav > li:hover {
+            cursor: pointer;
+        }
+
+        #myTab .tabNav > li.current {
+            color: #fff;
+            background-color: red;
+        }
+
+        #myTab .tabContent {
+            width: 200px;
+            height: 80px;
+            border: 1px solid #eee;
+        }
+
+        #myTab .tabContent > div {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        #myTab .tabContent > div.currentContent {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="myTab">
+        <ul class="tabNav">
+            <li class="current">java</li>
+            <li>html</li>
+            <li>css</li>
+            <li>php</li>
+        </ul>
+        <div class="tabContent">
+            <div class="currentContent">java~~~~</div>
+            <div>html~~~~</div>
+            <div>css~~~~~</div>
+            <div>php~~~~~</div>
+        </div>
+    </div>
+    <script src="../../js/jquery-1.11.2.js"></script>
+    <script src="jquery-tab-1.0.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('#myTab').tab();
+        });
+    </script>
+</body>
+</html>

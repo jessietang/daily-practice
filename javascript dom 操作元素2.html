@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #table-test {
+            border: 1px solid #eee;
+            border-collapse: collapse;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #table-test .table1, #table-test .table2 {
+            width: 100%;
+            border: 1px solid #eee;
+            border-collapse: collapse;
+            vertical-align: top;
+        }
+
+        #table-test .table1 tr th, #table-test .table2 tr th,
+        #table-test .table1 tr td, #table-test .table2 tr td {
+            border: 1px solid #eee;
+        }
+
+        #table-test .tool-table {
+            width: 100%;
+        }
+
+        #table-test .table1 tr td, #table-test .table2 tr td, #table-test .tool-table tr td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<table id="table-test" cellspacing="0" cellpadding="0">
+    <tr>
+        <td style="width: 40%;">
+            <table class="table1">
+                <tr>
+                    <th>
+                        <input type="checkbox" onclick="chooseAll(this);"/>
+                    </th>
+                    <th>content</th>
+                </tr>
+                <tr class="test">
+                    <td>
+                        <input type="checkbox" name="pro" value="01"/>
+                    </td>
+                    <td>
+                        第一个产品
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="pro" value="02"/>
+                    </td>
+                    <td>
+                        第二个产品
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="pro" value="03"/>
+                    </td>
+                    <td>
+                        第三个产品
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td style="width: 20%;">
+            <table class="tool-table">
+                <tr>
+                    <th>tools</th>
+                </tr>
+
+                <tr>
+                    <td><button class="add-btn" onclick="moveToRight();">移入>></button></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><button class="remove-btn" onclick="moveToLeft();"><<移出</button></td>
+                </tr>
+            </table>
+        </td>
+        <td style="width: 40%;" >
+            <table class="table2">
+                <tr>
+                    <th><input type="checkbox" onclick="chooseAll2(this);"/></th>
+                    <th>Content</th>
+                    <th>pro编码</th>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+<script type="text/javascript">
+    //js获取下一个兄弟节点
+    function getNextSibling(eleObj){
+        var next = eleObj.nextSibling;
+        if(next.nodeType == 3){ // 文本节点
+            return next.nextSibling;
+        }
+        return next;
+    }
+    //js获取上一个兄弟节点
+    function getPreviousSibling(eleObj){
+        var pre = eleObj.previousSibling;
+        if(pre.nodeType == 3){
+            return pre.previousSibling;
+        }
+        return pre;
+    }
+    //js获取所有子节点
+    function getChildNodes(parentNode){
+        var childs = [];
+        for(var i=0; i<parentNode.childNodes.length; i++){
+            if(parentNode.childNodes[i].nodeType == 1){ // 元素节点
+                childs.push(parentNode.childNodes[i]);
+            }
+        }
+        return childs;
+    }
+
+    //js获取第一个子节点
+    function getFirstChildNode(parentNode){
+        var first = parentNode.firstChild;
+        if(first.nodeType == 3){ // 文本节点
+            return first.nextSibling;
+        }
+        return first;
+        /*return parentNode.firstElementChild;*/
+    }
+    //js获取最后一个子节点
+    function getLastChildNode(parentNode){
+        var last = parentNode.lastChild;
+        if(last.nodeType == 3){
+            return last.nextSibling;
+        }
+        return last;
+    }
+    //选中状态下面全部选中  不选中下面全部不选中
+    function chooseAll(obj){
+        var oLeftCheckbox = document.getElementsByName("pro");
+        for(var i=0; i<oLeftCheckbox.length; i++){
+            oLeftCheckbox[i].checked = obj.checked;
+        }
+    }
+    function chooseAll2(obj){
+        var oRightCheckbox = document.getElementsByName("pro-cart");
+        for(var i=0; i<oRightCheckbox.length; i++){
+            oRightCheckbox[i].checked = obj.checked;
+        }
+    }
+
+    var oTable1 = document.getElementsByClassName("table1")[0];
+    var oTable2 = document.getElementsByClassName("table2")[0];
+    function moveToRight(){
+        var oLeftCheckbox = document.getElementsByName("pro");
+        for(var i=0; i<oLeftCheckbox.length; i++){
+            if(oLeftCheckbox[i].checked){
+                var proName = getNextSibling(oLeftCheckbox[i].parentNode).innerHTML;
+                var proCode = oLeftCheckbox[i].value;
+                // delete the selected row
+                var rowIndex = oLeftCheckbox[i].parentNode.parentNode.rowIndex;
+                oTable1.deleteRow(rowIndex);
+                console.log(i);
+
+                i--; // necessary
+
+                console.log(i);
+                // move to right
+                var newTr = oTable2.insertRow(oTable2.rows.length); // 插入一个新行到最后一行
+                newTr.innerHTML = `<td><input type="checkbox" value="${proCode}" name="pro-cart"/></td>
+                    <td>${proName}</td><td>${proCode}</td>`;
+            }
+        }
+    }
+
+    function moveToLeft(){
+        var oRightCheckbox = document.getElementsByName("pro-cart");
+        for(var i=0; i<oRightCheckbox.length; i++){
+            if(oRightCheckbox[i].checked){
+                var proName = getNextSibling(oRightCheckbox[i].parentNode).innerHTML;
+                var proCode = oRightCheckbox[i].value;
+                // delete the selected row
+                //rowIndex 属性返回某一行在表格的行集合中的位置（row index）
+                var rowIndex = oRightCheckbox[i].parentNode.parentNode.rowIndex;
+                //deleteRow() 方法用于从表格删除指定位置的行。
+                oTable2.deleteRow(rowIndex);
+                console.log(i);
+
+                i--; // necessary
+
+                console.log(i);
+                // move to right
+                //insertRow() 方法用于在表格中的指定位置插入一个新行。返回一个 TableRow，表示新插入的行。
+                var newTr = oTable1.insertRow(oTable1.rows.length); // 插入一个新行到最后一行
+                newTr.innerHTML = `<td><input type="checkbox" value="${proCode}" name="pro"/></td>
+                    <td>${proName}</td><td>${proCode}</td>`;
+            }
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

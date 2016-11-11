@@ -80,7 +80,7 @@ $(function(){
         var nowIdPrice = $(this).attr("data-price");
         var nowIdName = $(this).attr("data-name");
         console.log(nowIdName);
-        var flag = false;
+        var flag = false; /*哎哟，这里搞了半天*/
         if(boughtList.length > 0){
             for(var i in boughtList){
                 if(boughtList[i].id == nowId){

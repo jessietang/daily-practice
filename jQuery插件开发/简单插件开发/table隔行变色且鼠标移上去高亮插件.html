@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--
+        需求：开发一个插件，奇数行颜色是#38a38a,偶数行是#09f，
+        当鼠标移动到当前行的时候颜色变成yellow,鼠标移开还是原来的颜色
+    -->
+    <style>
+        #myTable {
+            width: 600px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            border-collapse: collapse;
+        }
+
+        #myTable tr, #myTable tr td {
+            border: 1px solid #eee;
+        }
+
+        .oddClass {
+            background-color: #38a38a;
+        }
+
+        .evenClass {
+            background-color: #09f;
+        }
+
+        .currentClass {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <table id="myTable">
+        <tr>
+            <td>编号</td>
+            <td>用户名</td>
+            <td>邮箱</td>
+        </tr>
+        <tr>
+            <td>01</td>
+            <td>aaa</td>
+            <td>aaa@bbb.com</td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td>bbb</td>
+            <td>bbb@ccc.com</td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td>ccc</td>
+            <td>ccc@ddd.com</td>
+        </tr>
+        <tr>
+            <td>04</td>
+            <td>ddd</td>
+            <td>ddd@eee.com</td>
+        </tr>
+    </table>
+    <script src="../../js/jquery-1.11.2.js"></script>
+    <script src="jquery-table-1.0.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#myTable").table();
+        });
+    </script>
+</body>
+</html>

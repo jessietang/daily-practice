@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div>
+        <p><a href="http://www.cuit.edu.cn">cuit</a></p>
+
+        <p><a href="http://www.baidu.com">baidu</a></p>
+
+        <p><a href="http://www.google.com">google</a></p>
+
+        <p>我是p标签，不会被影响</p>
+    </div>
+    <script src="../js/jquery-1.11.2.js"></script>
+    <script src="demo2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //$('a').aToRed();
+
+            $('a').aToOther({"color":"green", "fontSize": "30px"});
+        });
+    </script>
+</body>
+</html>

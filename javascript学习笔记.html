@@ -134,6 +134,32 @@
             height: 50px;
             padding: 5px;
         }
+
+        /*float*/
+        .divBox .div1, .divBox .div2 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid red;
+            float: left;
+        }
+
+        .divBox .div2 {
+            margin-left: 20px;
+        }
+
+        .clearfix:after {
+            content: "";
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            height: 0;
+            clear: both;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
     </style>
 </head>
 <!--<body onclick="clickBody();">-->
@@ -969,7 +995,7 @@
 
     });*/
 
-    $(function(){
+    /*$(function(){
         $.ajax({
             url:"http://staging.ashford.com/us/home?locale=en_US&_requestid=335"
         }).done(function(){
@@ -992,7 +1018,251 @@
         });
 
         console.log("divW"+$('#divW').width());
-    });
+    });*/
+
+
+    /*widow对象*/
+    // 抛开全局变量会成为window 对象的属性不谈，定义全局变量与在window 对象上直接定义属性还
+    // 是有一点差别：全局变量不能通过delete 操作符删除，而直接在window 对象上的定义的属性可以
+    var yourAge = 22;
+    window.color = 'age';
+    delete window.yourAge;
+    delete window.color;
+    console.log(window.yourAge); // 22
+    console.log(window.color); // undefined
+
+    /*跨浏览器取得窗口左边和上边的位置*/
+    var leftPos = (typeof window.screenLeft == "number") ?
+            window.screenLeft : window.screenX;
+    var topPos = (typeof window.screenTop == "number") ?
+            window.screenTop : window.screenY;
+    console.log(leftPos + "----" + topPos);
+
+
+    /*闭包 闭包只能取得包含函数中任何变量的最后一个值*/
+    /*function test2(){
+        var result = [];
+        for(var i=0; i<10; i++){
+            result[i] = function(){
+                return i;
+            };
+        }
+        return result;
+    }
+    for(var i in test2()){
+        console.log(test2()[i]()); // 10,10,...10
+    }*/
+
+    /*改进*/
+    /*function test2(){
+        var result = [];
+        for(var i=0; i<10; i++){
+            result[i] = (function(num){
+                return function(){
+                    return num;
+                };
+            })(i);
+        }
+        return result;
+    }
+    for(var i in test2()){
+        console.log(test2()[i]()); // 0,1,2,...9
+    }*/
+
+
+    /*判断一个字符串中出现次数最多的字符，统计这个次数*/
+    var str = "12b3bfdba321bd";
+    var strObj = {};
+    for(var i=0; i<str.length; i++){
+        if(!strObj[str.charAt(i)]){
+            strObj[str.charAt(i)] = 1;
+        }else{
+            strObj[str.charAt(i)] += 1;
+        }
+    }
+    var iMax = 0;
+    var iValue = "";
+    for(var i in strObj){
+        if(strObj[i] > iMax){
+            iMax = strObj[i];
+            iValue = i;
+        }
+    }
+    console.log("出现最多的字符"+iValue+"次数"+iMax);
+
+    /*获取json对象的长度*/
+    //console.log(strObj.length); // undefined 【JSON对象根本没有length属性】
+    function getJsonLength(json){
+        var jsonLength = 0;
+        for(var i in json){
+            jsonLength++;
+        }
+        return jsonLength;
+    }
+    console.log(getJsonLength(strObj)); // 7
+
+
+    /*编写一个方法，去掉数组的重复元素*/
+    function unique1(arr){
+        var newArr = [];
+        var flag;
+        for(var i=0; i<arr.length; i++){
+            flag = false;
+            if(newArr.length > 0){
+                for(var j=0; j<newArr.length; j++){
+                    if(arr[i] == newArr[j]){
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            if(!flag){
+                newArr.push(arr[i]);
+            }
+        }
+        return newArr;
+    }
+    var repeatArr = [1,2,3,4,2,1,3,2];
+    console.log(unique1(repeatArr)); // [1,2,3,4]
+
+    /*ES6提供了新的数据结构Set。它类似于数组，但是成员的值都是【唯一】的，没有重复的值。*/
+    function unique2(arr){
+        return [...new Set(arr)]; //...用于取出参数对象的所有可遍历属性，拷贝到当前对象中
+    }
+    console.log(unique2(repeatArr)); // [1, 2, 3, 4]
+
+    //Array.from将set结构转换为数组
+    function unique3(arr){
+        return Array.from(new Set(arr));
+    }
+    console.log(unique3(repeatArr));
+
+    /*变量提升 函数申明提升*/
+    /*alert(x);
+    var x = "111";
+    alert(x);
+    x="222";
+    function x(){return x};
+    alert(x);*/
+
+    // <==>
+
+    /*var x;
+    function x(){return x};
+    alert(x);
+    x = "111";
+    alert(x);
+    x="222";
+    alert(x);*/
+    /*result:
+            function x(){return x}
+    111
+    222*/
+
+
+
+    var arr=['1',2,false,true];
+    arr[5]=function(){alert('a');};
+    console.log(arr.length); // 6
+
+    /*js是对象引用*/
+    //递归
+    function test(n){
+        if(n == 1){
+            return 1;
+        }
+        return n*test(n-1);
+    }
+    console.log(test(5)); // 120
+    //深拷贝
+    var obj = {
+        a:{
+            b: 10
+        }
+    };
+    function deepCopy(obj){
+        var newObj = {};
+        if(typeof obj != 'object'){
+            return obj;
+        }
+        for(var attr in obj){
+            newObj[attr] = deepCopy(obj[attr]);
+        }
+        return newObj;
+    }
+    var obj2 = deepCopy(obj);
+    obj2.a.b = 50;
+    console.log(obj.a.b); // 10
+
+/*求给定的若干个值中的最大值*/
+
+    function max(a,b){
+        return a>b ? a : b;
+    }
+    function max1(){
+        var maxValue = arguments[0];
+        for (var i=1; i<arguments.length; i++){
+            maxValue = max(maxValue, arguments[i]);
+        }
+        return maxValue;
+    }
+
+
+
+
+    (function(){
+        var a = b = 3;
+    })();
+    //console.log(a); // a is not defined
+    console.log(b); // 3 b是全局变量， a是局部变量
+
+
+    /*立即执行函数表达式 IIFE*/
+    for(var i=0; i<5; i++){
+        setTimeout(function(){
+            console.log(i);
+        },1000);
+    }
+
+    for(var i=0; i<5; i++){
+        (function(num){
+            setTimeout(function(){
+                console.log(num);
+            },1000);
+        })(i);
+    }
+
+
+    /*9、实现函数 isInteger(x) 来判断 x 是否是整数*/
+    /*可以将 x 转换成10进制，判断和本身是不是相等即可：*/
+    function isInteger(x){
+        return parseInt(x,10) === x;
+    }
+    console.log(isInteger(10.2)); // false
+    console.log(isInteger(10)); // true
+    /*
+     * ES6 对数值进行了扩展，提供了静态方法 isInteger() 来判断参数是否是整数：
+
+     Number.isInteger(25) // true
+
+     Number.isInteger(25.0) // true
+
+     Number.isInteger(25.1) // false
+
+     Number.isInteger("15") // false
+
+     Number.isInteger(true) // false
+
+
+     JavaScript能够准确表示的整数范围在 -2^53 到 2^53 之间（不含两个端点），超过这个范围，
+     无法精确表示这个值。ES6 引入了Number.MAX_SAFE_INTEGER 和 Number.MIN_SAFE_INTEGER
+     这两个常量，用来表示这个范围的上下限，并提供了 Number.isSafeInteger() 来判断整数是
+     否是安全型整数。
+     * */
+
+
+
+
 </script>
 
 
@@ -1007,6 +1277,11 @@
 
 
 <div id="divW" style="width:100px;height:100px;padding: 30px;box-sizing: border-box;"></div>
+
+<div class="divBox clearfix">
+    <div class="div1">111</div>
+    <div class="div2">222</div>
+</div>
 </body>
 </html>
 
