@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <style>
+        #form-validation {
+            margin-top: 20px;
+        }
+
+        #form-validation .has-error {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--
+    表单验证:
+    用户名  text    验证长度   验证不能为空
+    密码  password   验证长度   验证不能为空
+    重复密码 password  和密码相同
+    性别 radio     必须选中
+    爱好 checkbox    至少选中一个
+    所居住的城市  select    必须选中一个
+    如果有数据不合法  不能提交表单
+-->
+<div id="form-validation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form class="form-horizontal" action="" id="myForm" role="form">
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">用户名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="userName" placeholder="user name"/>
+                            <p class="has-error userNameError">username can not be null!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">密码</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" id="pass" placeholder="password"/>
+                            <p class="has-error passwordError">password can not be null!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">重复密码</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" id="rePass" placeholder="password again"/>
+                            <p class="has-error rePassError1">password can not be null!</p>
+                            <p class="has-error rePassError2">repassword is not same as password!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">电话号码</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="phoneNum" placeholder="phone number"/>
+                            <p class="has-error phoneNumError1">phone number can not be null!</p>
+                            <p class="has-error phoneNumError2">phone number can only be digital!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-4 control-label">性别</label>
+                        <div class="col-md-8">
+                            <label for="" class="radio-inline"><input type="radio" name="sex" value="male"/>男</label>
+                            <label for="" class="radio-inline"><input type="radio" name="sex" value="female"/>女</label>
+                            <p class="has-error sexError">please select a sex!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-4 control-label">爱好</label>
+                        <div class="col-md-8" id="hobby">
+                            <label for="" class="checkbox-inline"><input type="checkbox" value="eat"/>吃</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" value="drink"/>喝</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" value="la"/>拉</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" value="sa"/>撒</label>
+                            <p class="has-error hobbyError">please at least select a hobby!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">居住城市</label>
+                        <div class="col-md-8">
+                            <select name="" id="myCity" class="form-control">
+                                <option value="">请选择一个城市</option>
+                                <option value="">成都</option>
+                                <option value="">上海</option>
+                                <option value="">北京</option>
+                            </select>
+                            <p class="has-error cityError">please select a city!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-4">
+                            <button class="btn btn-primary" type="submit" onclick="handleSubmit(event);">submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function preventDefault(event){
+        if(event.preventDefault){
+            event.preventDefault();
+        }else{
+            event.returnValue = false;
+        }
+    }
+    function handleSubmit(e){
+        var e = e || window.event;
+        preventDefault(e);
+        var aTextError = document.getElementsByClassName("has-error");
+        for(var n=0; n<aTextError.length; n++){ //每次点击submit后，先要把原来的error清除掉
+            aTextError[n].style.display = "none";
+        }
+        var oMyForm = document.getElementById("myForm");
+        var oUserName = document.getElementById("userName");
+        var oPass = document.getElementById("pass");
+        var oRePass = document.getElementById("rePass");
+        var oPhoneNum = document.getElementById("phoneNum");
+        var aSex = document.getElementsByName("sex");
+        var aCheckbox = document.getElementById("hobby").getElementsByTagName("input");
+        var oSelect = document.getElementById("myCity");
+        var submitFlag = true;
+        // username
+        if(oUserName.value == ""){
+            document.getElementsByClassName("userNameError")[0].style.display = "block";
+            submitFlag = false;
+        }
+
+        // password
+        if(oPass.value == ""){
+            document.getElementsByClassName("passwordError")[0].style.display = "block";
+            submitFlag = false;
+        }
+
+        // repassword
+        if(oRePass.value == ""){
+            document.getElementsByClassName("rePassError1")[0].style.display = "block";
+            submitFlag = false;
+        }else{
+            if(oPass.value != oRePass.value){
+                document.getElementsByClassName("rePassError2")[0].style.display = "block";
+                submitFlag = false;
+            }
+        }
+
+        //phone number
+        if(oPhoneNum.value == ""){
+            document.getElementsByClassName("phoneNumError1")[0].style.display = "block";
+            submitFlag = false;
+        }else{
+            if(isNaN(parseInt(oPhoneNum.value, 10))){
+                document.getElementsByClassName("phoneNumError2")[0].style.display = "block";
+                submitFlag = false;
+            }
+        }
+
+        //sex
+        var sexFlag = false;
+        for(var i=0; i<aSex.length; i++){
+            if(aSex[i].checked){
+                sexFlag = true;
+            }
+        }
+        if(!sexFlag){
+            document.getElementsByClassName("sexError")[0].style.display = "block";
+            submitFlag = false;
+        }
+
+        //hobby
+        var hobbyFlag = false;
+        for(var j=0; j<aCheckbox.length; j++){
+            if(aCheckbox[j].checked){
+                hobbyFlag = true;
+            }
+        }
+        if(!hobbyFlag){
+            document.getElementsByClassName("hobbyError")[0].style.display = "block";
+            submitFlag = false;
+        }
+
+        //city
+        var cityFlag = false;
+        for(var m=1; m<oSelect.options.length; m++){ // m从1开始，排除掉第一个 “请选择”
+            if(oSelect.options[m].selected){
+                cityFlag = true;
+            }
+        }
+        if(!cityFlag){
+            document.getElementsByClassName("cityError")[0].style.display = "block";
+            submitFlag = false;
+        }
+
+        if(submitFlag){
+            alert("已经提交");
+        }else{
+            alert("数据有错误，请更正");
+        }
+
+
+
+    }
+
+    console.log(isNaN("123")); // false
+    console.log(isNaN(123)); // false
+</script>
+</body>
+</html>

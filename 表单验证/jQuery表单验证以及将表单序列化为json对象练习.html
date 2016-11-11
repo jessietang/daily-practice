@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <style>
+        #form-validation {
+            margin-top: 20px;
+        }
+
+        #form-validation .has-error {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="form-validation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form class="form-horizontal" action="" id="myForm" role="form">
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">用户名</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="userName" id="userName" placeholder="user name"/>
+                            <p class="has-error userNameError">username can not be null!</p>
+                            <p class="has-error userNameError2">username can only be english, number and '_'</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">密码</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" name="pass" id="pass" placeholder="password"/>
+                            <p class="has-error passwordError">password can not be null!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">重复密码</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" name="rePass" id="rePass" placeholder="password again"/>
+                            <p class="has-error rePassError1">password can not be null!</p>
+                            <p class="has-error rePassError2">repassword is not same as password!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">电话号码</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="phoneNum" id="phoneNum" placeholder="phone number"/>
+                            <p class="has-error phoneNumError1">phone number can not be null!</p>
+                            <p class="has-error phoneNumError2">phone number can only be digital!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-4 control-label">性别</label>
+                        <div class="col-md-8">
+                            <label for="" class="radio-inline"><input type="radio" name="sex" value="male"/>男</label>
+                            <label for="" class="radio-inline"><input type="radio" name="sex" value="female"/>女</label>
+                            <p class="has-error sexError">please select a sex!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-md-4 control-label">爱好</label>
+                        <div class="col-md-8" id="hobby">
+                            <label for="" class="checkbox-inline"><input type="checkbox" name="hobby" value="eat"/>吃</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" name="hobby" value="drink"/>喝</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" name="hobby" value="la"/>拉</label>
+                            <label for="" class="checkbox-inline"><input type="checkbox" name="hobby" value="sa"/>撒</label>
+                            <p class="has-error hobbyError">please at least select a hobby!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-md-4 control-label">居住城市</label>
+                        <div class="col-md-8">
+                            <select name="myCity" id="myCity" class="form-control">
+                                <option value="">请选择一个城市</option>
+                                <option value="chengdu">成都</option>
+                                <option value="shanghai">上海</option>
+                                <option value="beijing">北京</option><!--select的option要给出value值-->
+                            </select>
+                            <p class="has-error cityError">please select a city!</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8 col-md-offset-4">
+                            <input class="btn btn-primary" type="submit" value="submit"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/jquery-1.11.2.js"></script>
+<script src="formSerializeJson.js"></script>
+<script type="text/javascript">
+    // formSerializeJson.js
+    (function($){
+        $.fn.serializeJson = function(){
+            var serializeObj = {};
+            var array = this.serializeArray();
+            $(array).each(function(){
+                if(serializeObj[this.name]){
+                    if($.isArray(serializeObj[this.name])){
+                        serializeObj[this.name].push(this.value);
+                    }else{
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                }else{
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+
+    $(function(){
+        // 判断一个字符串是不是纯数字
+        function judgeIsNum(str){
+            var pattern = /^\d+$/g; // or : /^[0-9]*$/g
+            //正则表达式 ^ 代表从开始位置起   $ 末尾   + 是连续多个  \d 是数字的意思  * 表示所有
+            var result = str.match(pattern);
+            if(result == null){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        $("input[type=submit]").click(function(e){
+            $('#myForm .has-error').hide();
+            var submitFlag = true;
+            if($('#userName').val() == ""){
+                $('.userNameError').show();
+                submitFlag = false;
+            }else{
+                if($('#userName').val().match(/^\w+$/g) == null){
+                    $('.userNameError2').show();
+                    submitFlag = false;
+                }
+            }
+            if($('#pass').val() == ""){
+                $('.passwordError').show();
+                submitFlag = false;
+            }
+            if($('#rePass').val() == ""){
+                $('.rePassError1').show();
+                submitFlag = false;
+            }else{
+                if($('#pass').val() != $('#rePass').val()){
+                    $('.rePassError2').show();
+                    submitFlag = false;
+                }
+            }
+            if($('#phoneNum').val() == ""){
+                $('.phoneNumError1').show();
+                submitFlag = false;
+            }else{
+                if(!judgeIsNum($('#phoneNum').val())){
+                    $('.phoneNumError2').show();
+                    submitFlag = false;
+                }
+            }
+            console.log($('#myForm input:radio[name="sex"]:checked').val()); //不选的时候是 undefined， undefined == null
+            if($('#myForm input:radio[name="sex"]:checked').val() == null){
+                $('.sexError').show();
+                submitFlag = false;
+            }
+
+            if($('#myForm input:checkbox:checked').length == 0){
+                $('.hobbyError').show();
+                submitFlag = false;
+            }
+            console.log($('#myCity').val());
+
+            if($('#myCity').val() == ""){ //跟sex不一样，sex是undefined == null, 这里是“”
+                $('.cityError').show();
+                submitFlag = false;
+            }
+            e.preventDefault();
+            if(submitFlag){
+                var data = $('#myForm').serializeJson();
+                console.log(data);
+                $.ajax({
+                    url: "",
+                    type: "post",
+                    data: data,
+                    success: function(data){
+                        console.log("提交成功"+data);
+                    },
+                    error: function(){
+                        console.log("error");
+                    }
+                });
+
+            }else{
+                alert('数据有错请更正！');
+            }
+
+
+
+
+        });
+
+    });
+</script>
+</body>
+</html>
