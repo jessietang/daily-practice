@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #main {
+            height: 400px;
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    http://echarts.baidu.com/echarts2/doc/example.html
+    http://echarts.baidu.com/echarts2/doc/start.html
+    -->
+    <div id="main"></div>
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        //路径配置
+        require.config({
+            paths: {
+                echarts:  'http://echarts.baidu.com/build/dist'
+            }
+        });
+
+        //ues it
+        require(
+                [
+                        'echarts',
+                        'echarts/chart/bar'
+                ],
+                function(ec){
+                    var myChart = ec.init(document.getElementById("main"));
+                    var option = {
+                        title: {
+                            text: '各类衣服销量情况',
+                            subtext: '纯属虚构',
+                            x: 'center'
+                        },
+                        tooltip: {
+                            show: true,
+                            trigger: 'item',
+                            feature: {
+                                mark: {show: true},
+                                dataView: {show: true, readOnly: false}
+                            }
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            x: 'left',
+                            data: ["寸衫","羊毛衫","雪纺衫","裤子","高跟鞋","牛仔裤"]
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ["寸衫","羊毛衫","雪纺衫","裤子","高跟鞋","牛仔裤"]
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                "name": "销量",
+                                "type": "bar",
+                                "radius": "95%",
+                                "center": ['50%', '60%'],
+                                "data": [5,20,40,10,10,20]
+                            }
+                        ]
+                    };
+                    myChart.setOption(option);
+                }
+        )
+    </script>
+</body>
+</html>

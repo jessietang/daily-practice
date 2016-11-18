@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0" charset="UTF-8">
+    <title></title>
+    <style>
+        @media screen and (orientation: landscape){ /*横屏*/
+            body {
+                background-color: red;
+            }
+        }
+
+        @media screen and (orientation: portrait){ /*竖屏*/
+            body {
+                background-color: green;
+            }
+        }
+    </style>
+
+
+    <!--下面这种写法是放到两个不同的css文件里面-->
+    <!--<link rel="stylesheet" media="all and (orientation: landscape)" href="landscape.css"/>
+    <link rel="stylesheet" media="all and (orientation: portrait)" href="portrait"/>-->
+</head>
+<body>
+<script type="text/javascript">
+    /*js判断手机横屏还是竖屏*/
+    /*屏幕方向对应的window.orientation值：
+     ipad,iphone： 90 或 -90 横屏
+     ipad,iphone： 0 或180 竖屏
+     Andriod：0 或180 横屏
+     Andriod： 90 或 -90 竖屏*/
+    //js中onorientationchange是window的一个事件，可以通过监听事件匹配屏幕横竖屏。
+    ////移动端的浏览器一般都支持window.orientation这个参数，
+    // 通过这个参数可以判断出手机是处在横屏还是竖屏状态。
+    window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', function(){
+        if(window.orientation == 180 || window.orientation == 0){
+            alert("横屏");
+        }
+        if(window.orientation == 90 || window.orientation == -90){
+            alert("竖屏");
+        }
+    })
+</script>
+</body>
+</html>

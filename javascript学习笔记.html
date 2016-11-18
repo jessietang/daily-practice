@@ -1260,6 +1260,55 @@
      否是安全型整数。
      * */
 
+    /*js获取页面视口的大小*/
+    // 页面是否处于标准模式  yes || no
+    var clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    console.log("clientWidth: "+clientWidth+"----"+"clientHeight: "+clientHeight);
+    //window.open("http://www.baidu.com");
+    //window.open("http://www.baidu.com","wroxWindow","height=400,width=400,top=10,left=10,resizable=yes");
+
+
+    // setTimeout() setInterval()
+    //   超时调用的代码都是在全局作用域中执行的，因此函数中this 的值在非严格模
+    // 式下指向window 对象，在严格模式下是undefined。
+
+   /* if(confirm("are you sure?")){
+        alert("i am so glad you are sure!");
+    }else{
+        alert("look forward to your sure again.");
+    }*/
+
+    /*var result = prompt("what's your name?","jessie");
+    if(result != null){
+        alert("welcome "+ result);
+    }
+*/
+    //显示打印对话框
+    //window.print();
+
+    //创建一个函数，用以解析查询字符串，然后返回包含所有参数的一个对象
+    // window.location.search ==> "?q=javascript" ==>返回URL的查询字符串。这个字符串以问号开头
+    function getQueryStringArgs(){
+        var qs = (window.location.search.length > 0 ? window.location.search.substring(1) : "");
+        var args = {};
+        var items = qs.length > 0 ? qs.split('&') : [];
+        var item = null;
+        var name = null;
+        var value = null;
+        for(var i=0; i<items.length; i++){
+            item = items[i].split("=");
+            //用decodeURIComponent()分别解码name 和value（因为查询字符串应该是被编码过的）。
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+
+            if(name.length){
+                args[name] = value;
+            }
+        }
+
+        return args;
+    }
 
 
 
@@ -1267,7 +1316,7 @@
 
 
 <input type="text" id="analytics_searchKey"/>
-<div class="search-full" style="width:200px;height:200px;">serach-full</div>
+<div class="search-full" style="width:200px;height:200px;">search-full</div>
 <div class="search-box">
     <button class="getFullSearch">getFullSearch</button>
 </div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .div0, .div1, .div2 {
+            width: 200px;
+            height: 50px;
+            background-color: #00CCFF;
+            margin-top: 20px;
+        }
+
+        .div1 {
+            word-wrap: break-word;/*会先另起一行，新的行放不到再把单词断了*/
+        }
+
+        .div2 {
+            word-break: break-all;/*比较暴力，不会新起一行，直接在后面跟着，强制把单词折断*/
+        }
+
+
+    </style>
+</head>
+<body>
+    <!--浏览器默认情况下，如果有一个单词很长，导致一行剩下的空间放不下，则浏览器会把这个单词挪到下一行去。
+    但是如果新行还放不下，就会溢出父元素-->
+    <h3>浏览器默认情况</h3>
+    <div class="div0">
+        <p>this is just a testttttttttttttttttttttttttttttttttttttttttttttttttt!</p>
+    </div>
+
+    <!--word-wrap: break-word; 会先另起一行，新的行放不到再把单词断了-->
+    <h3>word-wrap: break-word; </h3>
+    <div class="div1">
+        <p>this is just a testttttttttttttttttttttttttttttttttttttttttttttttttt!</p>
+    </div>
+
+    <!--word-break: break-all; 比较暴力，不会新起一行，直接在后面跟着，强制把单词折断-->
+    <h3>word-break: break-all;</h3>
+    <div class="div2">
+        <p>this is just a testttttttttttttttttttttttttttttttttttttttttttttttttt!</p>
+    </div>
+</body>
+</html>

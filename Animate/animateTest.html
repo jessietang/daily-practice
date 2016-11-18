@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="animate.css"/>
+    <style>
+        .div1 {
+             width: 200px;
+             height: 100px;
+             margin: 0 auto;
+             border: 1px solid #eee;
+             background-color: #5e5e5e;
+         }
+
+        .div2 {
+            width: 200px;
+            height: 100px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            background-color: #e4b9b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1"></div>
+    <div class="div2"></div>
+    <script src="../js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            //当动画效果执行完成后还可以通过以下代码添加事件,完成回调
+            $('.div1').addClass("animated fadeInLeftBig")
+                    .on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                        $('.div1').removeClass("animated fadeInLeftBig");
+                        $('.div2').addClass("animated fadeInLeftBig").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                            $('.div1').addClass("animated fadeInLeftBig");
+                            $('.div2').removeClass("animated fadeInLeftBig");
+                        });
+                    });
+        });
+    </script>
+</body>
+</html>

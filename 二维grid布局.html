@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #container {
+            height: 200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas: "one one two three"
+        "four four two three"
+        "five five five three";
+        }
+
+        .column-1 {
+            grid-area: one;
+            background-color: red;
+        }
+
+        .column-2 {
+            grid-area: two;
+            background-color: orange;
+        }
+
+        .column-3 {
+            grid-area: three;
+            background-color: yellow;
+        }
+
+        .column-4 {
+            grid-area: four;
+            background-color: green;
+        }
+
+        .column-5 {
+            grid-area: five;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="column-1"></div>
+        <div class="column-2"></div>
+        <div class="column-3"></div>
+        <div class="column-4"></div>
+        <div class="column-5"></div>
+    </div>
+</body>
+</html>

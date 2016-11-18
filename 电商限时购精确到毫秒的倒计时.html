@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="countDown"></div>
+
+    <script src="js/jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            function countTime(){
+                var currentTime = new Date();
+                var endTime = new Date("2016/11/20,12:00:00");
+                var timeGap = parseInt((endTime.getTime() - currentTime.getTime())/1000); //秒
+                // 注意取模
+                var d = parseInt(timeGap / (60*60*24));
+                var h = parseInt(timeGap / (60*60) % 24);
+                var m = parseInt(timeGap / 60 % 60);
+                var s = parseInt(timeGap % 60);
+                var ms = parseInt((endTime.getTime() - currentTime.getTime()) / 100 % 10);
+                $('.countDown').text("距离结束还有："+d+"天"+h+"小时"+m+"分"+s+"."+ms+"秒");
+                if(timeGap < 0){
+                    $('.countDown').text("活动已结束！");
+                }
+            }
+            countTime();
+            setInterval(countTime,100);
+        });
+    </script>
+</body>
+</html>
