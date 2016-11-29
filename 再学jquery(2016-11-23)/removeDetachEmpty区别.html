@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul class="test">
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+</ul>
+
+<ul class="test1">
+    <li>aaa</li>
+    <li>bbb</li>
+    <li>ccc</li>
+</ul>
+
+
+<p>你最喜欢的是？</p>
+
+
+<em class="test2">test wrap()</em>
+<em class="test2 test2_1">test wrapAll()</em>
+
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.test li').click(function(){
+            var _this = $(this);
+            alert(_this.text());
+        });
+        var $li2 = $('.test li:nth-child(2)').remove();
+        $li2.appendTo('.test'); //原来的点击事件没有了
+
+        var $li1 = $('.test li:nth-child(1)').detach();
+        $li1.appendTo('.test'); // 原来的点击事件还在
+
+        var $li3 = $('.test li:nth-child(1)');
+        $li3.empty(); //只是清空li里面的内容，li标签还在
+
+
+
+
+
+        $('.test1 li').click(function(){
+            var _this = $(this);
+            _this.clone(true).appendTo('.test1'); //true表示复制元素的同时也复制元素中所绑定的事件
+        });
+
+
+
+        $('p').click(function(){
+            //$('p').replaceWith("<strong>你最不喜欢的是？</strong>");
+            $("<strong>你最不喜欢的是？</strong>").replaceAll('p');
+        });
+
+
+        // wrap()将所有的元素进行单独的包裹
+        /*$('.test2').click(function(){
+            $(this).wrap("<strong></strong>");
+        });*/
+        /*result:
+        *   <strong><em class="test2">test wrap()</em></strong>
+        * */
+
+        // wrapAll()将所有匹配的元素用一个元素来包裹
+        $('.test2').wrapAll('<b></b>');
+        /*result:
+        * <b><em class="test2">test wrap()</em><em class="test2 test2_1">test wrapAll()</em></b>
+        * */
+
+
+
+
+    });
+</script>
+</body>
+</html>

@@ -1311,6 +1311,117 @@
     }
 
 
+    /*检测浏览器是否安装了插件（在IE 中无效）*/
+    function hasPlugin(name){
+        name = name.toLowerCase();
+        for(var i=0; i<navigator.plugins.length; i++){
+            if(navigator.plugins[i].name.toLowerCase().indexOf(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+    //alert(hasPlugin('Flash'));
+    //alert(hasPlugin('QuickTime'));
+
+
+    /*检测ie中的插件*/
+    function hasIEPlugin(name){
+        try{
+            new ActiveXObject(name);
+            return true;
+        } catch(ex){
+            return false;
+        }
+    }
+    //检测Flash
+    //alert(hasIEPlugin("ShockwaveFlash.ShockwaveFlash"));
+    //检测QuickTime
+    //alert(hasIEPlugin("QuickTime.QuickTime"));
+
+
+
+    //总结
+    //检测所有浏览器中的Flash
+    function hasFlash(){
+        var result = hasPlugin("Flash");
+        if(!result){
+            result = hasIEPlugin("ShockwaveFlash.ShockwaveFlash");
+        }
+        return result;
+    }
+
+    //检测所有浏览器中的QuickTime
+    function hasQuickTime(){
+        var result = hasPlugin("QuickTime");
+        if(!result){
+            result = hasIEPlugin("QuickTime.QuickTime");
+        }
+        return result;
+    }
+
+    $(function(){
+        $('#do').on('click',function(){
+            //setTimeout(long,0);
+
+
+            $('#status').text('calculating....');//此处会触发redraw事件的fired，但会放到队列里执行，直到long()执行完。
+
+            //without set timeout, user will never see "calculating...."
+            long();//执行长时间任务，阻塞
+
+            //with set timeout, works as expected
+            //用定时器，大约50ms以后执行长时间任务，放入执行队列，但在redraw之后了，根据先进先出原则
+            //long();
+        });
+        function long(){
+            var result = 0;
+            for (var i = 0; i<1000; i++){
+                for (var j = 0; j<1000; j++){
+                    for (var k = 0; k<1000; k++){
+                        result = result + i+j+k;
+                    }
+                }
+            }
+            $('#status').text('calclation done');
+            //has to be in here for this example. or else it will ALWAYS run instantly. This is the same as passing it a callback
+        }
+
+
+
+    });
+
+    //【javascript单线程机制】
+    // 2 1
+    /*setTimeout(function(){console.log(1);}, 0);
+    console.log(2);*/
+
+    // 100 300 200
+    /*console.log(100);
+    setTimeout(function(){console.log(200);},0);
+    console.log(300);*/
+
+    // 先全部输出first，然后全部输出second
+    /*function foo(){
+        console.log('first');
+        setTimeout((function(){console.log('second')}),0);
+    }
+    for(var i=0; i<10; i++){
+        foo();
+    }*/
+
+    // 执行的结果是10 30 , 然后浏览器假死，20永远不会被打印出来
+    /*console.log(10);
+    setTimeout(function(){console.log(20);},0);
+    while(true){console.log(30);}*/
+
+
+    //执行的结果： 10，40，30， 然后浏览器假死，20永远不会被打印出来
+    /*console.log(10);
+    setTimeout(function(){while(true){console.log(30);}},0);
+    setTimeout(function(){console.log(20);},10);
+    console.log(40);*/
+
 
 </script>
 
@@ -1331,7 +1442,21 @@
     <div class="div1">111</div>
     <div class="div2">222</div>
 </div>
+
+<button id='do'>Do long calc!</button>
+<div id='status'>status</div>
+<div id='result'></div>
+
+
+
 </body>
+
+
+
+
+
+
+
 </html>
 
 

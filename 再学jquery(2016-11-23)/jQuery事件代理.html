@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="myUl">
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+    <li>444</li>
+    <li>555</li>
+</ul>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        // 比如，我们想要给ul下面的li绑定一个点击事件，点击li之后，背景变成红色
+        // 我们一般会这样来写
+        /*$('#myUl li').on('click', function(){
+            $(this).css("backgroundColor","red");
+        });*/
+        //但假如有一百个li元素，那岂不是要绑定100个事件？？？
+
+
+        //代替这种效率很差的多元素事件监听的方法就是，你只需向他们的父节点绑定一次事件，
+        // 然后通过event.target获取到点击的当前元素
+        // this和event.target都是dom对象，如果要使用jquey中的方法可以将他们转换为
+        // jquery对象：$(this)和$(event.target);
+        // event.target.nodeName 获取到的是大写的元素标签，如 LI
+        $('#myUl').on('click', function(e){
+            var target = e.target;
+            if(target && target.nodeName == 'LI'){
+                //console.log(target.nodeName); // LI
+                $(target).css("backgroundColor", "red");
+            }
+        });
+    });
+</script>
+</body>
+</html>

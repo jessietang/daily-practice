@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="checkbox" id="box"/>同意协议
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //下面一段代码，用来判断多选框是否被选中
+        /*var $box = $('#box');
+        $box.click(function(){
+            if($box.is(":checked")){ // jQuery方式判断
+                alert("thanks for your support,and then, you can handle it.");
+            }
+        });*/
+
+
+        // 这里我们可以直接使用原生的javascript方法
+        var $box = $('#box');
+        var box = $box.get(0);
+        $box.click(function(){
+            if(box.checked){
+                alert("thanks for your support,and then, you can handle it.");
+            }
+        });
+        //毋庸置疑，第二种方式效率高于第一种方式，因为她不需要拐弯抹角的去调用许多函数
+    });
+</script>
+</body>
+</html>

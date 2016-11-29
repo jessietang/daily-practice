@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="../jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#load").ajaxStart(function(){
+            showLoading(); //显示loading
+            disableButtons(); //禁用按钮
+        }).ajaxComplete(function(){
+            hideLoading(); //隐藏loading
+            enableButtons(); // 启用按钮
+        });
+
+
+
+        // another way
+        function ajaxLoader(){
+            var pageLoadingDom = '<div id="af-page-loading"><img src="https://www.ashford.com/images/ashford/ajax-loader.gif" /></div>';
+            $('body').append(pageLoadingDom);
+        }
+
+        function ajaxLoadComplete(){
+            $('body').find('#af-page-loading').remove();
+        }
+
+        function startMyTask(){
+            ajaxLoader();
+            $.ajax({
+                dataType: "html",
+                url:"filterIndex.html",
+                success:function(data){
+                    ajaxLoadComplete();
+                    $('#newContent').html($(data).find('#myContent'));
+                    console.log('load success');
+                },
+                error: function(data){
+                    ajaxLoadComplete();
+                    console.log('load failed');
+                }
+            });
+        }
+
+        $('.myBtn').unbind('click').bind('click', function(){
+            startMyTask();
+        });
+
+
+    });
+</script>
+</body>
+</html>

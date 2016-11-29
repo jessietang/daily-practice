@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1" data-role="page" data-last-value="43"
+     data-options='{"name": "jessie", "sex": "female"}'></div>
+
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        // html5的data属性可以帮助我们插入数据，特别是前后短的数据交换
+        console.log($('#div1').data('role')); // page
+        console.log($('#div1').data('lastValue')); // 43
+        console.log($('#div1').data('options').name);  //jessie
+    });
+</script>
+</body>
+</html>

@@ -93,10 +93,10 @@ var EventUtil = {
 	},
 
 	preventDefault: function(event){
-		if(event.preventDefault){
+		if(event && event.preventDefault){
 			event.preventDefault();
 		}else{
-			event.returnValue = false;
+			event.returnValue = false; // ie
 		}
 	}
 };

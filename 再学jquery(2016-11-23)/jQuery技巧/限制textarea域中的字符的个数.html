@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<textarea name="" id="myTextArea" cols="30" rows="10"></textarea>
+<span class="msg-tip"></span>
+<script src="../jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var maxLength = 10;
+        $('#myTextArea').on('keyup', function(){
+            if($(this).val().length > maxLength){
+                var str = $(this).val().substring(0,maxLength);
+                $(this).val(str);
+                $('.msg-tip').text('文本长度不能大于10');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

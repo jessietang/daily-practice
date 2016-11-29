@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .div1 {
+            width: 100px;
+            height: 100px;
+            padding: 50px;
+            background-color: red;
+
+        }
+
+        .div1 .div2 {
+            margin-bottom: 200px;
+            width: 80px;
+            height: 80px;
+            background-color: orange;
+
+        }
+
+        .div11 {
+            margin-top: 100px;
+            width: 100px;
+            height: 100px;
+            padding: 50px;
+            background-color: red;
+
+        }
+
+        .div11 .div22 {
+            margin-bottom: 200px;
+            width: 80px;
+            height: 80px;
+            background-color: orange;
+
+        }
+    </style>
+</head>
+<body>
+
+<p>不论鼠标指针穿过被选元素还是其子元素，都会触发 mouseover 事件。</p>
+<p>只有在鼠标指针穿过被选元素时，才会触发 mouseenter 事件。</p>
+<div class="div1">
+    <div class="div2">
+    </div>
+    <p></p>
+</div>
+
+<div class="div11">
+    <div class="div22">
+    </div>
+    <p></p>
+</div>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var x = 0;
+        var y = 0;
+
+        $('.div1').mouseenter(function(){
+            x++;
+            $(this).find('p').text('x = '+x);
+        });
+
+
+        $('.div11').mouseover(function(){
+            y++;
+            $(this).find('p').text('y = '+y);
+        });
+    });
+</script>
+</body>
+</html>

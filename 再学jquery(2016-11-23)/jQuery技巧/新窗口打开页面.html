@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<a href="http://www.cuit.edu.cn" target="_blank">cuit</a>
+<a href="http://www.baidu.com">baidu</a>
+<a href="http://www.tianmao.com">tianmao</a>
+
+<a href="http://www.cssrain.cn" rel="external">cssrain</a>
+<script src="../jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('a[href^="http://"]').attr("target","_blank");
+
+        $("a[rel$='external']").click(function(){
+            this.target = '_blank;'
+        });
+    });
+</script>
+</body>
+</html>

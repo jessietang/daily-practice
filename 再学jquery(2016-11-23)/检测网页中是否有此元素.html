@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        // $('#test')获取到的永远是对象，即使网页上没有该元素。
+        // 因此，当要用jQuery来检查某个元素在网页上是否存在时，不能使用下面的代码
+        /*if($('#test')){ //
+            alert('该元素存在');
+        }*/
+
+
+        // 正确判断方法,注意，用length和size只能用属性，不能用方法
+
+        //方法一：length属性， 注意是length属性，而不是length()方法
+        /*if($('#test').length > 0){
+            alert('length 该元素存在');
+        }else{
+            alert('length 该元素不存在');
+        }*/
+
+        //方法二：size属性, 注意是size属性，而不是size()方法
+        /*if($('.test').size > 0){
+            alert('size 该元素存在');
+        }else{
+            alert('size 该元素不存在');
+        }*/
+
+        //方法三：转化为Dom对象
+        /*if($('#test')[0]){
+            alert('dom 该元素存在');
+        }else{
+            alert('dom 该元素不存在');
+        }*/
+
+        /*if(!($('#div').find('.div1').size > 0)){  //等于0， 表示这个元素不存在, 是几， 就表示这个元素有几个。
+            alert('size 该元素存在');
+        }else{
+            alert('size 该元素不存在');
+        }*/
+
+        /*if(!($('#div').find('.div1').length > 0)){  //等于0， 表示这个元素不存在, 是几， 就表示这个元素有几个。
+            alert('size 该元素存在');
+        }else{
+            alert('size 该元素不存在');
+        }*/
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="jquery.min.js"></script><!--情况二：jQuery库在其他库之前导入-->
+<script src="Prototype.js"></script>
+<script type="text/javascript">
+    //如果jQuery库在其他库之前就导入了，那么可以直接使用"jQuery"来做一些jQuery的工作
+    jQuery(function(){ //直接使用jQuery,无需调用jQuery.noConflict()函数
+        jQuery('p').click(function(){
+            alert(jQuery('p').text());
+        });
+    });
+    $("pp").style.display = 'none'; // 使用prototype
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        .div1 {
+            position: relative;
+            left: 50px;
+            top: 50px;
+        }
+
+        .div1 .test1 {
+            position: absolute;
+            left: 200px;
+            top: 200px;
+        }
+
+        .div2 {
+            margin-top: 1000px;
+        }
+    </style>
+</head>
+<body>
+<select name="" id="single" >
+    <option value="" selected>one</option>
+    <option value="">two</option>
+    <option value="">three</option>
+</select>
+
+<p class="p1">222222</p>
+
+<div class="div1">
+    <div class="test1">11111111111111</div>
+</div>
+
+<div class="div2">3333333333</div>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#single option:eq(2)').attr("selected",true);
+
+        // css()方法中，如果属性带有“-”符号，例如font-size, background-color,则要写成驼峰式
+        // fontSize  backgroundColor
+        // animate()方法中也是一样
+        $('.p1').css("fontSize", "30px");
+
+        // position()方法，获取元素相对于最近的一个position样式属性值为ralative或者absolute的父节点的相对位移
+        var position = $('.div1 .test1').position();
+        var left = position.left;
+        var top = position.top;
+        console.log(left + '----'+ top);  // 200----200
+
+        var offset = $('.div1 .test1').offset();
+        var left1 = offset.left;
+        var top1 = offset.top;
+        console.log(left1 + '----' + top1); // 250----303
+
+
+        $(window).scrollTop(300);
+        $(window).scrollLeft(300);
+        var scrollTop = $(window).scrollTop();
+        var scrollLeft = $(window).scrollLeft();
+        console.log(scrollTop + '----' +scrollLeft); // 300----50
+
+    });
+</script>
+</body>
+</html>

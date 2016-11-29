@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="checkbox" id="check-box" />呵呵呵
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        // 一、jQuery对象转化为dom对象的两种方法：
+
+        // 1.jQuery对象是一个类似于数组的对象，可以通过[index]的方法得到相应的dom对象
+        /*var $check_box = $('#check-box'); // jquery对象
+        var check_box = $check_box[0]; // dom 对象
+        alert(check_box.checked); // false*/
+
+        //2.jQuery本身提供的，通过get(index)方法得到相应的dom对象
+       /* var $check_box = $('#check-box'); // jquery对象
+        var check_box = $check_box.get(0); // dom 对象
+        alert(check_box.checked); // false*/
+
+
+
+        //二、Dom对象转换成jQuery对象
+        //用$()把Dom对象包装起来就可以了
+        var oCheckbox = document.getElementById('check-box');
+        var $check_box = $(oCheckbox);
+        alert($check_box.prop("checked")); // false / true
+        alert($check_box.is(":checked")); // false / true
+        alert($check_box.attr("checked")); // undefined / checked
+    });
+</script>
+</body>
+</html>

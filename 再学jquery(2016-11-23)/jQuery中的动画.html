@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .div2 {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            opacity: .5;
+            animation: myShow 5s;
+            -webkit-animation: myShow 5s;
+        }
+
+        /*css3动画*/
+        @keyframes myShow {
+            0% {
+                background-color: red;
+            }
+            25%{
+                background-color: orange;
+            }
+            50%{
+                background-color: yellow;
+            }
+            75%{
+                background-color: green;
+            }
+            100%{
+                background-color: blue;
+            }
+        }
+
+        @-webkit-keyframes myShow {
+            0% {
+                background-color: red;
+            }
+            25%{
+                background-color: orange;
+            }
+            50%{
+                background-color: yellow;
+            }
+            75%{
+                background-color: green;
+            }
+            100%{
+                background-color: blue;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+    <h3>title</h3>
+    <div class="content">show content</div>
+</div>
+
+<div class="div2"></div>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.div1 h3').on('click', function(){
+            $('.div1 .content').toggle();
+        });
+
+
+
+        $('.div2').on('click', function(){
+            $(this).animate({
+                "width": "+=100px",
+                "opacity": 1,
+                "backgroundColor": "blue"
+            },300)
+                    .animate({
+                        "height": "+=50px"
+                    });
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="myList"></ul>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var top_10_list = ["111","222","333","444","555","666","777","888","999","000"];
+        var $ul = $('#myList');
+        // 下面这种方式消耗的性能高，更好的方式是减少dom的操作
+        /*for(var i=0; i<top_10_list.length; i++){
+            $ul.append('<li>'+top_10_list[i]+'</li>');
+        }*/
+
+        // 这里应该将整个元素字符串在插入到dom之前全部创建好
+        var top_10_li = "";
+        for(var i=0; i<top_10_list.length; i++){
+            top_10_li += '<li>'+top_10_list[i]+'</li>';
+        }
+        $ul.append(top_10_li);
+    });
+</script>
+</body>
+</html>

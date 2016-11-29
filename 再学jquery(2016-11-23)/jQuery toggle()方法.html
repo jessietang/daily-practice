@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .highLight {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="panel">
+    <h3 class="highLight">title</h3>
+    <div class="content">
+        it is a test!
+    </div>
+</div>
+
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        /*$('#panel h3').on('click', function(){
+            var $content = $('.content');
+            if($content.is(':visible')){
+                $content.hide();
+            }else{
+                $content.show();
+            }
+        });*/
+
+
+        $('#panel h3').click(function(){
+            $('.content').toggle();
+            $(this).toggleClass('highLight');
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

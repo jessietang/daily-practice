@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>it is a test!</p>
+    <script src="Prototype.js"></script>
+    <script src="jquery.min.js"></script> <!--情况一：jquery库在其他库之后导入-->
+    <script type="text/javascript">
+        // 推荐方法一：
+        jQuery.noConflict(); //将变量$的控制权让渡给prototype.js
+        jQuery(function($){ //使用jQuery设定页面加载时执行的函数
+            $('p').click(function(){ //在函数内部继续使用$()方法
+                alert($(this).text());
+            });
+        });
+
+        $('pp').style.display = 'none'; // 使用prototype
+
+
+        //推荐方法二：
+        jQuery.noConflict(); //将变量$的控制权让渡给prototype.js
+        (function($){ //定义匿名函数并设置形参为$
+            $(function(){
+                $('p').click(function(){ //在函数内部继续使用$()方法
+                    alert($(this).text());
+                });
+            });
+        })(jQuery);
+        $('pp').style.display = 'none'; // 使用prototype
+
+    </script>
+
+
+</body>
+</html>

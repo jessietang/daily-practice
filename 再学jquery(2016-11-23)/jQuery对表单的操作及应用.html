@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .focus {
+            border: 1px solid green;
+            background: #fcc;
+        }
+    </style>
+</head>
+<body>
+<form action="" id="regForm">
+    <fieldset>
+        <legend>个人基本信息</legend>
+        <input type="text"/>
+        <input type="password"/>
+    </fieldset>
+</form>
+
+
+<form action="" id="form1">
+    <div class="msg_caption">
+        <span class="bigger">放大</span>
+        <span class="smaller">缩小</span>
+    </div>
+    <textarea name="" id="comment" cols="20" rows="8"></textarea>
+</form>
+
+
+<form action="" id="form2">
+    <div class="msg_caption">
+        <span class="up">up</span>
+        <span class="down">down</span>
+    </div>
+    <textarea name="" id="comment2" cols="20" rows="8">
+        i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.i am afraid this, i need power. pl give me some test.can you feel my love,oh my gold.
+        this is just a test.so you should to practise more and more.
+    </textarea>
+</form>
+
+
+<div id="div1">
+    您喜欢的是：
+    <input type="checkbox" value="羽毛球"/>羽毛球
+    <input type="checkbox" value="篮球"/>篮球
+    <input type="checkbox" value="乒乓球"/>乒乓球
+    <input type="checkbox" value="瑜伽"/>瑜伽
+    <input type="checkbox" value="DIY"/>DIY
+    <input type="checkbox" value="书法"/>书法
+    <div>
+        <button class="checkAll">全选</button>
+        <button class="checkNo">不选</button>
+        <button class="checkReverse">反选</button>
+        <button class="submit">提交</button>
+    </div>
+</div>
+
+
+<div id="div2">
+    <div class="content">
+        <select name="" id="leftSelect" multiple>
+            <option value="1">选项1</option>
+            <option value="1">选项2</option>
+            <option value="1">选项3</option>
+            <option value="1">选项4</option>
+            <option value="1">选项5</option>
+            <option value="1">选项6</option>
+            <option value="1">选项7</option>
+            <option value="1">选项8</option>
+        </select>
+        <div>
+            <button class="add">选中添加到右边</button>
+            <button class="add_all">全部添加到右边</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <select name="" id="rightSelect" multiple>
+        </select>
+        <div>
+            <button class="remove">选中删除到左边</button>
+            <button class="remove_all">全部删除到左边</button>
+        </div>
+    </div>
+</div>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#regForm :input').focus(function(){
+            $(this).addClass('focus');
+        }).blur(function(){
+            $(this).removeClass('focus');
+        });
+    });
+
+
+    $(function(){
+        var $comment = $('#comment');
+        $('.bigger').click(function(){
+            if(!$comment.is(":animated")){
+                if($comment.height() < 500){
+                    $comment.animate({
+                        height: "+=50"
+                    }, 400);
+                }
+            }
+        });
+        $('.smaller').click(function(){
+            if(!$comment.is(":animated")){
+                if($comment.height() > 50){
+                    $comment.animate({
+                        height: "-=50"
+                    }, 400);
+                }
+            }
+        });
+    });
+
+
+    $(function(){
+        var $comment2 = $("#comment2");
+        $('.up').click(function(){
+            if(!$comment2.is(":animated")){
+                $comment2.animate({
+                    scrollTop: "-=50"
+                }, 400);
+            }
+        });
+
+        $('.down').click(function(){
+            if(!$comment2.is(":animated")){
+                $comment2.animate({
+                    scrollTop: "+=50"
+                }, 400);
+            }
+        });
+    });
+
+
+    $(function(){
+
+        /*按照官方说明， 如果是设置disabled 和 checked这些属性，应使用prop()方法，而不是使用attr()方法*/
+        $('#div1 .checkAll').click(function(){
+            $('#div1 input:checkbox').prop("checked", true);
+        });
+
+        $("#div1 .checkNo").click(function(){
+            $('#div1 input:checkbox').prop("checked", false);
+        });
+
+        $('#div1 .checkReverse').click(function(){
+            $("#div1 input:checkbox").each(function(){
+                $(this).prop("checked",!$(this).prop("checked"));
+            });
+        });
+
+        $('#div1 .submit').click(function(){
+            var str = "你选中的是：\r\n";
+            $("#div1 :input:checkbox").each(function(){
+                str += $(this).val()+"\r\n";
+            });
+            alert(str);
+        });
+    });
+
+
+
+    $(function(){
+        // 下拉框应用
+
+        //将选中的添加到右边
+        $('.add').click(function(){
+            $("#leftSelect option:selected").appendTo('#rightSelect');
+        });
+
+        //将全部的添加给对方
+        $('.add_all').click(function(){
+            $('#leftSelect option').appendTo("#rightSelect");
+        });
+
+        //双击某个选项，将其添加给对方
+        $('#leftSelect').dblclick(function(){
+            $("#leftSelect option:selected").appendTo('#rightSelect');
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

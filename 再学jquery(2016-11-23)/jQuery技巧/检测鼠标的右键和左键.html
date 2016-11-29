@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="xy">test test test</div>
+<script src="../jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#xy').mousedown(function(e){
+            alert(e.which); // 1 = 鼠标左键  2=鼠标中键  3=鼠标右键
+        });
+    });
+</script>
+</body>
+</html>

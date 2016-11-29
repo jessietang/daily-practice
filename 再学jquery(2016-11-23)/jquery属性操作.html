@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p class="test1"></p>
+<p class="test2 tt"></p>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.test1').attr({"data-title": "myTitle", "name": "test"});
+        $('.test1').removeAttr("name");
+        console.log($('.test1').attr('name')+"---"+$('.test1').attr('data-title')); // undefined---myTitle
+        $('.test1').prop("a-title","aaa");
+        console.log($('.test1').prop('a-title')); // aaa
+
+
+        /*if($('.test2').is('.tt')){
+            alert('has tt class');
+        }else{
+
+        }*/
+
+        if($('.test2').hasClass('tt')){ // 这个方法是为了增强代码可读性而产生的。在JQuery内部，
+        // 实际上是调用了is()方法来完成这个功能的。等价于 $('.test2').is('.tt')
+            alert('has tt class');
+        }else{
+
+        }
+
+
+
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #skin li.selected {
+            color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="css/skin_0.css" id="cssfile"/>
+</head>
+<body>
+<ul id="skin">
+    <li id="skin_0">红色</li>
+    <li id="skin_1">灰色</li>
+    <li id="skin_2">蓝色</li>
+    <li id="skin_3">绿色</li>
+</ul>
+
+<div class="div_side_0">
+    <h2>时事新闻</h2>
+</div>
+<div class="div_side_1">
+    <h2>娱乐新闻</h2>
+</div>
+
+
+<script src="jquery.min.js"></script>
+<script src="jquery.cookie.js"></script>
+<script type="text/javascript">
+    $(function(){
+        function switchSkin(skinName){
+            $("#"+skinName).addClass("selected").siblings().removeClass("selected");
+            $('#cssfile').attr("href","css/"+ skinName +".css");
+            $.cookie("MyCssSkin", skinName, {path: '/', expires: 10});
+        }
+        var $li = $('#skin li');
+        $li.click(function(){
+            /*$('#'+this.id).addClass("selected").siblings().removeClass("selected");
+            $('#cssfile').attr("href","css/"+ (this.id) +".css");*/
+            switchSkin(this.id);
+        });
+
+        var cookie_skin = $.cookie("MyCssSkin");
+        if(cookie_skin){
+            /*$("#"+cookie_skin).addClass("selected").siblings().removeClass("selected");
+            $('#cssfile').attr("href","css/"+ (this.id) +".css");
+            $.cookie("MyCssSkin", cookie_skin, {path: '/', expires: 10});*/
+            switchSkin(cookie_skin);
+        }
+    });
+</script>
+</body>
+</html>
