@@ -7,14 +7,18 @@
 <body>
 用户名：<input type="text" id="username"/>
 <input type="checkbox"/>记住用户名
+<button id="btn">create a cookie</button>
 <script src="jquery.min.js"></script>
 <script src="jquery.cookie.js"></script>
 <script type="text/javascript">
     $(function(){
-        if($(":checkbox").prop("checked")){
-            var username = $('#username').val();
-            $.cookie("myInfo",username,{expires: 10, path: '/', secure: true});
-        }
+        $('#btn').on('click', function(){
+            if($(":checkbox").prop("checked")){
+                var username = $('#username').val();
+                $.cookie("myInfo",username,{expires: 10, path: '/'});
+            }
+        });
+
 
         /*创建一个持久并带有效路径和域名的cookie：
 
