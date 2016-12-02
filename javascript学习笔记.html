@@ -1423,6 +1423,35 @@
     console.log(40);*/
 
 
+    //使用javascript判断浏览器类型
+    function myBrowser(){
+        var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串
+        console.log(userAgent);
+
+        if (userAgent.indexOf("opera") > -1){
+            return "Opera"
+        } //判断是否Opera浏览器
+
+        if (userAgent.indexOf("firefox") > -1){
+            return "FF";
+        } //判断是否Firefox浏览器
+
+        if (userAgent.indexOf("safari") > -1){
+            if (userAgent.indexOf("chrome") > -1){//判断是否Chrome浏览器
+                return "Chrome";
+            }
+            return "Safari";//判断是否Safari浏览器
+        }
+        if (userAgent.indexOf("trident") > -1){
+            //notice: edge default这个是windows10里面的【Edge 是微软公司为去年推出的 Windows 10 操作系统专门设计的浏览器】
+            return "IE";
+        }//判断是否IE浏览器
+
+    }
+
+    var mm = myBrowser();
+    console.log(mm);
+
 </script>
 
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="300" height="300" style="border: 1px solid red;"></canvas>
+<script type="text/javascript">
+    function draw(){
+        var ctx = document.getElementById('myCanvas').getContext('2d');
+        var lineCap = ['butt','round','square'];
+        ctx.strokeStyle = 'red';
+        ctx.beginPath();
+        ctx.moveTo(10,10);
+        ctx.lineTo(10,150);
+        ctx.moveTo(150,10);
+        ctx.lineTo(150,150);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'blue';
+        for(var i=0; i<lineCap.length; i++){
+            ctx.lineWidth = 20;
+            ctx.lineCap = lineCap[i];
+            ctx.beginPath();
+            ctx.moveTo(10, 30+i*50);
+            ctx.lineTo(150, 30+i*50);
+            ctx.stroke();
+        }
+    }
+    window.onload = function(){
+        draw();
+    };
+</script>
+</body>
+</html>

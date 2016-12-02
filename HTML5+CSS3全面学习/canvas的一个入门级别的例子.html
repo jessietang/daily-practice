@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <canvas id="myCanvas" width="200" height="100" style="border: 1px solid #666;">
+        您的浏览器不支持canvas元素，请更换您的浏览器。（浏览器不支持的时候提示）
+    </canvas>
+    <script type="text/javascript">
+        window.onload = function(){
+            var c = document.getElementById('myCanvas');
+            var context = c.getContext('2d'); //获取上下文，创建context对象
+            context.fillStyle="red";
+            context.fillRect(50,25,100,50); //canvas坐标  坐标：(50,25) 宽：100 高: 50
+        };
+    </script>
+</body>
+</html>

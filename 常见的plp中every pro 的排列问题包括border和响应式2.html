@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        这里是相当于把高度固定了来解决
+    </title>
+    <link rel="stylesheet" href="bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <style>
+        .box {
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .box p {
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        /********************************
+        * a-removeOutline(for IE & FF)
+        *********************************/
+        a:hover,a:active,a:visited,a:focus{
+            outline:none;
+        }
+
+        .box .pro-img {
+            display: block;
+            width: 100%;
+            height: 80px; /* 给装图片的a标签固定一个宽和高 */
+        }
+
+        .box .pro-img img {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        @media (max-width: 767px){
+            .box:nth-child(1), .box:nth-child(2) {
+                border-top: 1px solid #eee;
+            }
+            .box:nth-child(2n+1) {
+                border-left: 1px solid #eee;
+            }
+        }
+
+        /*===start 下面这块代码，如果需要<=479px下面的是一行一个的排列，就加上===*/
+        @media (max-width: 479px) {
+            .box.col-xxs-12 {
+                width: 100%;
+            }
+
+            .box:nth-child(1) {
+                border-top: 1px solid #eee;
+            }
+
+            .box:nth-child(2) {
+                border-top: none;
+            }
+
+            .box {
+                border-left: 1px solid #eee;
+            }
+        }/*===end 下面这块代码，如果需要<=479px下面的是一行一个的排列，就加上===*/
+
+
+        @media (min-width: 768px) and (max-width: 991px){
+            .box:nth-child(1), .box:nth-child(2), .box:nth-child(3) {
+                border-top: 1px solid #eee;
+            }
+            .box:nth-child(3n+1) {
+                border-left: 1px solid #eee;
+            }
+        }
+
+        @media (min-width: 992px){
+            .box:nth-child(1), .box:nth-child(2), .box:nth-child(3), .box:nth-child(4) {
+                border-top: 1px solid #eee;
+            }
+            .box:nth-child(4n+1) {
+                border-left: 1px solid #eee;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 box-container">
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible1.png" alt="" width="100%" height="100" border="none"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible.png" alt="" width="100%" height="100"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible.png" alt="" width="100%" height="100"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible.png" alt="" width="100%" height="100"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible.png" alt="" width="100%" height="100"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 col-xxs-12 box">
+                <a class="pro-img" href="">
+                    <img src="image/compatible.png" alt="" width="100%" height="100"/>
+                </a>
+                <p>title</p>
+                <p>name</p>
+                <p>price</p>
+                <p>num</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

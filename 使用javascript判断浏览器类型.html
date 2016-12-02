@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>1111111111</p>
+<script type="text/javascript">
+   /* var Sys = {};
+    var ua = navigator.userAgent.toLowerCase();
+    alert(ua);
+    if (window.ActiveXObject)
+        Sys.ie = ua.match(/msie ([\d.]+)/)[1];
+    else if (document.getBoxObjectFor)
+        Sys.firefox = ua.match(/firefox\/([\d.]+)/)[1];
+    else if (window.MessageEvent && !document.getBoxObjectFor)
+        Sys.chrome = ua.match(/chrome\/([\d.]+)/)[1];
+    else if (window.opera)
+        Sys.opera = ua.match(/opera.([\d.]+)/)[1];
+    else if (window.openDatabase){
+        alert('test');
+        Sys.safari = ua.match(/version\/([\d.]+)/)[1];
+    }
+
+
+    //以下进行测试
+    if(Sys.ie) console.log('IE: '+Sys.ie);
+    if(Sys.firefox) console.log('Firefox: '+Sys.firefox);
+    if(Sys.chrome) console.log('Chrome: '+Sys.chrome);
+    if(Sys.opera) console.log('Opera: '+Sys.opera);
+    if(Sys.safari) alert('Safari: '+Sys.safari);*/
+
+   function myBrowser(){
+       var userAgent = navigator.userAgent.toLowerCase(); //取得浏览器的userAgent字符串
+       console.log(userAgent);
+
+       if (userAgent.indexOf("opera") > -1){
+           return "Opera"
+       } //判断是否Opera浏览器
+
+       if (userAgent.indexOf("firefox") > -1){
+           return "FF";
+       } //判断是否Firefox浏览器
+
+       if (userAgent.indexOf("safari") > -1){
+           if (userAgent.indexOf("chrome") > -1){//判断是否Chrome浏览器
+               return "Chrome";
+           }
+           return "Safari";//判断是否Safari浏览器
+       }
+       if (userAgent.indexOf("trident") > -1){
+       //notice: edge default这个是windows10里面的【Edge 是微软公司为去年推出的 Windows 10 操作系统专门设计的浏览器】
+           return "IE";
+       }//判断是否IE浏览器
+
+   }
+
+   var mm = myBrowser();
+   console.log(mm);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        #flex-box {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /*vh：视区高度*/
+        }
+
+        #header, #footer {
+            /*flex: 1;*/
+            /* === flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ] === */
+            flex: 1 1 0;
+        }
+
+        #article {
+            display: flex;
+            flex: 1;
+        }
+
+        #nav, #aside {
+            flex: 0 0 12em; /*em是相对长度单位。相对于当前对象内文本的字体尺寸*/
+            background-color: red;
+        }
+
+        #content {
+            flex: 1;
+            background-color: green;
+        }
+
+        #content .inner {
+            padding: 10px;
+        }
+
+        #nav {
+            order: -1;
+            background-color: blue;
+        }
+
+
+        @media (max-width: 768px) {
+            #article {
+                flex-direction: column;
+                flex: 1;
+            }
+            #nav,
+            #aside,
+            #content {
+                flex: auto;
+            }
+        }
+
+
+
+    </style>
+</head>
+<body id="flex-box">
+    <header id="header">#header</header>
+    <article id="article">
+        <main id="content">
+            <div class="inner">#center</div>
+        </main>
+        <nav id="nav">
+            <p>#left</p>
+            <!--<div style="width:100%;height:500px;background-color: grey;">grey</div>-->
+        </nav>
+        <aside id="aside">#right</aside>
+    </article>
+    <footer id="footer">#footer</footer>
+</body>
+</html>
