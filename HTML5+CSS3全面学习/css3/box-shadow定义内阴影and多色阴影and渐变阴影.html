@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*阴影类型、x轴位移、y轴位移、阴影大小、阴影扩展、阴影颜色*/
+
+        div{
+            margin-top: 20px;
+        }
+
+        .div1 {
+            width: 300px;
+            height: 200px;
+            padding: 16px;
+            -webkit-box-shadow: inset 2px 2px 10px #06c;/*阴影类型、x轴位移、y轴位移、阴影大小、阴影颜色*/
+            -moz-box-shadow: inset 2px 2px 10px #06c;
+            box-shadow: inset 2px 2px 10px #06c;
+        }
+
+        .div2 {
+            width: 300px;
+            height: 200px;
+            padding: 16px;
+            -webkit-box-shadow: -10px 0 12px red,
+            10px 0 12px blue,
+            0 -10px 12px yellow,
+            0 10px 12px green;
+            -moz-box-shadow: -10px 0 12px red,
+            10px 0 12px blue,
+            0 -10px 12px yellow,
+            0 10px 12px green;
+            box-shadow: -10px 0 12px red,
+            10px 0 12px blue,
+            0 -10px 12px yellow,
+            0 10px 12px green;
+        }
+
+        .div3 {
+            width: 300px;
+            height: 200px;
+            padding: 16px;
+            -webkit-box-shadow: -10px 0 12px 12px red,/*定义像素大小和像素扩展*/
+            10px 0 12px 12px blue,
+            0 -10px 12px 12px yellow,
+            0 10px 12px 12px green;
+            -moz-box-shadow: -10px 0 12px 12px red,
+            10px 0 12px 12px blue,
+            0 -10px 12px 12px yellow,
+            0 10px 12px 12px green;
+            box-shadow: -10px 0 12px 12px red,
+            10px 0 12px 12px blue,
+            0 -10px 12px 12px yellow,
+            0 10px 12px 12px green;
+        }
+    </style>
+</head>
+<body>
+<div class="div1">内阴影insert</div>
+
+<div class="div2">设置多组参数值定义多色阴影</div>
+
+<div class="div3">设置多组参数值定义渐变阴影</div>
+</body>
+</html>

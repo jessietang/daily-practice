@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="">
+    <table>
+        <tr>
+            <td>name:</td>
+            <td><input type="text" id="name"/></td>
+        </tr>
+
+        <tr>
+            <td>memo:</td>
+            <td><input type="text" id="memo"/></td>
+        </tr>
+        <tr>
+            <td><input type="reset" value="reset"/></td>
+            <td><input type="button" value="save" onclick="saveData();"/></td>
+        </tr>
+    </table>
+</form>
+<hr/>
+<table border="1" id="dataTable"></table>
+
+<script type="text/javascript">
+    var db = openDatabase('t1','1.0','memo test',2*1024*1024);
+    var dataTable = document.getElementById('dataTable');
+    function saveData(){
+        var name = document.getElementById('name').value;
+        var memo = document.getElementById('memo').value;
+        var time = new Date().getTime();
+        addData(name,memo,time);
+        showAllData();
+    }
+
+    function addData(name,memo,time){
+        db.transaction(function(tx){
+            tx.executeSql('INSERT INTO MsgData VALUES(?,?,?)',[name,memo,time],function(tx,results){
+                alert('data save successful');
+            },function(tx,error){
+                alert(error.source + "::" + error.message);
+            });
+        });
+    }
+
+    function showAllData(){
+        db.transaction(function(tx){
+            tx.executeSql('CREATE TABLE IF NOT EXISTS MsgData(name TEXT,message TEXT,time INTEGER)');
+            tx.executeSql('SELECT * FROM MsgData',[],function(tx,rs){
+                removeData();
+                for(var i=0; i<rs.rows.length; i++){
+                    showData(rs.rows.item(i));
+                }
+            });
+        });
+    }
+
+    function removeData(){
+        alert(dataTable.childNodes.length);
+        for(var i=dataTable.childNodes.length-1;i>=0;i--){
+            dataTable.removeChild(dataTable.childNodes[i]);
+        }
+        var tr = document.createElement('tr');
+        var th1 = document.createElement('th');
+        var th2 = document.createElement('th');
+        var th3 = document.createElement('th');
+        th1.innerHTML = 'name';
+        th2.innerHTML = 'memo';
+        th3.innerHTML = 'time';
+        tr.appendChild(th1);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        dataTable.appendChild(tr);
+    }
+
+    function showData(row){
+        var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        td1.innerHTML = row.name;
+        td2.innerHTML = row.message;
+        var t = new Date();
+        t.setTime(row.time);
+        td3.innerHTML = t.toLocaleDateString()+" "+t.toLocaleTimeString();
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        dataTable.appendChild(tr);
+    }
+
+    window.onload = function(){
+        showAllData();
+    };
+</script>
+</body>
+</html>

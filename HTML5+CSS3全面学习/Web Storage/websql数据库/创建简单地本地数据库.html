@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="status"></div>
+<script type="text/javascript">
+    var db = openDatabase('mydata','1.0','test db','2*1024*1024'); //数据库名、版本号、描述、数据库大小、创建回调
+    var msg = "";
+    db.transaction(function(tx){
+        tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS(id unique,log)');
+        tx.executeSql('INSERT INTO LOGS(id, log) VALUES (1, "foobar")');
+        tx.executeSql('INSERT INTO LOGS(id, log) VALUES (2, "logmsg")');
+        tx.executeSql('INSERT INTO LOGS(id, log) VALUES (3, "test")'); // insert into table values () 记得大写
+
+        msg = '<p>完成消息创建和插入行操作</p>';
+        document.querySelector('#status').innerHTML = msg;
+    });
+
+    db.transaction(function(tx){
+        tx.executeSql('SELECT * FROM LOGS',[],function(tx,results){
+            var len = results.rows.length,i;
+            msg = '<p>查询行数：'+len+'</p>';
+            document.querySelector('#status').innerHTML += msg;
+            for(i=0; i<len; i++){
+                msg = "<p><b>"+results.rows[i].log+"</b></p>";
+                document.querySelector('#status').innerHTML += msg;
+            }
+        },function(){
+            alert('查询出错');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="300" height="300" style="background-color: #eee;"></canvas>
+<script type="text/javascript">
+    var c = document.getElementById('myCanvas');
+    var context = c.getContext('2d');
+    //绘制第一个图形
+    context.fillStyle='red';
+    context.strokeStyle="#000";
+    context.fillRect(20,20,100,100);
+    context.strokeRect(20,20,100,100);
+    context.fill();
+    context.stroke();
+    //保存当前（第一个图形）canvas状态
+    context.save();
+    //绘制第二个图形
+    context.fillStyle='yellow';
+    context.strokeStyle='green';
+    context.fillRect(140,20,100,100);
+    context.strokeRect(140,20,100,100);
+    context.fill();
+    context.stroke();
+
+    //恢复第一个图形的canvas状态
+    context.restore();
+    context.fillRect(20,130,50,50);
+    context.strokeRect(80,130,50,50);
+</script>
+</body>
+</html>

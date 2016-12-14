@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="lib/jquery-ui.min.css"/>
+    <style>
+        .hidden {
+            display:none;
+        }
+
+        #theLog li {
+            width: 400px;
+            clear: both;
+        }
+
+        .delete {
+            display: inline-block;
+            float: right;
+            margin-right: 0;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="about" class="hidden">
+        <p>localStorage</p>
+        <p><button type="button" id="closeButton">Close</button></p>
+    </div>
+
+    <div id="clearLog-message" title="clear log" class="hidden">
+        确定要清除所有的数据吗？
+    </div>
+
+    <div id="emptyFields-message" title="Missing Required Fields" class="hidden">
+        必须提供相应的数据！
+    </div>
+
+    <header>
+        <button type="button" id="aboutButton">About</button>
+        <h1>DEMO</h1>
+
+        <form action="" id="logForm">
+            <input type="text" name="project" value="Project Name"
+                   onfocus="if(this.value == 'Project Name') this.value=''"
+                    onblur="if(this.value=='') this.value='Project Name'"/>
+
+            <input type="number" name="hours" value="Hours"
+                   onfocus="if(this.value == 'Hours') this.value=''"
+                   onblur="if(this.value=='') this.value='Hours'"/>
+
+            <input type="text" name="date" value="Date"
+                   onfocus="if(this.value == 'Date') this.value=''"
+                   onblur="if(this.value=='') this.value='Date'"/>
+
+            <input type="submit" value="Log Time"/>
+        </form>
+    </header>
+
+    <section>
+        <header>
+            <p>总时长：<span>0</span>hours</p>
+        </header>
+        <ul id="theLog">
+            <li class="empty">Loading&hellip;</li>
+        </ul>
+        <button type="button" id="clearLog">Clear Log</button>
+    </section>
+
+    <footer>
+        <p>demo</p>
+    </footer>
+
+
+    <script src="../../js/jquery-1.11.2.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        function getAllItems(){
+            var timeLog = '';
+            var i = 0;
+            var logLength = window.localStorage.length - 1;
+            var totalHours = 0.0;
+            for(i=0; i <= logLength; i++){
+                var itemKey = window.localStorage.key(i);
+                console.log(itemKey);
+                var values = window.localStorage.getItem(itemKey);
+                values = values.split(';');
+                var project = values[0];
+                var hours = values[1];
+                var date = values[2];
+                timeLog += `<li><strong>${project}:</strong>${hours}hours
+                <span class="delete">&times;
+                    <span class="hidden" title="delete time" id="${itemKey}">Are you want to delete ${project} from the log?</span>
+                </span>
+                <span class="date">${date}</span>
+                </li>`;
+                totalHours = totalHours + parseInt(hours);
+            }
+
+            if(timeLog == ""){
+                timeLog = `<li class="empty">Log Currently Empty</li>`;
+            }
+
+            $('section header p span').html(totalHours);
+            $('#theLog').html(timeLog);
+
+            //在最新的名单中，绑定每个项目对话框
+            deleteItem(); // IMPORTANT!!!!
+
+        }
+
+        function deleteItem(){
+            var deleteItemDialog = new Array();
+            $('.delete').each(function(){
+                var id = $(this).find('span').attr('id');
+                deleteItemDialog[id] = $('#'+id).dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    height: 140,
+                    modal: true,
+                    show: 'fold',
+                    buttons: {
+                        'Delete Time': function(){
+                            localStorage.removeItem(id);
+                            getAllItems();
+                            $(this).dialog('close');
+                        },
+                        Cancel: function(){
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+
+                $(this).click(function(){
+                    //alert('test');
+                    deleteItemDialog[id].dialog('open');
+                    return false;
+                });
+            });
+        }
+
+        $(function(){
+            if(typeof(localStorage) == 'undefined'){
+                alert('your browser does not support html5 localStorage.Try upgrading.');
+            }else{
+                getAllItems();
+                $('#logForm').submit(function(){
+                    var newDate = new Date();
+                    var itemId = newDate.getTime();
+                    var values = new Array();
+                    var project = $('input[name="project"]').val();
+                    var hours = $('input[name="hours"]').val();
+                    var date = $('input[name="date"]').val();
+
+                    project = project.replace(/(<([^>]+)>)/ig,"");
+                    values.push(project);
+                    values.push(hours);
+                    values.push(date);
+
+                    if(project == "" || project == 'Project Name' ||
+                            hours =="" || hours == "Hours" || date == "" || date == "Date"){
+                        $('#emptyFields-message').dialog({
+                            resizable: false,
+                            height: 140,
+                            modal: true,
+                            show: 'fold',
+                            buttons: {
+                                OK: function(){
+                                    $(this).dialog('close');
+                                }
+                            }
+                        });
+                    }else{
+                        try{
+                            localStorage.setItem(itemId, values.join(';'));
+                        }catch(e){
+                            if(e == QUOTA_EXCEEDED_ERR){
+                                alert('Quota exceeded');
+                            }
+                        }
+                        getAllItems();
+                    }
+                });
+
+                $('#clearLog').click(function(){
+                    $('#clearLog-message').dialog({
+                        resizable: false,
+                        height: 140,
+                        modal: true,
+                        show: 'fold',
+                        buttons: {
+                            'Delete all Items': function(){
+                                localStorage.clear();
+                                getAllItems();
+                                $(this).dialog('close');
+                            },
+                            Cancel: function(){
+                                $(this).dialog('close');
+                            }
+                        }
+                    });
+                });
+
+                $('#aboutButton').click(function(){
+                    $('#about').slideDown("slow");
+                });
+
+                $('#closeButton').click(function(){
+                    $('#about').slideUp('slow');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

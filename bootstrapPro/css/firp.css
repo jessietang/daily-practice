@@ -1,0 +1,171 @@
+.header{
+    width: 100%;
+    padding-bottom: 100px;
+    background: url(http://www.getfirp.com/img/firp-budgeting-hero.jpg) no-repeat;
+}
+.intro-book{
+    position: relative;
+    top: 67.5px;
+}
+.intro-book img{
+    max-width: 450px;
+    height: auto;
+}
+
+.intro-text{
+    position: relative;
+    margin-top: 150px;
+    color: #fff;
+}
+.intro-text .small{
+    font-size: 18px;
+    line-height: 36px;
+}
+.heading{
+    font-size: 40px;
+    margin: 10px 0;
+}
+.subHeading{
+    opacity: 0.5;
+    font-size: 20px;
+    margin:10px 0 30px 0;
+}
+.btn-green{
+    margin-top: 30px;
+    color: #fff;
+    background-color: #3566DE;
+    border-radius: 3px;
+}
+.intro-text .btn-green:hover{
+    background-color: #2D54B5;
+}
+.intro-text .btn-green .baby-pen{
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background: url(https://afeld.github.io/emoji-css/emoji/baby_bottle.png) no-repeat;
+    background-size: 1.5em 1.5em;
+}
+
+
+
+.my-nav{
+    width:100%;
+    background-color: #fff;
+    padding: 30px 0;
+    box-shadow: 3px 3px 5px #d2d2d2;
+}
+.myScrollspyfixed{  /*myScrollspy navbar固定*/
+    position:fixed;
+    z-index: 100;
+    left:0;
+    top:0;
+}
+.hide{
+    display:none;
+}
+.my-navbar-nav .btn{
+    display: inline-block;
+    float: right;
+}
+
+.my-navbar-nav>li{
+    margin-right: 60px;
+    border-bottom: 3px solid transparent;
+}
+.my-navbar-nav>li:not(.navActive):hover,
+.my-navbar-nav>li.navActive{
+    color: #000;
+    border-bottom: 3px solid blue;
+    background-color: #fff;
+}
+.my-navbar-nav>li.navActive a{
+    color: #000;
+}
+.my-early-btn{
+    width: 200px;
+    height: 50px;
+    border: 3px solid blue;
+    background-color: #fff;
+    color: blue;
+}
+
+.my-carousel-left{
+    position:relative;
+}
+.my-carousel-left .carousel-down-img{
+    width: 70%;
+    height: auto;
+}
+#myCarousel{
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 1;
+}
+#myCarousel img{
+    width: 70%;
+    height: auto;
+}
+#book .myBook{
+    padding: 100px 0;
+}
+.small{
+    font-size: 18px;
+    line-height: 36px;
+    color: #6A727B;
+}
+.call-to-action{
+    width: 100%;
+    padding: 100px 0;
+    background-color: #67c784;
+}
+.call-to-action .white{
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+}
+
+#author{
+    width: 100%;
+    padding: 100px 0;
+}
+#author .my-row-media{
+    margin-top: 30px;
+}
+#author .media .media-object{
+    width: 90%;
+    height: auto;
+}
+#author .my-author{
+    margin-top: 50px;
+}
+.heading-white{
+    color: #fff;
+}
+.my-white{
+    text-align: left;
+    color: #fff;
+    font-size: 30px;
+}
+.btn-blue{
+    background-color: #67c784;;
+    color: #fff;
+    border: 3px solid #fff;
+}
+.btn-blue:hover{
+    background-color: #fff;
+    color: #3566DE;
+    border: 3px solid #fff;
+}
+
+#contact{
+    padding: 100px 0;
+}
+#contact .row-margin-top{
+    margin-top: 30px;
+}
+#contact .fa{
+    display: inline-block;
+}

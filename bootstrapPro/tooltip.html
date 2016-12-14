@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title></title>
+    <link rel="stylesheet" href="../bootstrap-3.3.5/dist/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+    <script type="text/javascript" src="../bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="width:200px;height:200px;"></div>
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
+
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip on top</button>
+
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
+
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>
+
+<button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="tooltip exercise">tooltip exercise</button>
+
+
+
+<!-- HTML to write -->
+<a href="#" data-toggle="tooltip" title="Some tooltip text a book look at me!">Hover over me</a>
+
+<!-- Generated markup by the plugin    插件生成的标记-->
+<div class="tooltip top" role="tooltip">
+    <div class="tooltip-arrow"></div>
+    <div class="tooltip-inner">
+        Some tooltip text!11111
+    </div>
+</div>
+
+
+
+
+<!--  tooltip中的data-container="body" ???  -->
+<form class="form-inline">
+    <div class="form-group">
+        <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+        <a href="#" class="input-group" data-toggle="tooltip" title="2222222" data-container="body">
+            <div class="input-group-addon">$</div>
+            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+            <div class="input-group-addon">.00</div>
+        </a>
+    </div>
+    <button type="submit" class="btn btn-primary">Transfer cash</button>
+</form>
+
+
+<script>
+    $(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+</body>
+</html>

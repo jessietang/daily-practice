@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="300" height="300" style="border: 1px solid #666;"></canvas>
+<script type="text/javascript">
+    var c = document.getElementById('myCanvas');
+    var context = c.getContext('2d');
+
+    context.strokeStyle="red";
+    context.beginPath();
+    context.moveTo(0,300);
+    context.quadraticCurveTo(75,50,300,300);
+    context.stroke();
+    context.globalCompositeOperation="source-over";
+
+    //下面绘制的直线用于表示上面的曲线的控制点和控制线，控制点坐标即两直线的交点（75,50）
+    context.strokeStyle="green";
+    context.beginPath();
+    context.moveTo(75,50);
+    context.lineTo(0,300);
+    context.moveTo(75,50);
+    context.lineTo(300,300);
+    context.stroke();
+</script>
+</body>
+</html>

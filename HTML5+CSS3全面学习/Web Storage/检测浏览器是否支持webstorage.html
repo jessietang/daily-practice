@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function checkStorageSupport(){
+        if(window.sessionStorage){
+            alert('this browser supports sessionStorage');
+        }else{
+            alert('this browser does not support sessionStorage');
+        }
+
+        if(window.localStorage){
+            alert('this browser supports localStorage');
+        }else{
+            alert('this browser does not supports localStorage');
+        }
+    }
+
+    window.onload = function(){
+        checkStorageSupport();
+    };
+</script>
+</body>
+</html>

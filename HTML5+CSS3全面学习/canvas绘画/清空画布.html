@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="200" height="100" style="border: 1px solid red;"></canvas>
+
+<div><button id="clear-canvas" onclick="clearMap();">清空画布</button></div>
+<script type="text/javascript">
+    var c = document.getElementById('myCanvas');
+    var context = c.getContext('2d');
+
+    context.strokeStyle = 'red';
+    context.beginPath();
+    context.arc(100,100,50,-Math.PI*1/6,-Math.PI*5/6,true);
+    context.closePath();
+    context.stroke();
+
+
+    // clear canvas
+    function clearMap(){
+        context.clearRect(0,0,200,300);
+    }
+</script>
+</body>
+</html>

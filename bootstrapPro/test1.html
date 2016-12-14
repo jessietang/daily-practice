@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="../bootstrap-3.3.5/dist/css/bootstrap.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <title></title>
+</head>
+<body>
+<!--<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="" class="form-horizontal">
+                <div class="form-group">
+                    <label for="input1" class="col-sm-4 col-md-2 control-label">username</label>
+                    <div class="col-xs-12 col-sm-8 col-md-10">
+                        <input type="text" class="form-control" id="input1" placeholder="please input the username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4 col-md-10 col-md-offset-2">
+                        <div class="checkbox">
+                            <label>
+                                <input type="chechbox"/>remember me
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="">Client Load Balancing:</label>
+    <select id="maxUsersId" name="maxUsers" style="width: 100%;" class="form-control">
+        <option value="1" style="width: 100%;">1</option>
+        <option value="2" style="width: 100%;">2</option>
+        <option value="3" style="width: 100%;">3</option>
+        <option value="4" style="width: 100%;">4</option>
+    </select>
+</div>-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>SSID profile</h3>
+        </div>
+        <div class="col-xs-12">
+            <form id="ssid_profile" method="post" class="">
+                <div class="form-group">
+                    <label class="">Network Name(SSID):</label>
+                    <div class="">
+                        <input type="text" id="ssid" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">Hide SSID:</label>
+                    <div class="">
+                        <input type="radio" id="enable" value="0" name="broadcast_ssid">Enable
+                        <input type="radio" id="disable" value="1" name="broadcast_ssid">Disable
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">AP isolation:</label>
+                    <div class="">
+                        <input type="checkbox" id="ap_iso" value="0" name="broadcast_ssid">Enable
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">Authentication Method:</label>
+                    <div class="">
+                        <select id="method" value="0" name="broadcast_ssid" class="form-control">
+                            <option value="Disable">Disable</option>
+                            <option value="WPAPSK">WPAPSK</option>
+                            <option value="WPA2PSK">WPA2PSK</option>
+                            <option value="WPAPSKWPA2PSK">WPA/WPA2PSK</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">WPA Encryption:</label>
+                    <div class="">
+                        <input type="radio"  value="0" name="encMethod">TKIP
+                        <input type="radio"  value="1" name="encMethod">AES
+                        <input type="radio"  value="2" name="encMethod">TKIP+AES
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">Passphrase:</label>
+                    <div class="">
+                        <input type="text" id="passphrase" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="">Key Renewal Interval:</label>
+                    <div class="">
+                        <input type="text" id="keyRenewalInterval" value="3600" size="5" maxlength="4" class="form-control">second
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="">Client Load Balancing:</label>
+                    <select id="maxUsersId" name="maxUsers" style="width: 100%;" class="form-control">
+                        <option value="1" style="width: 100%;">1</option>
+                        <option value="2" style="width: 100%;">2</option>
+                        <option value="3" style="width: 100%;">3</option>
+                        <option value="4" style="width: 100%;">4</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>

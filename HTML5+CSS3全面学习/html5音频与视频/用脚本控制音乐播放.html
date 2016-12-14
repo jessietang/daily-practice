@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!--不用controls="controls" ，用自定义控制界面控制音频的播放-->
+<audio id="music" >
+    <source src="../media/best-future.mp4"/>
+</audio>
+
+<button id="toggle" onclick="toggleSound();">播放</button>
+<script type="text/javascript">
+    function toggleSound(){
+        var music = document.getElementById('music');
+        var toggle = document.getElementById('toggle');
+        if(music.paused){
+            music.play();
+            toggle.innerHTML = "暂停";
+        }else{
+            music.pause();
+            toggle.innerHTML = "播放";
+        }
+    }
+</script>
+</body>
+</html>

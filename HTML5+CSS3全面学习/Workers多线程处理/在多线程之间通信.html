@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #list {
+            width: 60%;
+            margin: 10px auto;
+        }
+        #list li{
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <p>获取到的两百个随机数中能被3整除的数字有：</p>
+    <ul id="list"></ul></body>
+
+<script type="text/javascript">
+    /*这里是主页面*/
+    var worker = new Worker('w.js');
+    worker.postMessage("");
+    worker.onmessage = function(e){
+        if(e.data != ""){
+            // var intArray = JSON.parse(e.data); //只有子线程里面才可以这样用
+            var intArray = e.data.split(';');
+            var oUl = document.getElementById('list');
+            for(var i=0; i<intArray.length; i++){
+                var li = document.createElement('li');
+                li.innerHTML = intArray[i];
+                oUl.appendChild(li);
+            }
+        }
+    };
+
+</script>
+
+</body>
+</html>

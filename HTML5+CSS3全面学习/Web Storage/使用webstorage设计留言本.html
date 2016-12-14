@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>使用localStorage设计web留言本</h1>
+<textarea name="" id="memo" cols="60" rows="10"></textarea>
+<input type="button" value="追加" onclick="saveStorage('memo');"/>
+<input type="button" value="初始化" onclick="clearStorage();"/>
+<div id="msg"></div>
+<script type="text/javascript">
+    function saveStorage(id){
+        var data = document.getElementById(id).value;
+        var time = new Date().getTime();
+        window.localStorage.setItem(time, data);
+        alert('data have benn saved');
+        // read
+        loadStorage('msg');
+    }
+
+    function loadStorage(distId){
+        var result = '<table border="1" >';
+        for(var i=0; i<localStorage.length; i++){
+            var key = localStorage.key(i);
+            var value = localStorage.getItem(key);
+            var date = new Date();
+            date.setTime(key);
+            var dateStr = date.toUTCString();
+            result += '<tr><td>'+value+'</td><td>'+dateStr+'</td></tr>';
+        }
+        result += '</table>';
+
+        var target = document.getElementById(distId);
+        target.innerHTML = result;
+    }
+
+    function clearStorage(){
+        var tipMsg = window.confirm("确认全部清除数据吗？");
+        if(tipMsg){
+            window.localStorage.clear();
+            loadStorage('msg');
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<!--<script src="https://maps.google.co.jp/maps/api/js?sensor=false"></script>-->
+<!--<script src="http://maps.google.cn/maps/api/js?sensor=false"></script>-->
+<!--<script src="http://ditu.google.cn/maps/api/js?sensor=false&language=zh-CN "></script>-->
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=46ce9d0614bf7aefe0ba562f8cf87194&v=1.0&services=false"></script>
+<script type="text/javascript">
+    function get_location(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(show_map,handle_error,{enableHighAccuracy:true,maximumAge:1000});
+        }else{
+            alert('your browser does not support the html5 geolocation api');
+        }
+    }
+
+    function show_map(position){
+        var latitude = position.coords.altitude; // 十进制数的维度
+        var longitude = position.coords.longitude; //十进制数的经度
+        showObject(position,0);
+    }
+
+    function handle_error(error){
+        switch(error.code){
+            case 1:
+                alert('位置服务被拒绝');
+                break;
+            case 2:
+                alert('暂时获取不到位置信息');
+                break;
+            case 3:
+                alert('获取信息超时');
+                break;
+            default:
+                alert('未知错误');
+                break;
+        }
+    }
+
+    function showObject(obj,k){
+        if(!obj){
+            return;
+        }
+        for(var i in obj){
+            if(typeof(obj[i]) != 'object' || obj[i] == null){
+                for(var j=0; j<k; j++){
+                    document.write("&nbsp;&nbps;&nbsp;&nbsp;");
+                }
+                document.write(i+";"+obj[i]+"<br/>");
+            }else{
+                document.write(i+";"+"<br/>");
+                showObject(obj[i],k+1);
+            }
+        }
+    }
+</script>
+</body>
+</html>

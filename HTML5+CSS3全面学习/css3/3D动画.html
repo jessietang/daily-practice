@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .div1 {
+            margin: 100px auto;
+            padding: 20px;
+            color: #fff;
+            background-color: #000;
+            width: 200px;
+            -webkit-animation: myTest 20s infinite linear;
+            -o-animation: myTest 20s infinite linear;
+            animation: myTest 20s infinite linear;
+        }
+
+        @keyframes myTest {
+            0% {
+                -webkit-transform: rotateX(0deg);
+                -moz-transform: rotateX(0deg);
+                -ms-transform: rotateX(0deg);
+                -o-transform: rotateX(0deg);
+                transform: rotateX(0deg);
+            }
+            
+            50% {
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+
+            100% {
+                -webkit-transform: rotateX(360deg);
+                -moz-transform: rotateX(360deg);
+                -ms-transform: rotateX(360deg);
+                -o-transform: rotateX(360deg);
+                transform: rotateX(360deg);
+            }
+        }
+
+        @-webkit-keyframes myTest {
+            0% {
+                -webkit-transform: rotateX(0deg);
+                -moz-transform: rotateX(0deg);
+                -ms-transform: rotateX(0deg);
+                -o-transform: rotateX(0deg);
+                transform: rotateX(0deg);
+            }
+
+            50% {
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+
+            100% {
+                -webkit-transform: rotateX(360deg);
+                -moz-transform: rotateX(360deg);
+                -ms-transform: rotateX(360deg);
+                -o-transform: rotateX(360deg);
+                transform: rotateX(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="div1">animation设计自动翻转特效</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<p>输入数值：<input type="text" id="num"/></p>
+<p><button onclick="calculate();">计算</button></p>
+<script type="text/javascript">
+    //下面这种代码，在弹出提示框之前，用户是不能再该页面上执行操作的。
+    // 当数字过大时，浏览器会弹出对话框，提示脚本运行时间过长
+    /*function calculate(){
+        var num = parseInt(document.getElementById('num').value,10);
+        var result = 0;
+        for(var i=0; i<=num; i++){
+            result += i;
+        }
+        alert("合计值为：" + result + "。");
+    }*/
+
+
+    //重写该页面脚本，使用web workers把页面中比较耗时的运算放在后台运行，
+    // 这样无论输入多大的数值都可以正常运行了
+
+    var worker = new Worker('SumCalculate.js');
+
+    //接收从线程中传出来的计算结果
+    worker.onmessage = function(e){
+        alert('合计值为：'+ e.data+'。');
+    };
+    function calculate(){
+        var num = parseInt(document.getElementById('num').value,10);
+        worker.postMessage(num); //将数值传给线程
+    }
+
+</script>
+</body>
+</html>

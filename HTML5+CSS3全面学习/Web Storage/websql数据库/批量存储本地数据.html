@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <table id="myTable" border="1" style="border: 1px solid #eee;width: 100%;" cellspacing="0" cellpadding="0">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        var db = openDatabase('testdb','1.0','my first database', 2*1024*1024);
+        function log(id, name){
+            var row = document.createElement('tr');
+            var idCell = document.createElement('td');
+            var nameCell = document.createElement('td');
+            idCell.textContent = id;
+            nameCell.textContent = name;
+            row.appendChild(idCell);
+            row.appendChild(nameCell);
+            document.getElementById('myTable').appendChild(row);
+        }
+
+        function doQuery(){
+            db.transaction(function(tx){
+                tx.executeSql('SELECT * FROM mytable',[], function(tx,results){
+                    for(var i=0; i<results.rows.length; i++){
+                        var item = results.rows.item(i);
+                        log(item.id, item.name);
+                    }
+                },function(){
+                    alert('查询出错');
+                });
+            });
+        }
+
+        function initDatabase(){
+            var names = ['张三','丽萨','李四','王五','开清','偶吧','啥米'];
+            db.transaction(function(tx){
+                tx.executeSql('CREATE TABLE IF NOT EXISTS mytable(id integer primary key autoincrement,name)');
+                //为表插入数据
+                for(var i=0; i<names.length; i++){
+                    tx.executeSql('INSERT INTO mytable(name) VALUES (?)',[names[i]]);
+                }
+                doQuery();
+
+            });
+        }
+
+        initDatabase();
+    </script>
+</body>
+</html>

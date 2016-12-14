@@ -1,0 +1,76 @@
+body{padding-bottom:100px;}
+.mynavbar{opacity:0.8;}
+.topnav_logo>img{width:175px;height:35px;margin-top:-5px;}
+.mysing_up{margin-top:10px;}
+.singInBtn{background-color:#000;color:#eee;border-color:#eee;margin-top:10px;}
+.singInBtn:hover{background-color:#000;color:#fff;border-color:#fff;}
+/*.mycarousel{margin-top:-50px;}*/
+.mycarousel-caption{bottom:300px;}
+.mycarousel-caption h1{font-size:60px;}
+.carousel-indicators{display:none;}
+.carousel-indicators li{width:20px;height:20px;background-color: #fff;}
+.carousel-indicators .active{width:22px;height:22px;background-color: #333333;border:none;}
+.carousel-control{font-size:100px;line-height:600px;}
+
+
+/*Bootstrap3生成的淡入淡出效果的响应式轮播幻灯*/
+.carousel-fade .carousel-inner .item{
+    opacity:0;
+    -webkit-transition: opacity .1s;
+    -moz-transition: opacity .1s;
+    -ms-transition: opacity .1s;
+    -o-transition: opacity .1s;
+    transition: opacity .1s;
+}
+
+.carousel-fade .carousel-inner .active{
+    opacity: 1;
+}
+
+.carousel-fade .carousel-inner .item .carousel-caption{
+    margin-left:200px;
+    opacity:0;
+    -webkit-transition: all .5s ease-in .1s;
+    -moz-transition: all .5s ease-in .1s;
+    -ms-transition: all .5s ease-in .1s;
+    -o-transition: all .5s ease-in .1s;
+    transition: all .5s ease-in .1s;
+}
+
+.carousel-fade .carousel-inner .active .carousel-caption{
+    margin-left:0;
+    opacity:1;
+}
+
+
+
+
+
+
+.nav-tabs{
+    width:100%;
+    height:80px;
+    padding-left:5%;
+    background-color: #303030;
+    color:#000;
+}
+.nav-tabs li{
+    margin-top:37px;
+    width:28%;
+    margin-left:2%;
+    text-align: center;
+    background-color: rgba(173, 173, 173, 0.76);
+    border-radius:5px;
+}
+.nav-tabs li a{color:#000;}
+.tab-pane{padding:10px;}
+
+
+
+.tab-content .container .row{
+    margin-top:50px;
+}
+.myForm{width:48%;float:left;}
+.myForm:nth-child(2){float:right;}
+.tab-content .container .row button{margin-top:20px;width:100%;color:#fff;}
+.tab-content .container .row img{width:68px;height:68px;}

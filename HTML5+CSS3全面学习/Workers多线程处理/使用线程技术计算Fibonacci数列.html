@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>Fibonacci数列是比较经典的数学规律，它以递归的方法定义：</p>
+<p>F0 = 0</p>
+<p>F1 = 1</p>
+<p>Fn = F(n-1) + F(n-2) (n>=2, n属于整数)</p>
+
+
+<script type="text/javascript">
+    window.onload = function(){
+        var worker = new Worker('fibonacci.js');
+        worker.postMessage(10);
+        var timer = (new Date()).valueOf();
+        console.log('开始计算：n=40','当前时间：'+timer);
+        worker.onmessage = function(e){
+            var timer2 = (new Date()).valueOf();
+            console.log('计算结果：'+ e.data+' 计算完成时间：'+timer2+"计算用时："+(timer2 - timer));
+        };
+
+        setTimeout(function(){
+            console.log('由于js的单线程机制，本来由于浏览器假死，定时器函数在计算数列时不会执行，' +
+                    '但这里用了workers多线程，前面计算fibonacci数列浏览器并没有假死，' +
+                    '所以定时器函数在计算数列时执行了,但还是在主线程代码执行完成之后',
+                    '当前执行时间：'+(new Date()).valueOf());
+        });
+
+        // js主线程
+        console.log("我在计算数列的时候执行了","当前时间："+(new Date()).valueOf());
+    };
+
+    /*输出结果：
+
+     开始计算：n=40 当前时间：1481191712748
+     使用线程技术计算Fibonacci数列.html:33 我在计算数列的时候执行了 当前时间：1481191712749
+     使用线程技术计算Fibonacci数列.html:26 由于js的单线程机制，本来本来由于浏览器假死，
+     定时器函数在计算数列时不会执行，但这里用了workers多线程，前面计算fibonacci数列浏览器并没有假死，
+     所以定时器函数在计算数列时执行了,但还是在主线程代码执行完成之后 当前执行时间：1481191712770
+     使用线程技术计算Fibonacci数列.html:22 计算结果：102334155 计算完成时间：1481191724690计算用时：11942
+
+
+
+     */
+</script>
+</body>
+</html>

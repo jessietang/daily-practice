@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .div1 {
+            background-color: #fff000;
+            color: #000;
+            width: 500px;
+            -webkit-transition: background-color 1s linear,width 1s linear;
+            -moz-transition: background-color 1s linear,width 1s linear;
+            -ms-transition: background-color 1s linear,width 1s linear;
+            -o-transition: background-color 1s linear,width 1s linear;
+            transition: background-color 1s linear,width 1s linear;
+        }
+
+        .div1:hover {
+            background-color: #003366;
+            color: #fff;
+            width: 600px;
+            height: 50px;
+            line-height: 50px;
+        }
+        
+        .div2 {
+            position: absolute;
+            top: 40px;
+            left:20px;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            -webkit-border-radius: 100px;
+            -moz-border-radius: 100px;
+            border-radius: 100px;
+            background-color: red;
+            color: #fff;
+            -webkit-transform: rotate(0deg);
+            -webkit-transition: left 1s linear, -webkit-transform 1s linear;
+            -moz-transform: rotate(0deg);
+            -moz-transition: left 1s linear, -moz-transform 1s linear;
+            -ms-transform: rotate(0deg);
+            -ms-transition: left 1s linear, -ms-transform 1s linear;
+            -o-transform: rotate(0deg);
+            -o-transition: left 1s linear, -o-transform 1s linear;
+            transform: rotate(0deg);
+            transition: left 1s linear, transform 1s linear;
+        }
+
+        .div2:hover {
+            position: absolute;
+            left: 500px;
+            -webkit-transform: rotate(3000deg);
+            -moz-transform: rotate(3000deg);
+            -ms-transform: rotate(3000deg);
+            -o-transform: rotate(3000deg);
+            transform: rotate(3000deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="div1">使用transitions功能可以同时对多个属性值进行平滑过渡</div>
+
+<div class="div2">img rotate</div>
+</body>
+</html>

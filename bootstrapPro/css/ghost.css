@@ -1,0 +1,199 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background-color: #ebebeb;
+}
+.main-header{
+    width:100%;
+    background-image: url('http://static.ghostchina.com/image/6/d1/fcb3879e14429d75833a461572e64.jpg');
+    padding:62px 0;
+}
+.branding{
+    display:block;
+    width:100%;
+    height:100%;
+    text-align:center;
+}
+.main-nav{
+    width:100%;
+    background-color: #fff;
+    border-top:1px solid #ebebeb;
+    border-bottom:2px solid #ebebeb;
+}
+.main-nav .menu{
+    list-style:none;
+    display:flex;
+    justify-content: center;
+
+}
+.main-nav .menu li{
+    float:left;
+}
+.main-nav .menu li a{
+    display:block;
+    height:58px;
+    line-height:58px;
+    padding:0 21px;
+    color:#000;
+}
+
+.content-wrap .main-content .post{
+    margin-top:30px;
+    width:90%;
+    padding:5% 10px;
+    background-color: #fff;
+
+}
+.content-wrap .main-content .post .post-head{
+    text-align: center;
+
+}
+.content-wrap .main-content .post .post-head .post-title a{
+    color:#000;
+}
+.content-wrap .main-content .post .post-head .post-title a:hover{
+    text-decoration:none;
+}
+.content-wrap .main-content .post .post-head .post-meta span a{
+    color:#e67e22;
+}
+.content-wrap .main-content .post .post-head .post-date:before{
+    content:'▪';
+}
+.content-wrap .main-content .post .post-content{
+    margin-top:20px;
+    line-height:1.62;
+    font-size:18px;
+}
+.content-wrap .main-content .post .post-link{
+    border-bottom:1px solid #ebebeb;
+}
+.content-wrap .main-content .post .post-link a{
+    background-color: #e67e22;
+    color:#fff;
+    margin:20px auto;
+}
+.content-wrap .main-content .post .post-footer{
+    margin-top:20px;
+}
+
+.content-wrap .main-content .pagination{
+    text-align:center;
+    width:100%;
+}
+.content-wrap .main-content .pagination .pages{
+    display:inline-block;
+    padding:6px 10px;
+    background-color:#e67e22;
+    color:#fff;
+    word-spacing: 2px;
+    letter-spacing: 2px;
+}
+.content-wrap .main-content .pagination .btn{
+    background-color:#e67e22;
+    color:#fff;
+}
+
+/*右边*/
+.content-wrap .widget{
+    margin-top:30px;
+    width:90%;
+    padding:5% 10px;
+    background-color:#fff;
+}
+.content-wrap .widget .title{
+    height:30px;
+    line-height:15px;
+    border-bottom:1px solid #ebebeb;
+}
+.content-wrap .widget .content{
+    margin-top:10px;
+}
+.content-wrap .widget .community p a{
+    color:#e67e22;
+}
+.content-wrap .widget .download a{
+    width:100%;
+    border:none;
+    background-color: #e67e22;
+    color:#fff;
+    border-radius:0;
+}
+.content-wrap .widget .download a:hover{
+    background-color:#000;
+}
+.content-wrap .widget .tag-cloud a{
+    border-radius:0;
+    margin-right:10px;
+    margin-top:5px;
+}
+.content-wrap .widget .tag-cloud a:hover{
+    background-color: #e67e22;
+}
+
+
+/*底部*/
+.main-footer{
+    width:100%;
+    padding:20px 0;
+    background-color:#202020;
+}
+.main-footer .widget{
+    width:90%;
+    margin:0 auto;
+    padding:5px 5%;
+}
+.main-footer .widget h4{
+    width:100%;
+    height:30px;
+    line-height:15px;
+    border-bottom:1px solid #303030;
+    color:#fff;
+}
+/*.main-footer .widget .content{
+    margin-top:20px;
+}*/
+.main-footer .widget .recent-post .recent-single-post{
+    border-bottom:1px dashed #303030;
+    padding:15px 0;
+}
+.main-footer .widget .recent-post .recent-single-post .post-title{
+    color:#959595;
+}
+.main-footer .widget .recent-post .recent-single-post .post-title:hover{
+    text-decoration:none;
+    color: #e67e22;
+}
+
+.main-footer .widget .tag-cloud{
+    margin-top:15px;
+}
+.main-footer .widget .tag-cloud a{
+    border-radius:0;
+    margin-right:10px;
+    margin-top:5px;
+    color:#959595;
+    background-color:#202020;
+    border-color:#959595;
+}
+.main-footer .widget .tag-cloud a:hover{
+    background-color: #e67e22;
+    color:#fff;
+}
+.main-footer .widget .friedsLink a{
+    border:none;
+
+}
+hr{
+    border:1px dashed #303030;
+}
+
+
+.copyRight .col-md-12{
+    text-align:center;
+}
+.copyRight .col-md-12 a{
+    color:#000;
+}

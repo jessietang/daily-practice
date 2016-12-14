@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            background-color: #000;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        .p1 {
+            text-align: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #d1d1d1;
+            background-color: #ccc;
+            padding: 24px;
+            text-shadow: -1px -1px #fff,/*通过左上和右下各添加一个1px错位的补色阴影，营造一种淡淡的立体效果*/
+            1px 1px #333;
+        }
+
+        .p2 {
+            text-align: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #d1d1d1;
+            background-color: #ccc;
+            padding: 24px;
+            text-shadow: 1px 1px #fff,/*反向思维，把立体的左上和右下阴影颜色颠倒，营造一种凹体效果*/
+            -1px -1px #333;
+        }
+
+        .p3 {
+            text-align: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #d1d1d1;
+            background-color: #ccc;
+            padding: 24px;
+            text-shadow: -1px 0 #000,/*为文本的四条边添加1px的实体阴影*/
+            0 -1px #000,
+            1px 0 #000,
+            0 1px #000;
+        }
+
+        .p4 {
+            text-align: center;
+            font-size: 80px;
+            font-weight: bold;
+            color: #d1d1d1;
+            background-color: #ccc;
+            padding: 24px;
+            text-shadow: 0 0 16px #f87,
+            0 0 16px #f87;
+        }
+    </style>
+</head>
+<body>
+<p class="p1">HTML5+CSS3立体文字</p>
+
+<p class="p2">HTML5+CSS3凹体文字</p>
+
+<p class="p3">HTML5+CSS3文本描边</p>
+
+<p class="p4">HTML5+CSS3外发光文字</p>
+</body>
+</html>

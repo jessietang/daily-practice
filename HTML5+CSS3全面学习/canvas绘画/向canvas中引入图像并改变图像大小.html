@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<canvas id="myCanvas" width="300" height="200" style="border: 1px solid #666;"></canvas>
+<script type="text/javascript">
+    function draw(){
+        var ctx = document.getElementById('myCanvas').getContext('2d');
+        var img = new Image();
+        img.onload = function(){
+            //ctx.drawImage(img,0,0,100,50); //改变图像大小
+            ctx.drawImage(img,0,0,50,50,100,100,50,50);
+            ctx.font = '60px';
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            ctx.shadowBlur = 2;
+            ctx.shadowColor = 'red';
+            ctx.fillStyle = '#fff';
+            ctx.fillText('COOL',50,165);
+        };
+        img.src='../image/ashford_new_space_logo_11102011.png';
+    }
+    window.onload = function(){
+        draw();
+    };
+</script>
+</body>
+</html>

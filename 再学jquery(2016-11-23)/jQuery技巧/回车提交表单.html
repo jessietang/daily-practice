@@ -5,16 +5,72 @@
     <title></title>
 </head>
 <body>
-<input type="text"/>
+<input type="text" id="input1"/>
+<input type="text" id="input2"/>
+<input type="text" id="input3"/>
 <script src="../jquery.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        $('input').on('keyup', function(e){
-            if(e.which == '13'){
+        $('#input1').on('keyup', function(e){
+            alert(e.keyCode);
+            //ie9以下报错
+        });
+
+        $("#input2").on('keyup', function(e){
+            alert(e.which);
+            //ie9以下报错
+        });
+
+        $('#input3').on('keyup', function(e){
+            var e = e || window.event;
+            var code = e.which || e.keyCode;
+            if(code == "13"){
                 alert('回车提交！');
             }
         });
     });
 </script>
+
+<script type="text/javascript">
+    window.onload = function(){
+        var oInput1 = document.getElementById('input1');
+        var oInput2 = document.getElementById('input2');
+        var oInput3 = document.getElementById('input3');
+        oInput1.onkeyup = function(_e){
+            var e = _e || window.event;
+            //没有遇到说ff下面 e.keyCode==0
+            alert(e.keyCode);
+            // ie下一直有值
+            // FF下也有值
+            //chrome下有值
+            //opera下有值
+
+        };
+
+        oInput2.onkeyup = function(_e){
+            var e = _e || window.event;
+            alert(e.which);
+            // ie9以下：undefined
+            // FF下也有值
+            // chrome下有值
+            // safari下有值
+            //opera下有值
+        };
+
+        oInput3.onkeyup = function(_e){
+            var e = _e || window.event;
+            var code = e.keyCode || e.which;
+            if(code == '13'){
+                alert('回车提交！');
+            }
+        };
+
+    };
+</script>
+
+
+<!--
+综上：尽管jquery有的给我们封装好了的，但是出于安全考虑，我们在写代码的时候还是要基于兼容性来写。
+-->
 </body>
 </html>

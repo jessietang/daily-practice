@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>有问题，没懂啥子意思</title>
+</head>
+<body>
+<div id="content">
+    <h1>localStorage</h1>
+    <div id="form">
+        <form action="" id="travelForm">
+            <table class="form">
+                <tr>
+                    <td class="label">Traveler</td>
+                    <td><input type="text" name="traveler"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Destination</td>
+                    <td><input type="text" name="destination"/></td>
+                </tr>
+                <tr>
+                    <td class="label">Transportation</td>
+                    <td><input type="text" name="transportation"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="button">
+                        <input type="button" id="formClear" value="Clear" onclick="dbClear();"/>
+                        <input type="button" id="formSubmit" value="Go" onclick="dbGo();"/>
+                    </td>
+                </tr>
+            </table>
+
+
+        </form>
+    </div>
+    <div id="results"></div>
+</div>
+
+<script type="text/javascript">
+    var t = document.createElement('table');
+    var errorMessage = "";
+    var db = getLocalStorage() || dispError('Local Storage not supported.');
+    function getLocalStorage(){
+        try{
+            if(window.localStorage){
+                return window.localStorage;
+            }
+        }catch(e){
+            return undefined;
+        }
+    }
+
+    function dispResults(){
+        /*if(errorMessage){
+            element('results').innerHTML = errorMessage;
+            return;
+        }*/
+        var t = document.createElement('table');
+        t.insertRow(['traveler',db.getItem('traveler')]);
+        t.insertRow(['destination',db.getItem('destination')]);
+        t.insertRow(['transportation',db.getItem('transportation')]);
+        document.getElementById('results').appendChild(t);
+    }
+
+    function dbGo(){
+        var f = document.getElementById('travelForm');
+        db.setItem('traveler', f.elements['traveler'].value);
+        db.setItem('destination', f.elements['destination'].value);
+        db.setItem('transportation', f.elements['transportation'].value);
+        dispResults();
+    }
+
+    function dbClear(){
+
+        db.clear();
+        dispResults();
+    }
+
+    function initDisp(){
+        dispResults();
+    }
+
+    window.onload = function(){
+        initDisp();
+    };
+</script>
+</body>
+</html>

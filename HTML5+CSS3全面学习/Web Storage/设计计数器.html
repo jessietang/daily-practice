@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计数器</title>
+</head>
+<body>
+<script type="text/javascript">
+    if(window.localStorage.pageCount){
+        window.localStorage.pageCount = Number(window.localStorage.pageCount) + 1;
+    }else{
+        window.localStorage.pageCount = 1;
+    }
+
+    document.write("总访问数："+window.localStorage.pageCount);
+
+    if(window.sessionStorage.pageCount){
+        window.sessionStorage.pageCount = Number(window.sessionStorage.pageCount) + 1;
+    }else{
+        window.sessionStorage.pageCount = 1;
+    }
+
+    document.write("<br/>当前会话内访问数："+window.sessionStorage.pageCount);
+</script>
+</body>
+</html>

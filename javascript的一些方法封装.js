@@ -93,6 +93,7 @@ var EventUtil = {
 	},
 
 	preventDefault: function(event){
+		var event = event || window.event; // other browser || ie browser
 		if(event && event.preventDefault){
 			event.preventDefault();
 		}else{

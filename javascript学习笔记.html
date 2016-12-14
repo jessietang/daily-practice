@@ -1452,6 +1452,45 @@
     var mm = myBrowser();
     console.log(mm);
 
+
+    //数组的slice and splice方法
+    var testArr = [66, 2, 3, 4];
+    console.log("splice "+testArr.splice(2,1)); // splice 3
+    console.log(testArr); // [66, 2, 4]
+    // arrayObject.slice(start,end)该方法并不会修改数组，而是返回一个子数组
+    console.log(testArr.slice(1)); //[2, 4]
+    console.log(testArr); //[66, 2, 4]
+
+
+
+    // 手动修改window系统时间后，js的Date为何有时候不能改变？
+    //我的本地测试是可以的，没有出现这个问题，不知道杨姗姗那边是怎么一回事
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+    console.log(getNowFormatDate());
+
+
+    var today = new Date();
+    console.log(today);
+
+
+
+
 </script>
 
 
@@ -1476,6 +1515,28 @@
 <div id='status'>status</div>
 <div id='result'></div>
 
+
+<!-- input type=file/checkbox/radio样式美化 -->
+<div style="position: absolute;width:50px;height:50px;background-color:red;-webkit-border-radius: 50px;-moz-border-radius: 50px;border-radius: 50px;">
+    <input type="file" style="position:relative;opacity:0;filter:alpha(opacity=0);width:100%;height:100%;"/>
+</div>
+
+<div class="spacer" style="margin-top: 50px;height: 50px;"></div>
+
+<!-- input type=file/checkbox/radio样式美化 -->
+<div class="oneChoose">
+    <input type="checkbox" style="display:none;"/>
+    <label for="">
+    <span style="display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: -1px 8px 0 0;
+    vertical-align: middle;
+    background: url('http://www.ashford.com/images/elements/bg_checkbox.png') left top no-repeat;
+    cursor: pointer;"></span>
+        checkbox
+    </label>
+</div>
 
 
 </body>

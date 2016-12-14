@@ -1,0 +1,161 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+/**/
+#header{
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #004F89 url(http://krakenjs.com/img/Rays.png) no-repeat top center;
+}
+.rock{
+    width: 100%;
+    height: auto;
+    background: url(http://krakenjs.com/img/Rocks.png) repeat-x bottom left;
+}
+
+.rock .my-navbar{
+    background-color: transparent;
+    border: none;
+}
+
+.rock .my-navbar-toggle{
+    background-color: #0d79be;
+    border: none;
+}
+.rock .my-navbar-toggle:hover{
+    background-color: #0d79be;
+    border: none;
+}
+.navbar-default .navbar-toggle .my-icon-bar {
+    background-color: #fff;
+}
+.rock .brand-right{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.rock .brand-right .paypal{
+    width: 160px;
+    height: 20px;
+}
+#kra-example-navbar-collapse-1 .navbarText{
+    color: #fff;
+    font-size: 20px;
+    text-decoration: underline;
+}
+#kra-example-navbar-collapse-1 .navbarText:hover{
+    text-decoration: none;
+}
+/*.rock .my-row{
+    position:relative;
+    z-index:0;
+}*/
+.rock .row .my-col-xs-right{
+    height:206px;
+    color: #fff;
+}
+.rock .row .my-col-xs-right .my-btn{
+    background-color: #0d79be;
+    border: none;
+    margin-top:20px;
+    color: #fff;
+}
+.rock .row .my-col-xs-right .my-btn-2{
+    margin-left: 20px;
+}
+
+
+/*main*/
+.my-main{
+    display:block;
+    width: 100%;
+    height:auto;
+}
+#intro{
+    width: 100%;
+    height: auto;
+    background: linear-gradient(to bottom, #1a1845 0%, #004f8b 80%);
+    color: #fff;
+    padding-bottom: 10px;
+}
+.intro-container-1{
+    padding: 30px auto;
+}
+.intro-container-1 .my-a{
+    color: #fff;
+    text-decoration: underline;
+}
+.intro-container-1 .my-a:hover{
+    text-decoration: none;
+}
+
+#intro .intro-container-2 img{
+    width: 121px;
+    height: 131px;
+}
+#intro .intro-container-2 strong{
+    display: block;
+    width: 100%;
+    height: 15px;
+    line-height:15px;
+    text-align: center;
+}
+#intro .intro-container-2 a{
+    display: block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color:#fff;
+    text-decoration: none;
+}
+#intro .intro-container-2 a:hover{
+    color:#fff;
+}
+
+/*documentation*/
+#documentation{
+    width: 100%;
+    color: red;
+    padding-bottom: 50px;
+}
+/* Custom Styles */
+ul.nav-tabs{
+    width: 140px;
+    margin-top: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+}
+ul.nav-tabs li{
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
+ul.nav-tabs li:first-child{
+    border-top: none;
+}
+ul.nav-tabs li a{
+    margin: 0;
+    padding: 8px 16px;
+    border-radius: 0;
+}
+ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
+    color: #fff;
+    background: #0088cc;
+    border: 1px solid #0088cc;
+}
+ul.nav-tabs li:first-child a{
+    border-radius: 4px 4px 0 0;
+}
+ul.nav-tabs li:last-child a{
+    border-radius: 0 0 4px 4px;
+}
+ul.nav-tabs{
+    top: 30px; /* Set the top position of pinned element 设置固定的位置*/
+    /*元素锁定后，距离顶部30px*/
+}

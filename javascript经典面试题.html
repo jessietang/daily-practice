@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>javavscript面试常见题型</title>
 </head>
-<body>
+<body style="height:10000px;">
     <div id="div1">
         <p class="p1"></p>
         <p class="p2">
@@ -13,6 +13,11 @@
         <a href="" class="a1"></a>
         <a href="" class="a2"></a>
     </div>
+    <ul id="myUl">
+        <li class="list">111</li>
+        <li class="list">222</li>
+        <li class="list">333</li>
+    </ul>
     <script src="js/jquery-1.11.2.js"></script>
     <script type="text/javascript">
 
@@ -352,7 +357,7 @@
             oLi.appendChild(document.createTextNode('i am li '+ i));
             oLi.onclick = (function(m){
                 return function(){
-                    alert(m);
+                    //alert(m);
                 };
             })(i);
             oUl.appendChild(oLi);
@@ -640,7 +645,7 @@
             }
         }
         var oDiv = document.getElementById('div1');
-        Traverse(oDiv,function(){alert('i am call back fun');});
+        //Traverse(oDiv,function(){alert('i am call back fun');});
         //console.log(oDiv.children);
 
 
@@ -713,7 +718,7 @@
 
         /*28.快速排序 */
         function quickSort(arr){
-            if(arr.length <= 1){
+            if(arr.length <= 1){ /*必须，不然报堆栈溢出的错误*/
                 return arr;
             }
             var leftArr = [],
@@ -732,7 +737,7 @@
             return [].concat(quickSort(leftArr),middle,quickSort(rightArr));
         }
         var quickArr = [1,2,-1];
-        console.log(quickSort(quickArr));
+        //console.log(quickSort(quickArr));
 
 
         /*29.平年闰年算法函数*/
@@ -744,7 +749,467 @@
             }
         }
         isLeapYear(2016);
+
+
+        /*30. 将url的查询参数解析成字典对象*/
+        function getQueryObject(url) {
+            url = url == null ? window.location.href : url;
+            var search = url.substring(url.lastIndexOf("?") + 1);
+            var obj = {};
+            var reg = /([^?&=]+)=([^?&=]*)/g;
+            // [^?&=]+表示：除了？、&、=之外的一到多个字符
+            // [^?&=]*表示：除了？、&、=之外的0到多个字符（任意多个）
+            search.replace(reg, function (rs, $1, $2) {
+                var name = decodeURIComponent($1);
+                var val = decodeURIComponent($2);
+                val = String(val);
+                obj[name] = val;
+                return rs;
+            });
+            return obj;
+        }
+
+        console.log(getQueryObject('https://www.baidu.com/baidu?tn=monline_3_dg&ie=utf-8&wd=12306%E7%81%AB%E8%BD%A6%E7%A5%A8%E7%BD%91%E4%B8%8A%E8%AE%A2%E7%A5%A8%E5%AE%98%E7%BD%91'));
+
+
+        /*31.描述一下js里面的事件的三个阶段*/
+        /*
+        DOM2级事件模型中规定了事件流的三个阶段：捕获阶段、目标阶段、冒泡阶段。低版本ie（ie8及其以下不支持捕获阶段）
+        捕获事件流：Netscape提出的事件流，即事件由页面元素接收，逐级向下，传播到最具体的元素。
+        冒泡事件流：IE提出的事件流，即事件由最具体的元素接收，逐级向上，传播到页面元素。
+        */
+
+        /*32.IE和W3C不同绑定事件解绑事件的方法有什么区别，参数分别是什么，以及事件对象e有什么区别*/
+        /*
+        w3c绑定事件: target.addEventListener(event,listener,useCapture);
+         event-->事件名，不带'on'
+         listener-->事件触发时执行的函数
+         useCapture-->指定事件是否在捕获阶段或者冒泡阶段执行，
+         为true时事件句柄在捕获阶段执行，为false时事件句柄在冒泡阶段执行。
+         对应的事件移除：
+         removeEventListener(event,function,capture/bubble);
+
+         IE绑定事件：target.attachEvent(type,listener);
+         type-->字符串，事件名称，含有'on'，如：onclick onmouseover等等。
+         listener-->实现了EventListener接口或者是javascript中的函数。
+         对应的事件移除：
+         detachEvent(event,function);
+         */
+        //封装成js绑定事件函数：
+        function myAddEvent(obj,ev,fn){
+            if(obj.attachEvent){
+                obj.attachEvent('on'+ev,fn);
+            }else{
+                obj.addEventListener(ev,fn,false);
+            }
+        }
+
+        /*33.事件的委托（代理 Delegated Events）的原理以及优缺点*/
+        /*
+           原理：事件冒泡机制
+           优点：1).可以大量节省内存占用,减少事件注册，比如在table上代理所有td的click事件就很不错。
+                2).可以实现当新增子对象时，无需再次对其进行事件绑定，对于动态内容部分尤为合适。
+           缺点：
+           事件代理的常用应用应该仅限于上述需求下，如果把所有事件都用代理，就可能会出现事件误判，
+           即本不应该被触发的事件被绑定上了事件
+        */
+        //手写原生js实现事件代理，并要求兼容浏览器
+        function delegateEvent(interfaceEle,selector,type,fn){
+            //事件绑定
+            if(interfaceEle.addEventListener){
+                interfaceEle.addEventListener(type,eventfn,false);
+            }else{
+                interfaceEle.attachEvent('on'+type,eventfn);
+            }
+
+            function eventfn(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if(matchSelector(target,selector)){
+                    if(fn){
+                        fn.call(target,e);
+                    }
+                }
+            }
+        }
+        function matchSelector(ele,selector){
+            // if use id
+            if(selector.charAt(0) === "#"){
+                return ele.id == selector.slice(1);
+            }
+            //if use class
+            if(selector.charAt(0) === "."){
+                return (" "+ele.className+" ").indexOf(" "+selector.slice(1)+" ") != -1;
+            }
+            //if use tagName
+            return ele.tagName.toLowerCase() === selector.toLowerCase();
+        }
+
+        window.onload = function(){
+            var myUl = document.getElementById('myUl');
+           /* myAddEvent(myUl,'click',function(e){
+                var e = e || window.event;
+                var target = e.target || e.srcElement;
+                if(target.nodeName === 'LI'){
+                    target.style.backgroundColor = 'red';
+                }
+            });*/
+
+            /*参考这个例子：原生js事件委托事件代理.html*/
+            delegateEvent(myUl,'li','click',function(e){
+                var target = e.target || e.srcElement;
+                target.style.background = 'red';
+            });
+        };
+
+        /*34.前端性能优化*/
+        /*关于前端优化的东西太多太多了，不同角度不同方向也有很多，网络性能优化，加快访问速度，
+        浏览器并行加载数量，怎样实现原生JS异步载入，CDN加速的原理，如何将不同静态资源发布到
+        多个域名服务器上，发布后这些静态字段的url路径改怎么批量改写，用什么工具进行项目打包，
+        css打包后的相对路径怎么转换为绝对路径，用什么工具进行项目模块依赖管理，怎么进行cookie优化等等，
+         这个说起来就很多了，尽可能的按照自己做过的优化来讲，否则面试官随便挑一项深究都可能会卡壳，
+         与其这样还不如不讲*/
+
+        /*35.闭包原理及其应用*/
+        /*什么情况下会发生闭包，为什么需要闭包，什么场景下需要，闭包闭了谁，怎么释放被闭包的
+        变量内存，闭包的优点是什么，缺点是什么等等。*/
+        function fun(n,o) {
+            console.log(o);
+            return {
+                fun:function(m){
+                    return fun(m,n);
+                }
+            };
+        }
+        var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,0,0,0
+        var b = fun(0).fun(1).fun(2).fun(3);//undefined,0,1,2
+        var c = fun(0).fun(1);  c.fun(2);  c.fun(3);//undefined,0,1,1
+
+        //问:三行a,b,c的输出分别是什么？
+
+        /*函数作用域链的问题*/
+        /*测试1，对象内部的函数表达式*/
+        var o={
+            fn:function (){
+                console.log(fn);
+            }
+        };
+        //o.fn();//ERROR报错: fn is not defined(…)
+
+        /*测试2，非对象内部的函数表达式*/
+        var fn = function(){
+            console.log(fn);
+        };
+        fn(); //function(){console.log(fn);}
+
+        /*结论是：使用var或是非对象内部的函数表达式内，可以访问到存放当前函数的变量；在对象内部的不能访问到。
+         原因也非常简单，因为函数作用域链的问题，采用var的是在外部创建了一个fn变量，
+         函数内部当然可以在内部寻找不到fn后向上册作用域查找fn，而在创建对象内部时，
+         因为没有在函数作用域内创建fn，所以无法访问。
+
+         所以综上所述，可以得知，最内层的return出去的fun函数不是第二层fun函数，是最外层的fun函数。
+
+         所以，三个fun函数的关系也理清楚了，第一个等于第三个，他们都不等于第二个。*/
+        /* var a = fun(0);  a.fun(1);  a.fun(2);  a.fun(3);//undefined,0,0,0
+        可以得知，第一个fun(0)是在调用第一层fun函数。第二个fun(1)是在调用前一个fun的返回值的fun函数，所以：
+
+         第后面几个fun(1),fun(2),fun(3),函数都是在调用第二层fun函数。
+         遂：
+
+         在第一次调用fun(0)时，o为undefined；
+
+         第二次调用fun(1)时m为1，此时fun闭包了外层函数的n，也就是第一次调用的n=0，即m=1，n=0，
+         并在内部调用第一层fun函数fun(1,0);所以o为0；
+
+         第三次调用fun(2)时m为2，但依然是调用a.fun，所以还是闭包了第一次调用时的n，
+         所以内部调用第一层的fun(2,0);所以o为0
+
+         第四次同理；*/
+        /*var b = fun(0).fun(1).fun(2).fun(3);//undefined,0,1,2
+         先从fun(0)开始看，肯定是调用的第一层fun函数；而他的返回值是一个对象，所以第二个fun(1)调用的是第二层fun函数，
+         后面几个也是调用的第二层fun函数。
+
+         遂：
+
+         在第一次调用第一层fun(0)时，o为undefined；
+
+         第二次调用 .fun(1)时m为1，此时fun闭包了外层函数的n，也就是第一次调用的n=0，即m=1，n=0，
+         并在内部调用第一层fun函数fun(1,0);所以o为0；
+
+         第三次调用 .fun(2)时m为2，此时当前的fun函数不是第一次执行的返回对象，而是第二次执行的返回对象。
+         而在第二次执行第一层fun函数时时(1,0)所以n=1,o=0,返回时闭包了第二次的n，遂在第三次调用第三层fun
+         函数时m=2,n=1，即调用第一层fun函数fun(2,1)，所以o为1；
+
+         第四次调用 .fun(3)时m为3，闭包了第三次调用的n，同理，最终调用第一层fun函数为fun(3,2)；所以o为2；
+         */
+
+        /*36.手写数组快速去重、快速排序*/
+        var arr1 = [2,1,2,1,2,1,3];
+        function unique(arr){ /*快速去重*/
+            var newArr = [];
+            var flag;
+            for(var i=0; i<arr.length; i++){
+                flag = false;
+                if(newArr.length > 0){
+                    for(var j=0; j<newArr.length; j++){
+                        if(arr[i] == newArr[j]){
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+
+                if(!flag){
+                    newArr.push(arr[i]);
+                }
+            }
+            return newArr;
+        }
+        console.log(unique(arr1)); // [2,1]
+
+
+        function quickSortTest(arr){
+            if(arr.length <= 1){
+                return arr;
+            }/*没有加这个，就报错了：Maximum call stack size exceeded(…)*/
+            var leftArr = [];
+            var middleArr = [];
+            var rightArr = [];
+            var middleValue = arr[Math.floor(arr.length / 2)];
+            for(var i=0; i<arr.length; i++){
+                if(arr[i] > middleValue){
+                    rightArr.push(arr[i]);
+                }else if(arr[i] < middleValue){
+                    leftArr.push(arr[i]);
+                }else{
+                    middleArr.push(arr[i]);
+                }
+            }
+            return [].concat(quickSortTest(leftArr),middleArr,quickSortTest(rightArr));
+        }
+        var arr22 = [1,2,-1,0,10,-10];
+        console.log(quickSortTest(arr22)); // [-10, -1, 0, 1, 2, 10]
+
+        /*37.js的定义提升*/
+        (function(a){
+            console.log(a);
+            var a=10;
+            function a(){};
+        }(100));
+
+        /*变量提升、函数声明提升*/
+        (function(a){
+            var a;
+            function a(){}
+            console.log(a);
+            a = 10;
+        }(100));
+
+
+        function Foo() {
+            getName = function () { alert (1); };
+            return this;
+        }
+        Foo.getName = function () { alert (2);};
+        Foo.prototype.getName = function () { alert (3);};
+        var getName = function () { alert (4);};
+        function getName() { alert (5);}
+
+
+        var getName;
+        function getName() { alert (5);}
+        function Foo() {
+            getName = function () { alert (1); };
+            return this;
+        }
+        Foo.getName = function () { alert (2);};
+        Foo.prototype.getName = function () { alert (3);};
+        getName = function () { alert (4);};
+
+
+        //请写出以下输出结果：
+        //Foo.getName(); //2
+        //getName(); //4
+        //Foo().getName();//1
+        //getName();//1
+        //new Foo.getName();//2
+        //new Foo().getName();//3
+        //new new Foo().getName();// <==> new ((new Foo()).getName)();  3
+
+
+        /*38.跨域、jsonp原理*/
+
+        /*39.将url的查询参数解析成字典对象*/
+        function getQueryObject(url) {
+            url = url == null ? window.location.href : url;
+            var search = url.substring(url.lastIndexOf("?") + 1);
+            var obj = {};
+            var reg = /([^?&=]+)=([^?&=]*)/g;
+            // [^?&=]+表示：除了？、&、=之外的一到多个字符
+            // [^?&=]*表示：除了？、&、=之外的0到多个字符（任意多个）
+            search.replace(reg, function (rs, $1, $2) {
+                var name = decodeURIComponent($1);
+                var val = decodeURIComponent($2);
+                val = String(val);
+                obj[name] = val;
+                return rs;
+            });
+            return obj;
+        }
+
+        /*decodeURIComponent() 函数可对 encodeURIComponent() 函数编码的 URI 进行解码。*/
+        /*var test1="http://www.w3school.com.cn/My first/";
+        document.write(encodeURIComponent(test1)+ "<br />");
+        document.write(decodeURIComponent(test1));*/
+        //输出结果：
+        //http%3A%2F%2Fwww.w3school.com.cn%2FMy%20first%2F
+        //http://www.w3school.com.cn/My first/
+
+        console.log(getQueryObject('https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=1&tn=monline_3_dg&wd=%E' +
+                '6%B5%8F%E8%A7%88%E5%99%A8%E5%B9%B6%E8%A1%8C%E5%8A%A0%E8%BD%BD&oq=e%20window.event&rsv_p' +
+                'q=c214fc1800087f3f&rsv_t=9a94hcuvNur9tZPFkZzwE1IZymTAb2nIy2UlYqpw6evpaTvsk6IxL6btvc4neK' +
+                'itZsM6&rqlang=cn&rsv_enter=1&inputT=674&rsv_sug3=54&rsv_sug1=38&rsv_sug7=100&rsv_n=2&rs' +
+                'v_sug2=0&rsv_sug4=742'));
+        //Object {ie: "utf-8", f: "3", rsv_bp: "1", tn: "monline_3_dg", wd: "浏览器并行加载"…}
+
+
+        /*40.函数节流 ====》思想：setTimeout定时器*/
+        /*对于常见的场景，如网页滚动时，经常会有滚动到哪时做什么样的动画效果，遂要注册onscroll事件，
+        如何减少触发次数，到达优化性能，同时又满足效果要求不卡顿，一个是优化事件内代码，减少代码量，
+        二就是做函数节流。*/
+        var throttleV2 = function(fn, delay, mustRunDelay){
+            var timer = null;
+            var t_start;
+            return function(){
+                var context = this, args = arguments, t_curr = +new Date();
+                clearTimeout(timer);
+                if(!t_start){
+                    t_start = t_curr;
+                }
+                if(t_curr - t_start >= mustRunDelay){
+                    fn.apply(context, args);
+                    t_start = t_curr;
+                }
+                else {
+                    timer = setTimeout(function(){
+                        fn.apply(context, args);
+                    }, delay);
+                }
+            };
+        };
+        /*第一个问题:
+         t_start定义时就应该初始化,你在返回函数里初始化,你仔细看看作用只起了一次,
+         但是实际却是每次都执行,浪费了多次判断资源
+         第二个问题:
+         当执行时间大于必须执行时间时,首先要做的应该是先重置开始时间,应为在火狐下,
+         在执行回调函数的同时,滚动条依然在滚动,这样就是短时间大量触发回调函数,没有
+         起到函数节流作用,不信,你alert一下
+         第三个问题:
+         当执行时间大于必须执行时间时,当重置开始时间后,紧接着要再clearTimeout(timer),
+         因为此时timer已经定义了,你在执行回调函数的同时,可能滚动已经停止,造成执行完回
+         调函数后,又要再次执行定时器中的回调函数
+         第四个问题:
+         定时器中的回调函数执行完后,也要重置t_start,要不然那就彻底没有起到函数节流思想了*/
+
+        //改进版的函数节流
+        function highThottle(fn,content,musttime,time){
+            var start=new Date();
+            var musttime=musttime||5000;
+            return function(){
+                var args=arguments;
+                clearTimeout(fn.timer);
+                var end=new Date();
+                if(end-start>musttime){
+                    start=new Date();
+                    clearTimeout(fn.timer);
+                    fn.apply(content,args);
+                }else{
+                    fn.timer=setTimeout(function(){
+                        start=new Date();
+                        fn.apply(content,args);
+                    },time||200);
+                }
+            }
+        }
+
+
+        /*41.设计模式*/
+
+        /*43.*/
+
+
+
+
     </script>
+    <!--42.经典的css垂直居中方法-->
+    <!--1)容器内-->
+    <!--<div style="position: relative;background-color:green;width:500px;height:300px;">
+        <div style="width:50%;height:50%;margin: auto;position:absolute;
+        left:0;top:0;bottom:0;right:0;background-color:greenyellow;">
+            兼容性：所有现代浏览器&ie8&ie8+
+        </div>
+    </div>-->
+
+    <!--2）视区内 $(window).height() ==> 770px-->
+    <!--<div style="position:relative;background-color:green;height:770px;">
+        <div style="position:fixed;z-index:999;width:50%;height:50%;
+        margin: auto;left:0;top:0;bottom:0;right:0;background-color:red;"></div>
+    </div>-->
+
+    <!--3）边栏 使用right:0;left:auto;固定于屏幕右侧，使用left:0;right:auto;固定与屏幕左侧。-->
+    <!--<div style="position:relative;background-color:green;">
+        <div style="position:fixed;z-index:999;width:50%;height:50%;
+        margin: auto;left:auto;top:0;bottom:0;right:0;background-color:red;"></div>
+    </div>-->
+    <!--<div style="position:relative;background-color:green;">
+        <div style="position:fixed;z-index:999;width:50%;height:50%;
+        margin: auto;left:0;top:0;bottom:0;right:auto;background-color:red;"></div>
+    </div>-->
+
+    <!--4)响应式自适应居中  $(window).height() ==> 770px -->
+    <!--<div style="position:relative;height:770px;background-color: #003300;">
+        <div style="margin: auto;position:absolute;left:0;top:0;right:0;bottom:0;width: 60%;height: 60%;min-width: 200px;max-width: 400px;
+        padding: 40px;background-color:green;">
+            响应式局对局中，内容块儿使用了百分比形式的width/height,min-/max-,padding,使其水平居中显示
+        </div>
+    </div>-->
+
+    <!--5)溢出情况-->
+    <!--<div style="position:relative;height:770px;background-color: #003300;">
+        <div style="margin: auto;position:absolute;left:0;top:0;right:0;bottom:0;width: 60%;height: 10%;min-width: 200px;max-width: 400px;
+        padding: 40px;background-color:green;overflow-y:scroll;">
+            溢出情况绝对局中，内容高度大于块元素或容器
+            （视区viewport或设为position:relative的父容
+            器）会溢出，这时内容可能会显示到块与容器的外
+            面，或者被截断出现显示不全（分别对应内容块overflow
+            属性设置为visible和hidden的表现）。
+            溢出情况绝对局中，内容高度大于块元素或容器
+            （视区viewport或设为position:relative的父容
+            器）会溢出，这时内容可能会显示到块与容器的外
+            面，或者被截断出现显示不全（分别对应内容块overflow
+            属性设置为visible和hidden的表现）。
+        </div>
+    </div>-->
+
+    <!--6)图片 图片应用局对局中height：auto直接应用于图片本身-->
+    <!--<div style="position:relative;width:100%;height:300px;;background-color: green;">
+        <img src="image/ashford_new_space_logo_11102011.png" alt=""
+             style="position:absolute;margin:auto;left:0;right:0;top:0;bottom:0;height:auto;"/>
+    </div>-->
+    <!--7）负外边距-->
+    <!--这或许是当前最流行的使用方法。如果块元素尺寸已知，可以通过以下方式让内容块居中于容器显示：
+外边距margin取负数，大小为width/height（不使用box-sizing: border-box时包括padding，）
+的一半，再加上top: 50%; left: 50%;测试表明，这是唯一在IE6-IE7上也表现良好的方法。-->
+
+    <!--8）变形transform-->
+    <!--<div style="position:relative;width:100%;height:300px;background-color:greenyellow;">
+        <div style="position:absolute;left:50%;top:50%;width:30%;height:30%;background-color: green;
+        -webkit-transform: translate(-50%,-50%);-moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);-o-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);">
+            这里的translate 50%是相对于自己本身。
+        </div>
+    </div>-->
 
 
 </body>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>只在FF browser中有效！！！其他browser中报错：Worker is not defined(…)</title>
+    <style>
+        #list {
+            width: 60%;
+            margin: 10px auto;
+        }
+        #list li{
+            display: inline-block;
+            padding: 5px 10px;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<p>获取到的两百个随机数中能被3整除的数字有：</p>
+<ul id="list"></ul></body>
+
+<script type="text/javascript">
+    /*在上一个例子（在后台过滤值.html）的基础上，把主页脚本中随机生成数组的工作
+    放到后台线程中进行，然后使用另一个子线程在随机数组中挑选可以被3整除的数字。
+    对于数组的船体以及挑选结果的传递均采用JSON对象来进行转换，以验证是否能在
+    线程之间进行javascript对象的传递工作*/
+    var worker = new Worker('script1.js');
+    worker.postMessage("");
+    worker.onmessage = function(e){
+        if(e.data != ""){
+            var intArray = e.data.split(';');
+            var oUl = document.getElementById('list');
+            for(var i=0; i<intArray.length; i++){
+                var li = document.createElement('li');
+                li.innerHTML = intArray[i];
+                oUl.appendChild(li);
+            }
+        }
+    };
+</script>
+</html>

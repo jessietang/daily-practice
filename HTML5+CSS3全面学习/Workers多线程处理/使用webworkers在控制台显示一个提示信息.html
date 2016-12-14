@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    //web页主线程
+
+    //创建一个Worker对象并向他传递将在新线程中执行的脚本的url
+    var worker = new Worker('worker1.js');
+
+    //向Worker发送数据
+    worker.postMessage("hello world");
+
+    //接收Worker传过来的数据函数
+    worker.onmessage = function(evt){
+        console.log(evt.data); //输出Worker发送来的数据
+    };
+</script>
+</body>
+</html>

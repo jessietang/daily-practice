@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>使用web storage模拟数据库</h1>
+
+<form action="">
+    <table>
+        <tr>
+            <td>name：</td>
+            <td><input type="text" id="name"/></td>
+        </tr>
+        <tr>
+            <td>email：</td>
+            <td><input type="text" id="email"/></td>
+        </tr>
+        <tr>
+            <td>phone：</td>
+            <td><input type="text" id="phone"/></td>
+        </tr>
+        <tr>
+            <td>remarks：</td>
+            <td><input type="text" id="remarks"/></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="reset" value="reset"/>
+            </td>
+            <td>
+                <input type="button" value="save" onclick="saveStorage();"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<hr/>
+
+<p>检索：<input type="text" id="find"/>
+    <input type="button" value="检索" onclick="findStorage();"/></p>
+
+<div id="msgShow"></div>
+
+<script type="text/javascript">
+    function saveStorage(){
+        var data = new Object();
+        data.name = document.getElementById('name').value;
+        data.email = document.getElementById('email').value;
+        data.phone = document.getElementById('phone').value;
+        data.remarks = document.getElementById('remarks').value;
+        var str = JSON.stringify(data); //stringify()用于从一个对象解析出字符串
+        localStorage.setItem(data.name,str);
+        alert('data have been saved!');
+    }
+
+    function findStorage(){
+        var findKeyWords = document.getElementById('find').value;
+        var strJson = localStorage.getItem(findKeyWords);
+        var target = document.getElementById('msgShow');
+        if(strJson){
+            var data = JSON.parse(strJson);
+            var result = '<p>name:'+data.name+'</p>';
+            result += '<p>email:'+data.email+'</p>';
+            result += '<p>phone:'+data.phone+'</p>';
+            result += '<p>remarks:'+data.remarks+'</p>';
+            target.innerHTML = result;
+        }else{
+            target.innerHTML = '该用户不存在！'
+        }
+
+    }
+</script>
+
+</body>
+</html>

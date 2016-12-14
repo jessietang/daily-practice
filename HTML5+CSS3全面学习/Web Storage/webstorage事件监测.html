@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<button id="btn">touch storage</button>
+<script type="text/javascript">
+    function displayStorageEvent(e){
+        var logged = "key:"+ e.key+",newValue:"+ e.newValue+",oldValue:"+ e.oldValue+",url:"+ e.url+",storageArea:"+ e.storageArea;
+        alert(logged);
+    }
+    window.onload = function(){
+        window.addEventListener("storage",displayStorageEvent,true);
+        var oBtn = document.getElementById('btn');
+        oBtn.onclick = function(){
+            alert('test');
+            window.sessionStorage.username = 'Jessie';
+            alert(window.sessionStorage.username);
+        };
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="jquery.bulletchart.css"/>
+</head>
+<body>
+<div class="chart bullet-chart" style="width: 85%;">
+    <div class="legend">
+        <div class="legend-item" data-index="0">
+            <span class="legend-symbol bar"></span><span class="legend-label">Projected
+                    Target</span>
+        </div>
+        <div class="legend-item" data-index="1">
+            <span class="legend-symbol bar blue"></span><span
+                class="legend-label">Actual Target</span>
+        </div>
+        <div class="legend-item" data-index="2">
+            <span class="legend-symbol marker green"></span><span
+                class="legend-label">Green Line</span>
+        </div>
+        <div class="legend-item" data-index="3">
+            <span class="legend-symbol marker red"></span><span
+                class="legend-label">Minimum Threshold</span>
+        </div>
+    </div>
+    <div class="chart-container">
+        <div class="bar" style="width: 80%;"></div>
+        <div class="bar blue" style="width: 70%;"></div>
+        <div class="marker green" style="left: 60%;"></div>
+        <div class="marker red" style="left: 50%;"></div>
+    </div>
+    <div class="tick-bar">
+        <span class="tick" style="left: 0%;"></span><span class="tick-label"
+                                                          style="left: 0%;">0</span><span class="tick" style="left: 25%;"></span><span
+            class="tick-label" style="left: 25%;">25</span><span class="tick"
+                                                                 style="left: 50%;"></span><span class="tick-label"
+                                                                                                 style="left: 50%;">50</span><span class="tick" style="left: 75%;"></span><span
+            class="tick-label" style="left: 75%;">75</span><span class="tick"
+                                                                 style="left: 100%;"></span><span class="tick-label"
+                                                                                                  style="left: 100%;">100</span>
+    </div>
+</div>
+
+<input id="bulletChartBtn" type="button" value="BulletChart"/><br/>
+<div class="myChart1"></div>
+<div class="myChart2"></div>
+
+<script src="../../js/jquery-1.11.2.js"></script>
+<script src="jquery.bulletchart.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#bulletChartBtn").click(function(){
+            $('.myChart1').bulletchart({
+                size: 85,
+                bars: [
+                    { title: 'Projected Target', value: 80, css: '' },
+                    { title: 'Actual Target', value: 70, css: 'blue' }
+                ],
+                markers: [
+                    { title: 'Green Line', value: 60, css: 'green' },
+                    { title: 'Minimum Threshold', value: 50, css: 'red' }
+                ],
+                ticks: [0, 25, 50, 75, 100]
+            });
+
+            $('.myChart2').bulletchart({
+                size: 85,
+                bars: [
+                    { title: 'Projected Target', value: 80, css: '' },
+                    { title: 'Actual Target', value: 50, css: 'blue' }
+                ],
+                markers: [
+                    { title: 'Green Line', value: 40, css: 'green' },
+                    { title: 'Minimum Threshold', value: 45, css: 'red' }
+                ],
+                ticks: [0, 25, 50, 75, 100]
+            });
+        });
+    });
+</script>
+</body>
+</html>

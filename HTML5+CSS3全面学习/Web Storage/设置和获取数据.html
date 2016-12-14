@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+    function checkStorageSupport(){
+        if(window.sessionStorage){
+            alert('this browser supports sessionStorage');
+        }else{
+            alert('this browser does not support sessionStorage');
+        }
+
+        if(window.localStorage){
+            alert('this browser supports localStorage');
+        }else{
+            alert('this browser does not supports localStorage');
+        }
+    }
+
+    window.onload = function(){
+        checkStorageSupport();
+
+        //使用setItem(key,value) 和 getItem(key)来设置和获取
+        /*window.sessionStorage.setItem('username','Jessie');
+        alert(window.sessionStorage.getItem('username'));*/
+
+
+        //另外一种方法，使用点语法设置数据
+        /*window.sessionStorage.username = 'Cassie';
+        alert(window.sessionStorage.username);*/
+
+        window.sessionStorage.username = 'aini';
+        window.sessionStorage.password = '123';
+        window.sessionStorage.email = 'aa@bb.com';
+
+        console.log(window.sessionStorage.key(0)); // email
+
+        console.log(window.sessionStorage.length); // 3
+
+        console.log(window.sessionStorage.email); //aa@bb.com
+        window.sessionStorage.removeItem('email');
+        console.log(window.sessionStorage.email); // undefined
+
+        window.sessionStorage.clear(); //删除存储列表中的所有数据
+        console.log(window.sessionStorage.username); // undefined
+
+    };
+</script>
+</body>
+</html>
