@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .demo1, .demo2, .demo3, .demo4, .demo5, .demo6, .demo7 {
+            margin-top: 20px;
+        }
+
+        .demo1 {
+            width: 300px;
+            height: 300px;
+            background-color: green;
+        }
+
+        .demo1 .text-here {
+            line-height: 300px;
+        }
+
+        .demo2 {
+            width: 300px;
+            height: 300px;
+            background-color: green;
+            line-height: 300px;
+        }
+
+        .demo2 img {
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        .demo3 {
+            width: 300px;
+            height: 300px;
+            background-color: green;
+            display: table;
+        }
+
+        .demo3 .text-here {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .demo4 {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: green;
+        }
+
+        .demo4 .child {
+            position: absolute;
+            width: 50%;
+            height: 30%;
+            background-color: grey;
+            left: 50%;
+            top: 50%;
+            margin-left: -25%;
+            margin-top: -15%;
+        }
+
+        .demo5 {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: green;
+        }
+
+        .demo5 .child {
+            position: absolute;
+            width: 50%;
+            height: 30%;
+            background-color: grey;
+            margin: auto;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .demo6 {
+            width: 300px;
+            background-color: green;
+        }
+
+        .demo6 .child {
+            padding: 30% 0;
+        }
+
+        /*.demo7 {
+            width: 300px;
+            height: 250px;
+            background-color: green;
+        }
+
+        .demo7 .floater {
+            float: left;
+            height: 50%;
+            width: 100%;
+            margin-bottom: -50px;
+            outline: 1px solid red;
+        }
+
+        .demo7 .child {
+            clear: both;
+            height: 100px;
+            outline: 1px solid yellow;
+        }*/
+
+    </style>
+</head>
+<body>
+
+    <!--1.line-height 适用于单行文本垂直居中-->
+    <!--垂直居中文字-->
+    <div class="demo1">
+        <div class="text-here">line-height</div>
+    </div>
+
+    <!--垂直居中图片-->
+    <div class="demo2">
+        <img src="image/1.jpg" alt=""/>
+    </div>
+
+    <!--2.table cell 适用：通用  不兼容低版本ie(ie7-)-->
+    <div class="demo3">
+        <div class="text-here">table cell and vertical align</div>
+    </div>
+
+    <!--3.absolute positioning and negative margin -->
+    <div class="demo4">
+        <div class="child"></div>
+    </div>
+
+    <!--4.Absolute Positioning and Stretching  通用，但在IE版本低于7时不能正常工作-->
+    <div class="demo5">
+        <div class="child"></div>
+    </div>
+
+    <!--5.Equal Top and Bottom Padding -->
+    <div class="demo6">
+        <div class="child">Equal Top and Bottom Padding</div>
+    </div>
+
+    <!--6.floater div 感觉没啥作用-->
+    <!--<div class="demo7">
+        <div class="floater"></div>
+        <div class="child">content text</div>
+    </div>-->
+</body>
+</html>
