@@ -25,6 +25,7 @@
             var e = e || window.event;
             var code = e.which || e.keyCode;
             if(code == "13"){
+                console.log($(this).val());
                 alert('回车提交！');
             }
         });

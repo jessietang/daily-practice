@@ -5,9 +5,36 @@
     <title></title>
 </head>
 <body>
+<button id="load">load now</button>
+
+<button class="myBtn">my btn</button>
+
+<div id="newContent">222222222</div>
+
+<ul>
+    <li><strong>list</strong> item 1 - one strong tag</li>
+    <li><strong>list</strong> item <strong>2</strong>
+        - two <span>strong tags</span></li>
+    <li>list item 3</li>
+    <li>list item 4</li>
+    <li>list item 5</li>
+    <li>list item 6</li>
+</ul>
 <script src="../jquery.min.js"></script>
 <script type="text/javascript">
     $(function(){
+        $(document).on('click', '#load', function(){
+            setTimeout(function(){
+                $.ajax({
+                    url: 'filterIndex.html',
+                    success: function(){
+                        setTimeout(function(){
+                            alert('请求成功!');
+                        },1000);
+                    }
+                });
+            },1000);
+        });
         $("#load").ajaxStart(function(){
             showLoading(); //显示loading
             disableButtons(); //禁用按钮
@@ -15,6 +42,20 @@
             hideLoading(); //隐藏loading
             enableButtons(); // 启用按钮
         });
+
+        function showLoading(){
+            var pageLoadingDom = '<div id="af-page-loading"><img src="https://www.ashford.com/images/ashford/ajax-loader.gif" /></div>';
+            $('body').append(pageLoadingDom);
+        }
+        function disableButtons(){
+            $('#load').attr("disabled",true);
+        }
+        function hideLoading(){
+            $('body').find('#af-page-loading').remove();
+        }
+        function enableButtons(){
+            $('#load').attr("disabled",false);
+        }
 
 
 
@@ -35,7 +76,10 @@
                 url:"filterIndex.html",
                 success:function(data){
                     ajaxLoadComplete();
-                    $('#newContent').html($(data).find('#myContent'));
+                    //console.log($(data).filter('#myContent').html());
+                    //一般是重新渲染数据，即把自己赋值给自己，注意用的是filter而不是find()
+                    //$('#myContent').html($(data).filter('#myContent').html());
+                    $('#newContent').html($(data).filter('#myContent').html());
                     console.log('load success');
                 },
                 error: function(data){
@@ -48,6 +92,12 @@
         $('.myBtn').unbind('click').bind('click', function(){
             startMyTask();
         });
+
+
+        // filter的应用
+        $('li').filter(function(index) {
+            return $('strong', this).length == 1;
+        }).css('background-color', 'red');
 
 
     });

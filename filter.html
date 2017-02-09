@@ -52,7 +52,7 @@
     <div class="popup">
 
     </div>
-    <script src="../js/jquery-1.11.2.js"></script>
+    <script src="js/jquery-1.11.2.js"></script>
     <script type="text/javascript">
         $(function(){
             function ajaxLoader(){
@@ -71,7 +71,10 @@
                     url:"filterIndex.html",
                     success:function(data){
                         ajaxLoadComplete();
-                        $('#newContent').html($(data).find('#myContent'));
+                        //一般是重新渲染数据，即把自己赋值给自己
+                        //$('#myContent').html($(data).filter('#myContent').html());
+
+                        $('#newContent').html($(data).filter('#myContent').html());
                         console.log('load success');
                     },
                     error: function(data){
