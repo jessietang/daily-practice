@@ -29,7 +29,11 @@
     //把所有不是数字不是.也不是$的字符替换成空字符串
     //i : ignore  g: global
     var str1 = string1.replace(/[^\d,^{.},^{$}]/ig, '');
+    var str1_1 = string1.replace(/[^\d,{.},{$}]/ig, '');
     console.log(str1); // 1.309$
+    console.log(str1_1); // 1.309$
+    var str1_11 = string1.replace(/[^{\d,{.},{$}}]/ig,'');  // 这个算是标准写法把！！！
+    console.log(str1_11); // 1.309$
     //把所有数字和.替换成字母t
     var str1_2 = string1.replace(/[\d,{.}]/ig,'t');
     console.log(str1_2); //#@ttttt$
@@ -57,6 +61,39 @@
     var string6 = '#jTyhT$T78s0s';
     var str6 = string6.replace(/[^a-z,^\d]/g,'H');
     console.log(str6); // HjHyhHHH78s0s
+
+    //7).^ 和 $ 分别用来匹配字符串的开头和结束
+    // ^匹配开头，注意与非‘非’区分开
+    var testStr1 = 'mabcde123';
+    var testStr2 = 'abcde123';
+    var testStr3 = '12ab34cd';
+    //匹配以ab字符串开头的字符串，如果匹配到了就返回字符串构成的数组，没匹配到就返回null
+    console.log(testStr1.match(/(^ab)/g)); // null
+    //把以字符串m开头的字符替换成M
+    console.log(testStr1.replace(/(^m)/g,'M')); // Mabcde123
+    //把不是字符m的所有字符替换成M
+    console.log(testStr1.replace(/[^{m,c}]/g,'M')); // mMMcMMMMM
+    //把不是字符m的所有字符替换成M
+    console.log(testStr1.replace(/[^m,^c]/g,'M')); // mMMcMMMMM
+    //把所有不是小写字母的字符替换成6
+    console.log(testStr1.replace(/[^a-z]/g,'6')); // mabcde666
+    //把以小写字母开头的字符替换成6
+    console.log(testStr1.replace(/^[a-z]/g,'6')); // 6abcde123
+    //匹配以ab字符串开头的字符串，如果匹配到了就返回字符串构成的数组，没匹配到就返回null
+    console.log(testStr2.match(/(^ab)/g)); // ["ab"]
+    //把所有非数字字符替换成T
+    console.log(testStr3.replace(/[^\d]/g,'T')); // 12TT34TT
+    //把所有非数字字符替换成T
+    console.log(testStr3.replace(/[^0-9]/g,'T')); //12TT34TT
+    //把以数字开始的字符替换成T
+    console.log(testStr3.replace(/^[\d]/g,'T')); // T2ab34cd
+    //把以数字开始的字符替换成T
+    console.log(testStr3.replace(/^[0-9]/g, 'T')); //T2ab34cd
+    // 从一个字符串中截取出浮点数
+    console.log("kl$100.08".replace(/[^{(0-9),{.}}]/ig,"")); // 100.08
+
+
+
 
 
     //闭包复习
