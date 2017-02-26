@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="js/jquery.fullpage.css"/>
+    <style>
+        .section h1 {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -50px;
+            margin-top: -50px;
+        }
+
+        .slideText2{
+            z-index: 10;
+            -webkit-transition: all 1s;
+            -moz-transition: all 1s;
+            -ms-transition: all 1s;
+            -o-transition: all 1s;
+            transition: all 1s;
+        }
+
+        .slideText2.active{
+            -webkit-transform: translate3d(-200px, 0px, 0px);
+            -moz-transform: translate3d(-200px, 0px, 0px);
+            -ms-transform:translate3d(-200px, 0px, 0px);
+            transform: translate3d(-200px, 0px, 0px);
+        }
+    </style>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.fullpage.js"></script>
+</head>
+<body>
+    <div id="fullpage">
+        <!--每一屏class名：jquery.fullpage.js里面变量 SECTION_DEFAULT_SEL -->
+        <div class="section s1">
+            <img src="images/bg1.jpg" alt=""/>
+            <h1>第一屏</h1>
+        </div>
+        <div class="section s2">
+            <img src="images/bg2.jpg" alt=""/>
+            <h1 class="slideText2">第二屏</h1>
+        </div>
+        <div class="section s3">
+            <img src="images/bg3.jpg" alt=""/>
+            <h1>第三屏</h1>
+        </div>
+        <div class="section s4">
+            <img src="images/bg4.jpg" alt=""/>
+            <h1>第四屏</h1>
+        </div>
+        <div class="section s5">
+            <img src="images/bg5.jpg" alt=""/>
+            <h1>第五屏</h1>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            /*参数配置可参考readme文件*/
+            $('#fullpage').fullpage({
+                'navigation': true,
+                'scrollingSpeed': 800,/*滚动速度，单位为毫秒*/
+                'verticalCentered': false,/*内容是否垂直居中*/
+                'css3': true,/*是否使用 CSS3 transforms 滚动*/
+                'navigationPosition': 'right',
+                'slidesNavigation': true,
+                'navigationTooltips': ['first', 'second', 'third', 'forth','fifth']/*项目导航的 tip*/,
+                'afterLoad': function(anchorLink, index){ /*滚动到某一屏之后*/
+                    if(index == 2){
+                        $('h1').addClass('active');
+                    }
+                },
+            });
+        });
+    </script>
+</body>
+</html>
