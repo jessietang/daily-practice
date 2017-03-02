@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>完美的背景图全屏css代码 – background-size:cover</title>
+    <style>
+        .test1 {
+            float: left;
+            margin: 20px;
+            width: 300px;
+            height: 900px;
+            background: blue url('img/ww_1.png') center center no-repeat;
+            -o-background-size: cover;
+            -moz-background-size: cover; /*ff*/
+            -webkit-background-size: cover;
+            background-size: cover; /*两边的去掉很多，如果图片很小就会放大到没有空白，其中一边就会不显示*/
+        }
+
+        .test2 {
+            float: left;
+            margin: 20px;
+            width: 300px;
+            height: 900px;
+            background: blue url('img/ww_1.png') center center no-repeat;
+            -o-background-size: contain;
+            -moz-background-size: contain; /*ff*/
+            -webkit-background-size: contain;
+            background-size: contain;  /*按照某一边来覆盖显示区域的，会有白边*/
+        }
+
+        .test3 {
+            float: left;
+            margin: 20px;
+            width: 300px;
+            height: 900px;
+            background: blue url('img/ww_1.png') center top no-repeat;
+            -o-background-size: contain;
+            -moz-background-size: contain; /*ff*/
+            -webkit-background-size: contain;
+            background-size: contain;  /*按照某一边来覆盖显示区域的，会有白边*/
+        }
+    </style>
+</head>
+<body>
+    <div class="test1"></div>
+
+    <div class="test2"></div>
+
+    <div class="test3"></div>
+
+</body>
+</html>

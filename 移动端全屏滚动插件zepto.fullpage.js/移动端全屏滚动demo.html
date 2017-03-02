@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/zepto.fullpage.css"/>
+    <style>
+        .wp {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .page1 {
+            background-color: #ff5050;
+        }
+
+        .page2 {
+            background-color: #ffcf3b;
+        }
+
+        .page3 {
+            background-color: #10adff;
+        }
+
+        .page4 {
+            background-color: #09bb06;
+        }
+
+        .page5 {
+            background-color: #952cee;
+        }
+
+        .page {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="wp">
+        <div class="wp-inner">
+            <div class="page page1" style="background-image: url(images/ww_1.png)"></div>
+            <div class="page page2" style="background-image: url(images/ww_2.png)"></div>
+            <div class="page page3" style="background-image: url(images/ww_3.png)"></div>
+            <div class="page page4" style="background-image: url(images/ww_4.png)"></div>
+            <div class="page page5" style="background-image: url(images/ww_5.png)"></div>
+        </div>
+    </div>
+
+    <script src="js/zepto.js"></script>
+    <script src="js/zepto.fullpage.js"></script>
+    <script>
+        $(function(){
+            $('.wp-inner').fullpage({
+                dir: 'h'
+            });
+        });
+    </script>
+</body>
+</html>
