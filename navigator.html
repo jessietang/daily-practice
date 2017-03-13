@@ -19,6 +19,29 @@
     }else{ // pc
 
     }
+
+    /**
+     * 判断是否移动设备访问
+     * @return {Boolean} [description]
+     */
+    function isMobileUserAgent() {
+        return (/iphone|ipod|android.*mobile|windows.*phone|blackberry.*mobile/i.test(window.navigator.userAgent.toLowerCase()));
+    }
+    /**
+     * 判断是否苹果移动设备访问
+     * @return {Boolean} [description]
+     */
+    function isAppleMobileDevice() {
+        return (/iphone|ipod|ipad|Macintosh/i.test(navigator.userAgent.toLowerCase()));
+    }
+    /**
+     * 判断是否安卓移动设备访问
+     * @return {Boolean} [description]
+     */
+    function isAndroidMobileDevice() {
+        return (/android/i.test(navigator.userAgent.toLowerCase()));
+    }
+
 </script>
 </body>
 </html>

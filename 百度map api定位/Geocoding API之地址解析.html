@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geocoding API之地址解析</title>
+</head>
+<body>
+<!--Geocoding API是一类接口，用于提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务-->
+
+<!--
+    需求：通过一个具体位置得到
+-->
+
+<script src="js/jquery.min.js"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
+<script type="text/javascript">
+    $(function(){
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){ // 定位失败
+                $.ajax({
+                    url: 'http://api.map.baidu.com/geocoder/v2/?address=四川省成都市武侯区武侯祠横街13号&output=json&ak=Cu2gMKwvBltUntF3DUEZcZ6w',
+                    dataType: 'jsonp',
+                    jsonp: 'callback',
+                    success: function(r){
+                        var result = r.result;
+                        if(result){
+                            console.log(result.location.lat+','+result.location.lng); // 30.64482086135479,104.05262017767008
+                        }else{
+                            console.log('地址解析失败');
+                        }
+                    },
+                    error: function(d){
+                        console.log('解析地址失败:'+ d.msg);
+                    }
+                });
+            }else{ // 定位失败
+                console.log('failed'+ this.getStatus());
+            }
+        },{
+            enableHighAccuracy: true // 高精度定位
+        })
+    });
+</script>
+</body>
+</html>
