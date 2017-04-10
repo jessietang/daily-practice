@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置透明度用rgba比opactiy更好，但是要注意兼容性</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        h2, h3 {
+            margin: 10px;
+        }
+
+
+        ul, li {
+            list-style: none;
+            height: 50px;
+        }
+
+        li {
+            float: left;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        /*==opacity==*/
+        li.opacity1 {
+            background: rgb(255,255,0);
+            opacity: 1;
+            filter: alpha(opacity=100);
+        }
+        li.opacity2 {
+            background: rgb(255,255,0);
+            opacity: 0.8;
+            filter: alpha(opacity=80);
+        }
+        li.opacity3 {
+            background: rgb(255,255,0);
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+        }
+        li.opacity4 {
+            background: rgb(255,255,0);
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+        }
+        li.opacity5 {
+            background: rgb(255,255,0);
+            opacity: 0.2;
+            filter: alpha(opacity=20);
+        }
+        li.opacity6 {
+            background: rgb(255,255,0);
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+
+        /*==rgba==*/
+        .rgba1 {
+            background: rgba(255,255,0,1);
+        }
+        .rgba2 {
+            background: rgba(255,255,0,.8);
+        }
+        .rgba3 {
+            background: rgba(255,255,0,.6);
+        }
+        .rgba4 {
+            background: rgba(255,255,0,.4);
+        }
+        .rgba5 {
+            background: rgba(255,255,0,.2);
+        }
+        .rgba6 {
+            background: rgba(255,255,0,0);
+        }
+
+        h4 {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>设置透明度用rgba来设置比用opacity设置更好</h2>
+
+<h3>RGBA比元素设置CSS的透明度更好，因为单独的颜色可以在不影响整个元素的透明度，
+    他不会影响到元素其他的属性，比如说边框，字体同时也不会影响到其他元素的相关透明度。</h3>
+
+<h3>opacity后代元素会随着一起具有透明性，所以我们Opacity中的字随着透明值下降越来越看不清楚，
+    而RGBA不具有这样的问题，但是其支持的浏览器中有一个占在大市场份额的IE不支持，这也就是让我们需要去做兼容。</h3>
+
+
+<h4>opacity 后代元素会随着一起具有透明性</h4>
+<ul style="clear: both;">
+    <li class="opacity1">100%</li>
+    <li class="opacity2">80%</li>
+    <li class="opacity3">60%</li>
+    <li class="opacity4">40%</li>
+    <li class="opacity5">20%</li>
+    <li class="opacity6">0%</li>
+</ul>
+
+<h4>rgba 后代元素不会随着一起具有透明性 IE8及以下浏览器不兼容</h4>
+<ul style="clear: both;">
+    <li class="rgba1">1</li>
+    <li class="rgba2">0.8</li>
+    <li class="rgba3">0.6</li>
+    <li class="rgba4">0.4</li>
+    <li class="rgba5">0.2</li>
+    <li class="rgba6">0</li>
+</ul>
+<!--
+要想解决在IE8下的透明度问题，可以增加这样一句话：
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000,endColorstr=#7f000000);
+这句话本来是做渐变用的，但是这里没有渐变效果所以startColorstr和endColorstr设置为同一种颜色。
+这里的#7f000000，#7f代表的是透明度，000000代表的是颜色,下面是透明度的对应表
+-->
+</body>
+</html>

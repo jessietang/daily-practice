@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="div1" data-role="page" data-last-value="43" data-options='{"name": "jessie", "sex": "female", "age": 23}'></div>
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+    $(function(){
+        var role = $('#div1').data('role');
+        var options = $('#div1').data('options');
+        var lastValue = $('#div1').data('lastValue');
+        $('body').append('<h2>role: '+role+'</h2>');
+        $('body').append('<h2>lastValue: '+lastValue+'</h2>');
+        console.log(options);
+        // $.each()
+        $.each(options, function(idx,obj){
+            console.log(idx);
+            console.log(obj);
+            $('body').append('<li>'+idx+': '+obj+'</li>');
+        });
+
+
+        // 1. $.each()遍历数组
+        var arr1 = [{name:"limeng",email:"xfjylimeng"},{name:"hehe",email:"xfjylimeng"}];
+        $.each(arr1, function(i,n){
+            console.log("索引:"+i+"对应值为："+n.name); // 索引:0对应值为：limeng     索引:1对应值为：hehe
+        });
+
+        //2.
+        var arr2 = ["one","two","three","our"];
+        $.each(arr2, function(){
+            alert(this); // 输出：one   two  three  four
+        });
+
+        //3.
+        var arr3 = [[1,2,3],[4,5,6],[7,8,9]];
+        $.each(arr3, function(i, item){
+            console.log(item[0]); // 1, 4, 7
+            console.log(item[i]); // 1, 5, 9
+        });
+
+        //4.
+        var obj = {"name":'tj', "age": 23, "sex": "female", "email": "aa@bb.com"};
+        $.each(obj, function(key, val){
+            console.log(key); // name age sex email
+            console.log(val); // tj 23 female aa@bb.com
+            console.log(obj[key]); // tj 23 female aa@bb.com
+        });
+    });
+</script>
+
+</body>
+</html>

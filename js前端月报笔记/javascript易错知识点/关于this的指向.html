@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    /*==1.谁调用这个方法，this就是指的是谁==*/
+    var obj = {
+        name: 'xiayu',
+        getName: function(){
+            return this.name
+        }
+    };
+    console.log(obj.getName()); // xiayu
+
+
+    /*==2.将对象中的方法赋值给一个变量，改变this的指向==*/
+    var obj2 = {
+        name: 'xiayu',
+        getName: function(){
+            return this.name
+        }
+    };
+    var getName = obj2.getName;
+    console.log(getName()); // undefined  this指向window
+
+
+    /*==3.将对象中的方法赋值给变量，通过apply方法改变当前对象this的指向==*/
+    var obj3 = {
+        name: 'jessie',
+        getName: function(){
+            return this.name
+        }
+    };
+    var obj4 = {
+        name: 'cassie'
+    };
+    var getName3 = obj3.getName;
+    console.log(getName3.apply(obj4)); // cassie
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>高度设置百分比不起作用</title>
+    <style>
+        html,body { /*给html,body设置一个height: 100%;就可以解决了*/
+            min-height: 100%;
+            _height: 100%;
+        }
+
+        .outDiv { /*若某元素的父元素没有确定高度，则无法有效使用height=XX%的样式*/
+            width: 50%;
+            height: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<!--参考： http://www.cnblogs.com/vajoy/p/3730014.html-->
+    <div class="outDiv"></div>
+</body>
+</html>

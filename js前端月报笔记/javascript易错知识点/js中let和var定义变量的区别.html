@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--
+
+使用 let 语句声明一个变量，该变量的范围限于声明它的块中。  可以在声明变量时为变量赋值，也可以稍后在脚本中给变量赋值。
+
+使用 let 声明的变量，在声明前无法使用，否则将会导致错误。
+
+如果未在 let 语句中初始化您的变量，则将自动为其分配 JavaScript 值 undefined。
+-->
+<script>
+    /*==1.申明后未赋值，表现相同==*/
+    (function(){
+        var varTest;
+        let letTest;
+        console.log(varTest); // undefined
+        console.log(letTest); // undefined
+    })();
+
+
+
+    /*==2.使用未申明的变量，表现不同==*/
+    (function(){
+        console.log(varTest); // undefined  变量提升
+        //console.log(letTest); // letTest is not defined  let没有变量提升
+        var varTest = 'test var ok';
+        let letTest = 'test let ok';
+    })();
+
+
+
+    /*==3.重复申明同一个变量时，表现不同==*/
+    (function(){
+        var varTest = 'test var ok';
+        let letTest = 'test let ok';
+
+        var varTest = 'test var changed';
+        // let letTest = 'test let changed';  //Uncaught SyntaxError: Identifier 'letTest' has already been declared
+
+        console.log(varTest); // test var changed (注意要注释掉上面letTest变量的重复声明才能运行)
+        console.log(letTest);
+    })();
+
+
+    /*==4.变量作用范围,表现不同==*/
+    (function(){
+        var varTest = 'test var ok';
+        let letTest = 'test let ok';
+
+        {
+            var varTest = 'test var changed';
+            let letTest = 'test let changed';
+        }
+
+        console.log(varTest); // test var changed
+        console.log(letTest); // test let ok
+    })();
+
+
+</script>
+</body>
+</html>
