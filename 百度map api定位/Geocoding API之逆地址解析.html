@@ -12,6 +12,7 @@
 -->
 
 <script src="js/jquery.min.js"></script>
+<!-- 百度API -->
 <script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
 <script type="text/javascript">
     $(function(){
@@ -24,6 +25,7 @@
                 console.log(r.point); // H {lng: 104.06792346, lat: 30.67994285}
                 console.log('你的经纬度坐标：'+ '('+ r.point.lat + ',' + r.point.lng);
                 // 使用Geocoding API去把经纬度转换为地址
+                // 这里展示了jQuery如何实现jsonp的调用
                 $.ajax({
                     url: 'http://api.map.baidu.com/geocoder/v2/?ak=Cu2gMKwvBltUntF3DUEZcZ6w&location=' + r.point.lat + ',' + r.point.lng + '&output=json&pois=2',
                     dataType: 'jsonp',
