@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*ie hack*/
+        .bb {
+            width: 200px;
+            height: 200px;
+            background-color: red; /*所有的识别*/
+            .background-color: orange\9; /*ie6 7 8识别*/
+            +background-color: yellow; /*ie6 7识别*/
+            _background-color: green; /*ie6识别*/
+        }
+
+        .ulTest {
+            width: 300px;
+            height: 50px;
+        }
+
+        .ulTest li {
+            display: inline-block;
+            width: 80px;
+            margin-left: 10px;
+            height: 50px;
+            background-color: #843534;
+        }
+
+        .box {
+            width: 100px;
+            height: 1px;
+            /*解决ie6下默认行高18px的方法，写一个来覆盖*/
+            line-height: 1px;
+            background-color: red;
+        }
+
+        /*清浮动*/
+        .clearfix:after {
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            content: "";
+            clear: both;
+            height: 0;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        .floatTest .tBox {
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            background-color: #0000cc;
+        }
+
+        .floatTest .tBox:hover {
+            cursor: pointer;
+        }
+
+        /*三角形*/
+        .trangle {
+            display: block;
+            width: 0;
+            height: 0;
+            border: 30px solid red;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div class="bb"></div>
+<ul class="ulTest">
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<div class="box"></div>
+
+<div class="floatTest clearfix">
+    <div class="tBox"></div>
+    <div class="tBox"></div>
+    <div class="tBox"></div>
+</div>
+<div>11111111111111</div>
+
+<span class="trangle"></span>
+<script>
+    // 1.div盒模型
+    // 1).w3c标准盒模型: [content-box]
+    // 2).IE盒模型: [border-box] 在设置有border和padding的时候不会把宽度撑大。[IE5.5及更早的版本使用的是IE盒模型]
+
+    // 2.link和@import的区别？
+    // 1).link属于XHTML标签，而@import是css提供的
+    // 2).页面被加载时，link会同时被加载。而@import引用的css会等到页面被加载完再加载
+    // 3).@import只在ie5以上才能识别，而link是XHTML标签，无兼容性问题
+    // 4).link方式的样式权重高于@import的权重
+    // 5).使用dom控制样式时的差别。当使用javascript控制dom去改变样式的时候，只能使用link标签，因为@import不是dom可以控制的
+
+    // 3.CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？CSS 3新增伪类有哪些？
+    // 1).CSS 选择符有哪些：id选择器、类选择器、标签选择器、相邻选择器（h1+p）、子选择器（ul>li）、后代选择器(div p)、通配符选择器(*)、
+    // 属性选择器（a[rel="external"]）、伪类选择器（a:hover, li:nth-child）
+    // 2).哪些属性可继承：
+    // 可继承： font-size font-family color, UL LI DL DD DT;
+    // 不可继承：border padding margin width height ;
+    // 3).优先级算法如何计算？
+    // 优先级就近原则，样式定义最近者为准，载入样式以最后载入的定位为准。
+    // 优先级为：
+    // !important >  id > class > tag
+    // important 比 内联优先级高
+    // 4)CSS 3新增伪类举例：
+    // 1).p:first-of-type 选择属于其父元素的首个<p>元素的每个<p>元素。
+    // 2).p:last-of-type  选择属于其父元素的最后<p>元素的每个<p>元素。
+    // 3).p:only-of-type  选择属于其父元素唯一的<p>元素的每个<p>元素。
+    // 4).p:only-child    选择属于其父元素的唯一子元素的每个<p>元素。
+    // 5).p:nth-child(2)  选择属于其父元素的第二个子元素的每个<p>元素。
+    // 6).:enabled、:disabled 控制表单控件的禁用状态。
+    // 7).:checked  单选框或复选框被选中。
+
+    // 4.如何居中div？给div设置一个宽度，然后添加margin:0 auto属性
+
+    // 5.如何居中一个浮动元素? 确定容器的宽高，如宽500、高 300的层，设置层的外边距 [和做一个居中的popup布局一样]
+
+    // 6.经常遇到的浏览器兼容性问题有哪些？原因、解决方案是什么？
+    // 1).PNG24的图片在ie6浏览器上出现背景，解决方案是做成PNG8
+    // 2).浏览器默认的margin和padding不一样，解决方案是加一个全局的*{margin:0;padding:0;}来统一
+    // 3).IE6双边距bug: 块儿属性标签float之后，又有横行的margin情况下，在ie6显示margin比设置的大
+    // 4).浮动ie产生的双边距问题：块儿级元素就加display:inline;行内元素转块儿级元素display:inline后面再加display:table;
+    // 5).ie hack技巧：
+
+    // 7.常用hack技巧：
+    //   1).IE下，可以使用获取常规属性的方法来获取自定义属性，也可以使用getAttribute()获取自定义属性；
+    // （2）Firefox下，只能使用getAttribute()获取自定义属性。解决方法：统一通过getAttribute()获取自定义属性。
+    // （3）IE下，even对象有x,y属性，但是没有pageX,pageY属性；
+    // （4）Firefox下，event对象有pageX,pageY属性，但是没有x,y属性。解决方法是条件注释，缺点是在IE浏览器下可能会增加额外的HTTP请求数。
+    // （5）Chrome 中文界面下默认会将小于12px的文本强制按照12px显示，可通过加入 CSS属性-webkit-text-size-adjust: none;来解决。
+    // （6）超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不再具有hover和active了，解决方法是改变CSS属性的排列顺序：
+    // L-V-H-A :  a:link {} a:visited {} a:hover {} a:active {}
+
+    // 8.列出display的值，说明它们的作用。position的值里，relative和absolute定位原点是？
+    // display: block/inline-block/none/list-item 像块类型元素一样显示，并添加样式列表标记
+    // position的值里，relative和absolute定位原点是:
+    // absolute：生成绝对定位的元素，相对于static定位以外(position: absolute/relative)的第一个父元素进行定位。
+    // relative：生成相对定位的元素，相对于其正常位置进行定位。
+
+    // 9.为什么要初始化CSS样式？
+    /*因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。
+     最简单的初始化方法就是：* {padding: 0; margin: 0;} （笔者不建议这样）
+     淘宝的样式初始化：
+     body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+     body, button, input, select, textarea { font:12px/1.5tahoma, arial, \5b8b\4f53; }
+     h1, h2, h3, h4, h5, h6{ font-size:100%; }
+     address, cite, dfn, em, var { font-style:normal; }
+     code, kbd, pre, samp { font-family:couriernew, courier, monospace; }
+     small{ font-size:12px; }
+     ul, ol { list-style:none; }
+     a { text-decoration:none; }
+     a:hover { text-decoration:underline; }
+     sup { vertical-align:text-top; }
+     sub{ vertical-align:text-bottom; }
+     legend { color:#000; }
+     fieldset, img { border:0; }
+     button, input, select, textarea { font-size:100%; }
+     table { border-collapse:collapse; border-spacing:0; }*/
+
+    // 10.如何理解表现与内容相分离？
+    // 表现与结构相分离简单的说就是HTML中只有标签元素 表现完全是由CSS文件控制的。
+
+    // 11.如何定义高度为1px的容器？[主要要注意的是：在IE6浏览器中，容器的高度不是1px ,而是18px.因为ie6下有默认的行高18px]
+
+    // 12.用纯 CSS 创建一个三角形的原理是什么？ [ 把上、左、右三条边隐藏掉（颜色设为 transparent）]
+
+    // 13. ::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。
+    // 1). :after/::after/:before/::before 都是伪元素，与:hover :active等伪类不一样。
+    // 2). :after/:before伪元素是在css2中提出来的，兼容性到ie8。
+    // 3). ::after/::before是css3中的写法，为了将伪类和伪元素分开，平常都还是写一个冒号，来达到兼容的效果。
+    // 4). 如果你的网站只需要兼容webkit、firefox、opera等浏览器，建议对于伪元素采用双冒号的写法，
+    // 如果不得不兼容IE浏览器，还是用CSS2的单冒号写法比较安全
+
+    // 14.现在HTML5中css3可以写出一个旋转的立方体，请写出要用到的CSS属性。
+
+    // 15.介绍一下 Sass 和 Less 是什么？它们有何区别？
+    /**/
+
+
+
+
+</script>
+</body>
+</html>
