@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="js/jquery-1.11.2.js"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
+<script>
+    var currentLocation = "";
+    var geolocation = new BMap.Geolocation();
+    //获取定位
+    geolocation.getCurrentPosition(function(r) {
+        //定位成功
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            console.log(r.point); // r.point经纬度坐标对象 {lng: 104.06792346, lat: 30.67994285}
+            //r.point
+            $.ajax({
+                url: 'http://api.map.baidu.com/geocoder/v2/?ak=Cu2gMKwvBltUntF3DUEZcZ6w&location=' + r.point.lat + ',' + r.point.lng + '&output=json&pois=2',
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function(d) {
+                    console.log(d);
+                    var result = d.result;
+                    console.log(d.result);
+                    if (result) {
+                        console.log(result.formatted_address);
+                        //console.log(result.addressComponent);
+                        var adrObj = result.addressComponent;
+                        currentLocation = adrObj.province + adrObj.city + adrObj.district + adrObj.street;
+                        console.log(currentLocation);
+                    } else {
+                        alert('解析地址失败');
+                    }
+                },
+                error: function(d) {
+                    alert('解析地址失败:' + d.msg);
+                }
+            });
+
+
+
+            /*var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            alert('您的位置：'+r.point.lng+','+r.point.lat);*/
+
+
+        } else {
+            console.log('failed' + this.getStatus());
+        }
+    }, {
+        enableHighAccuracy: true
+    });
+
+</script>
+
+</body>
+</html>

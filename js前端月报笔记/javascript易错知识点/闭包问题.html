@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>111</p>
+
+<p>222</p>
+
+<p>333</p>
+
+<p>444</p>
+
+<p>555</p>
+<script>
+    var aDiv = document.getElementsByTagName('p');
+    /*==1.下面是一个很常见闭包问题，点击任何div弹出的值总是5，因为当你触发点击事件的时候i的值早已是5==*/
+    /* 闭包只能取得包含函数中任何变量的最后一个值 */
+    /*for(var i=0; i<aDiv.length; i++){
+        aDiv[i].onclick = function(){
+            alert(i);
+        };
+    }*/
+
+
+    /*==2.我们可以通过创建另外一个函数强制让闭包的行为符合预期==*/
+    /* 在绑定点击事件外部封装一个立即执行函数，并将i传入该函数即可 */
+    for(var i=0; i<aDiv.length; i++){
+        (function(w){
+            aDiv[w].onclick = function(){
+                alert(w);
+            };
+        })(i);
+    }
+</script>
+</body>
+</html>

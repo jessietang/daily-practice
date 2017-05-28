@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .banner {
+            width: 100%;
+            height: 709px;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+        .banner .carousel-inner {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 500%;
+            height: auto;
+        }
+
+        .banner .carousel-inner .item {
+            width: 20%;
+            height: auto;
+            float: left;
+        }
+
+        .banner .carousel-inner .item a {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .banner .carousel-inner .item a > img {
+            width: 100%;
+            height: auto;
+        }
+
+        /*== carousel indicators ==*/
+        .banner .carousel-indicators {
+            position: absolute;
+            width: 400px;
+            left: 50%;
+            margin-left: -200px;
+            bottom: 20px;
+        }
+
+        .banner .carousel-indicators .item {
+            float: left;
+            width: 60px;
+            height: 30px;
+            cursor: pointer;
+            background-color: #000;
+            border: 1px solid #fff;
+        }
+
+        .banner .carousel-indicators .item.indicatorActive {
+            background-color: #666;
+            border: 1px solid #eee;
+        }
+
+        /*==prev next button==*/
+        .prev, .next {
+            width: 100px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            text-align: center;
+            font-size: 30px;
+            line-height: 350px;
+            background-color: red;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="banner">
+    <ul class="carousel-inner">
+        <li class="item slideActive"><a href=""><img src="image/bannerCarousel1.png" alt=""/></a></li>
+        <li class="item"><a href=""><img src="image/bannerCarousel2.jpg" alt=""/></a></li>
+        <li class="item"><a href=""><img src="image/bannerCarousel3.jpg" alt=""/></a></li>
+        <li class="item"><a href=""><img src="image/bannerCarousel4.jpg" alt=""/></a></li>
+        <li class="item"><a href=""><img src="image/bannerCarousel5.jpg" alt=""/></a></li>
+    </ul>
+    <ul class="carousel-indicators">
+        <li class="item indicatorActive"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+    </ul>
+    <div class="prev"><</div>
+    <div class="next">></div>
+</div>
+
+<script src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var now = 0;
+        var liWidth = $('.carousel-inner .item').width();
+        var len = $('.carousel-inner .item').length;
+
+        // key code
+        function tab(index){
+            $('.carousel-inner').animate({
+                left: -index*liWidth+'px'
+            });
+        }
+
+        function next(){
+            now++;
+            if(now == len){
+                now = 0;
+            }
+            tab(now);
+            $('.carousel-indicators .item').eq(now).addClass('indicatorActive').siblings().removeClass('indicatorActive');
+        }
+
+        function prev(){
+            now--;
+            if(now == -1){
+                now = len-1;
+            }
+            tab(now);
+            $('.carousel-indicators .item').eq(now).addClass('indicatorActive').siblings().removeClass('indicatorActive');
+        }
+
+
+        // prev next
+        $(document).on('click','.next', next).on('click','.prev', prev);
+
+
+        // auto play
+        var timer = null;
+        $('.banner').hover(function(){
+            clearInterval(timer);
+        },function(){
+            timer = setInterval(next,2000);
+        }).trigger('mouseleave');
+
+
+        //indicators highlight
+        $('.carousel-indicators .item').each(function(index){
+            var _this = $(this);
+            _this.click(function(){
+                console.log(index);
+                now = index;
+                tab(now);
+                $(this).addClass('indicatorActive').siblings().removeClass('indicatorActive');
+            });
+        });
+
+
+
+    });
+</script>
+</body>
+</html>

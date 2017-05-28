@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+
+
+    function Location(){};
+    Location.prototype.getLocation = function(callback){
+        var options = {
+            enableHighAccuracy: true,
+            maximumAge: 1000
+        };
+        this.callback = Object.prototype.toString.call(callback) =="[object Function]" ?
+                callback :
+                function(address){
+                    alert(address.province + address.city);
+                    console.log("getLocation(callbackFunction) 可获得定位信息对象");
+                };
+        var self = this;
+        if (navigator.geolocation) {
+            //浏览器支持geolocation
+            navigator.geolocation.getCurrentPosition(function(position){
+                // 先利用geolocation获取经纬度
+                //十进制数的经度
+                var longitude = position.coords.longitude;
+                // 十进制数的维度
+                var latitude = position.coords.latitude;
+                console.log(longitude + '-----'+latitude);
+                // 再使用百度地图api进行反解析
+                self.loadMapApi(longitude,latitude);
+            }, self.onError, options);
+        } else {
+            //浏览器不支持geolocation
+            alert("你的设备不支持获取地理位置信息！");
+        }
+    };
+    Location.prototype.loadMapApi = function(longitude, latitude){
+        var self = this;
+        var oHead = document.getElementsByTagName('HEAD').item(0);
+        var oScript= document.createElement("script");
+        oScript.type = "text/javascript";
+        oScript.src="http://api.map.baidu.com/getscript?v=2.0&ak=A396783ee700cfdb9ba1df281ce36862&services=&t=20140930184510";
+        //oScript.src="http://api.map.baidu.com/api?key=46ce9d0614bf7aefe0ba562f8cf87194&v=1.0&services=false";
+        oHead.appendChild(oScript);
+        oScript.onload = function(date){
+            var oHead2 = document.getElementsByTagName('HEAD').item(0);
+            var oScript2= document.createElement("script");
+            oScript2.type = "text/javascript";
+            // 利用convertor.js
+            oScript2.src="js/convertor.js";
+            oHead2.appendChild(oScript2);
+            oScript2.onload = function(){
+                setTimeout(function () {
+                    var gpsPoint = new BMap.Point(longitude, latitude);
+                    BMap.Convertor.translate(gpsPoint, 0, function (point) {
+                        var geoc = new BMap.Geocoder();
+                        geoc.getLocation(point, function (rs) {
+                            var addComp = rs.addressComponents;
+                            //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                            self.callback(addComp);
+                        });
+                    });
+                }, 3000);
+
+                /*setTimeout(function () {
+                    var gpsPoint = new BMap.Point(longitude, latitude);
+                    BMap.Convertor.translate(gpsPoint, 0, function (point) {
+                        var geoc = new BMap.Geocoder();
+                        geoc.getLocation(point, function (rs) {
+
+                            map.addControl(new BMap.NavigationControl());
+                            map.addControl(new BMap.ScaleControl());
+                            map.addControl(new BMap.OverviewMapControl());
+                            map.centerAndZoom(point, 18);
+                            map.addOverlay(new BMap.Marker(point)) ;
+
+                            //alert("2");
+                            var addComp = rs.addressComponents;
+                            self.callback(addComp);
+                            //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                            //alert('您的位置：'+rs.point.lng+','+rs.point.lat);
+                        });
+                    });
+                }, 1000);*/
+
+                /*var point = new BMap.Point(longitude, latitude);
+                BMap.Convertor.translate(point, 0, function (points) {
+                    var geoc = new BMap.Geocoder();
+                    geoc.getLocation(points, function (rs) {
+                        var addComp = rs.addressComponents;
+                        self.callback(addComp);
+                        //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                    });
+                });*/
+            };
+
+            /*var point = new BMap.Point(longitude, latitude);
+            BMap.Convertor.translate(point, 0, function (points) {
+                var geoc = new BMap.Geocoder();
+                geoc.getLocation(points, function (rs) {
+                    var addComp = rs.addressComponents;
+                    self.callback(addComp);
+                    //alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                });
+            });*/
+
+            /*var gc = new BMap.Geocoder();
+            // 根据一个坐标点得到一个地址的描述 通过Geocoder.getLocation()方法获得地址描述
+            gc.getLocation(point, function(rs) {
+                var addComp = rs.addressComponents;
+                self.callback(addComp);
+            });*/
+        }
+    };
+    Location.prototype.onError = function(error) {
+        switch (error.code) {
+            case 1:
+                console.log("位置服务被拒绝");
+                break;
+            case 2:
+                console.log("暂时获取不到位置信息");
+                break;
+            case 3:
+                console.log("获取信息超时");
+                break;
+            case 4:
+                console.log("未知错误");
+                break;
+        }
+    };
+    //调用
+    var local = new Location();
+    local.getLocation(function(res){
+        //此处就是返回的地理位置信息
+        console.log(res.province + ", " + res.city + ", " + res.district + ", " + res.street + ", " + res.streetNumber);
+        //var currentLocation = res.province + res.city;
+        //console.log(currentLocation);
+    });
+</script>
+</body>
+</html>

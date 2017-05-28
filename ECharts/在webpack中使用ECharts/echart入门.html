@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #myDiv {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<div id="myDiv"></div>
+<script>
+    var echarts = require('echarts');
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    // 绘制图表
+    myChart.setOption({
+        title: {
+            text: 'ECharts入门实例',
+            subtext: '纯属虚构',
+            x: 'center'
+        },
+        tooltip: {},
+        xAxis: {
+            data:
+        }
+
+    });
+</script>
+</body>
+</html>

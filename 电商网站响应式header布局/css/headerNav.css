@@ -1,0 +1,347 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul,li {
+    list-style: none;
+}
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    height: 0;
+    content: "";
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+body {
+    font-family: Arial,Helvetica,"sans-serif";
+    font-size: 12px;
+    line-height: 1.4;
+    color: #666;
+}
+
+.navbar-collapse.in {
+    overflow-y: inherit;
+}
+
+.main-navigation {
+    margin-top: 20px;
+}
+
+@media (min-width: 768px){
+    .main-navigation .container{
+        width: auto;
+    }
+}
+
+@media (min-width: 1000px){
+    .main-navigation .container{
+        width: 1000px;
+    }
+
+    .navigation .menu-item .glyphicon {
+        display: none;
+    }
+}
+
+@media (min-width: 1200px){
+    .main-navigation .container{
+        width: 1000px;
+    }
+}
+
+.subNav {
+    display: none;
+}
+
+.main-header {
+    margin-top: 50px;
+}
+
+.searchWrap {
+    margin-top: 35px;
+}
+
+#targeting-data {
+    width: 355px;
+}
+
+.text-search {
+    border: none;
+    border: 2px solid #333;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.af-changeCountry a, .shopping-bag a {
+    display: block;
+    padding: 2px 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.af-changeCountry a .flag {
+    margin: 6px 7px 0 5px;
+    float: left;
+    background: url('http://zh.ashford.com/images/msdropdown/icons/flagssprite_big.png') no-repeat;
+    background-position: 0 -1150px;
+    width: 24px;
+    height: 24px;
+}
+
+.af-changeCountry a .country-text {
+    margin-top: 10px;
+    float: left;
+    margin-right: 7px;
+}
+
+.af-changeCountry a .arrow {
+    background: url('http://zh.ashford.com/images/icons/arrow_header2.png') no-repeat;
+    float: right;
+    width: 12px;
+    height: 9px;
+    margin-top: 12px;
+}
+
+.shopping-bag a {
+    margin-top: 12px;
+    padding: 0 5px 10px 25px;
+}
+
+
+
+
+
+
+
+
+
+
+.main-navigation {
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #eee;
+    -webkit-box-shadow: 0 5px 20px #eee;
+    -moz-box-shadow: 0 5px 20px #eee;
+    box-shadow: 0 5px 20px #eee;
+    height: 35px;
+}
+
+.navigation {
+    display: table;
+    width: 100%;
+    background: url('http://zh.ashford.com/images/ashford/nav_border.png') no-repeat left 0;
+    position: relative;
+
+}
+
+.navigation > li.menu-item {
+    display: table-cell;
+    background: url('http://zh.ashford.com/images/ashford/nav_border.png') no-repeat right 0;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 14px;
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.navigation > li.menu-item-active {
+    background-color: #000;
+    color: #fff;
+}
+
+.navigation > li.menu-item > a {
+    color: #393939;
+    text-decoration: none;
+    text-transform: uppercase; /*定义仅有大写字母*/
+}
+
+.navigation > li.menu-item-active > a {
+    color: #fff;
+}
+
+@media (min-width: 1000px){
+    .navigation > li.menu-item .subNav {
+        width: 1000px;
+    }
+}
+
+.navigation > li.menu-item .subNav {
+    position: absolute;
+    left: 0;
+    top: 35px;
+    z-index: 100;
+    background-color: #f1f1f1;
+}
+
+.navigation > li.menu-item .subNav .catSubNavWrap {
+    padding: 20px 10px;
+    border: 10px solid #000;
+}
+
+.subNav .catSubNavWrap .subCategory {
+    float: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 20%;
+}
+
+.subNav .catSubNavWrap .subCategory li {
+    width: 100%;
+    text-align: left;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.subNav .catSubNavWrap .subCategory li a {
+    text-decoration: none;
+    color: #393939;
+    display: block;
+    padding: 2px 0 2px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+.subNav .catSubNavWrap .subCategory li .alp{
+    color: #5d5d5d;
+}
+
+.subNav .catSubNavWrap .subCategory li:nth-child(1),
+.subNav .catSubNavWrap .subCategory li:nth-child(1) a {
+    font-size: 18px;
+}
+
+.subNav .catSubNavWrap .subCategory li:hover{
+    background-color: #fff;
+}
+
+/*===responsive design==*/
+.navbar-toggle .icon-bar {
+    text-decoration: none;
+    background-color: #f00;
+}
+
+
+.af-responsive-logo {
+
+}
+
+.af-responsive-logo img {
+    height: 45px;
+}
+
+@media (min-width: 768px){
+    .container {
+        width: auto;
+    }
+}
+
+@media (min-width:768px) and (max-width:999px){
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+
+    .navbar-collapse.collapse.in {
+        display: block!important;
+    }
+
+    .navigation .menu-item {
+         float: left;
+         width: 50%;
+         position: relative;
+    }
+}
+
+@media (max-width: 999px){
+    .subNav .catSubNavWrap .subCategory {
+        width: 100%;
+    }
+
+    #targeting-data {
+        width: 100%;
+    }
+
+    .navigation {
+        background-color: #f1f1f1;
+    }
+
+    .searchWrap {
+        border: 1px solid #d7d7d7;
+        border-radius: 8px;
+        background-color: #f2f2f2;
+        float: right;
+        width: 100%;
+    }
+
+    .main-navigation {
+        background-color: #fff;
+        border-bottom: none;
+    }
+
+    .main-navigation .responsive-navbar {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .navbar .navbar-collapse {
+        border: 1px solid #d7d7d7;
+        border-bottom-width: 0;
+        border-radius: 8px;
+        background: #f5f5f5;
+        margin-bottom: 10px;
+    }
+
+    .menu-item {
+        text-align: left!important;
+    }
+
+    .menu-item .glyphicon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        line-height: 35px;
+        padding-right: 10px;
+    }
+
+    .main-navigation {
+        height: auto;
+    }
+
+    .navigation {
+        border: 1px solid #d7d7d7;
+    }
+
+    .subNav {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px){
+    .navigation .menu-item {
+        float: left;
+        width: 100%;
+        position: relative;
+    }
+}
+
+
+
+

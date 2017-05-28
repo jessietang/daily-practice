@@ -5,12 +5,15 @@
     <title></title>
 </head>
 <body>
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
 <!--<script src="https://maps.google.co.jp/maps/api/js?sensor=false"></script>-->
 <!--<script src="http://maps.google.cn/maps/api/js?sensor=false"></script>-->
 <!--<script src="http://ditu.google.cn/maps/api/js?sensor=false&language=zh-CN "></script>-->
 <!--<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>-->
-<script type="text/javascript" src="http://api.map.baidu.com/api?key=46ce9d0614bf7aefe0ba562f8cf87194&v=1.0&services=false"></script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/api?key=46ce9d0614bf7aefe0ba562f8cf87194&v=1.0&services=false"></script>-->
+
+<!--<script src="http://api.map.baidu.com/api?v=1.4" type="text/javascript"></script>-->
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
     function get_location(){
         if(navigator.geolocation){
@@ -21,8 +24,9 @@
     }
 
     function show_map(position){
-        var latitude = position.coords.altitude; // 十进制数的维度
+        var latitude = position.coords.latitude; // 十进制数的维度
         var longitude = position.coords.longitude; //十进制数的经度
+        console.log(longitude + '---'+latitude);
         showObject(position,0);
     }
 
@@ -59,6 +63,7 @@
             }
         }
     }
+	get_location();
 </script>
 </body>
 </html>

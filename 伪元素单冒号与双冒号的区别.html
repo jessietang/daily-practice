@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /*sendFriendsCoupon.html 这个地方布局应该按下面这样来做才算最好的办法*/
+        .test1 {
+            font-size: 30px;
+            margin: 100px auto;
+            width: 250px;
+            background-color: #eee;
+            position: relative;
+            padding: 0 0 0 30px; /**/
+        }
+
+        .test1:before {
+            position: absolute;
+            left: 0; /**/
+            content: '1.';
+        }
+
+        .test1::after {
+            content: '!!!';
+            background-color: red;
+        }
+
+        /*
+
+          1. :after/::after/:before/::before 都是伪元素，与:hover :active等伪类不一样。
+          2. :after/:before伪元素是在css2中提出来的，兼容性到ie8。
+          3. ::after/::before是css3中的写法，为了将伪类和伪元素分开，平常都还是写一个冒号，来达到兼容的效果。
+          4. 如果你的网站只需要兼容webkit、firefox、opera等浏览器，建议对于伪元素采用双冒号的写法，
+          如果不得不兼容IE浏览器，还是用CSS2的单冒号写法比较安全
+        */
+
+
+    </style>
+</head>
+<body>
+    <p class="test1">to download the truck app</p>
+
+
+</body>
+</html>

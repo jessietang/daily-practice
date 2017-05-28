@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    // example01
+    var a = 1;
+    function test(){
+        var a = 2;
+        console.log(a);
+    }
+    test(); // 2
+
+
+
+    // example02
+    var a2 = 3;
+    function test2(){
+        console.log(a2);
+        var a2 = 4;
+    }
+    test2(); // undefined
+
+    //test2等价于下面的代码
+    /*var a2 = 3;
+    function test2(){
+        var a2; // 变量提升
+        console.log(a2);
+        a2 = 4;
+    }
+    test2(); */// undefined
+
+
+    // example03
+    var a3 = 5;
+    function test3(){
+        console.log(a3);
+        a3 = 6;
+    }
+    test3(); // 5  a3被重新复制，但是在console之下，所以输出全局作用域中的a
+
+
+/*使用 let 语句声明一个变量，该变量的范围限于声明它的块中。  可以在声明变量时为变量赋值，也可以稍后在脚本中给变量赋值。
+
+ 使用 let 声明的变量，在声明前无法使用，否则将会导致错误。
+
+ 如果未在 let 语句中初始化您的变量，则将自动为其分配 JavaScript 值 undefined。*/
+    // example04
+    let b = 7;
+    function test4(){
+        console.log(b);
+        let b = 2;
+    }
+    //test4(); // b is not defined
+    // 上方函数作用域中使用了ES6的let重新声明了变量b，而let不同于var其不存在变量提升的功能，所以输出报错“b is not defined”
+
+    // example04_1
+    let b2 = 7;
+    function test4_1(){
+        console.log(b2);
+    }
+    test4_1(); // 7
+
+    // example04_2
+    function test4_2(){
+        console.log(b3);
+        let b3 = 9; // b3 is not defined
+    }
+    // test4_2();
+
+
+    // example05
+    function test5(){
+        let letTest = 1;
+        var varTest = 1;
+        {
+            let letTest = 2;
+            var varTest = 2;
+        }
+        console.log(letTest); // 1  内部"{}"中声明的letTest和外部的letTest不是同一个变量
+        console.log(varTest); // 2  内部"{}"中声明的varTest变量覆盖外部的varTest声明
+    }
+    test5();
+
+
+
+</script>
+</body>
+</html>

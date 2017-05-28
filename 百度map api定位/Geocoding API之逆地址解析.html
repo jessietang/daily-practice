@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Geocoding API之逆地址解析</title>
+</head>
+<body>
+<!--Geocoding API是一类接口，用于提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务-->
+
+<!--
+    需求：通过定位得到当前位置
+-->
+
+<script src="js/jquery.min.js"></script>
+<!-- 百度API -->
+<script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
+<script type="text/javascript">
+    $(function(){
+        var currentPosition = '';
+
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+            // 定位成功
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                console.log(r.point); // H {lng: 104.06792346, lat: 30.67994285}
+                console.log('你的经纬度坐标：'+ '('+ r.point.lat + ',' + r.point.lng);
+                // 使用Geocoding API去把经纬度转换为地址
+                // 这里展示了jQuery如何实现jsonp的调用
+                $.ajax({
+                    url: 'http://api.map.baidu.com/geocoder/v2/?ak=Cu2gMKwvBltUntF3DUEZcZ6w&location=' + r.point.lat + ',' + r.point.lng + '&output=json&pois=2',
+                    dataType: 'jsonp',
+                    jsonp: 'callback',
+                    success: function(d){
+                        var result = d.result;
+                        console.log(result);
+                        if(result){
+                            currentPosition = result.formatted_address;
+                            console.log(currentPosition);
+                        }else{
+                            console.log('地址解析失败');
+                            currentPosition = '地址解析失败';
+                        }
+                    },
+                    error: function(d){
+                        console.log('解析地址失败：' + d.msg);
+                        currentPosition = '解析地址失败：' + d.msg;
+                    }
+
+                });
+            }else{ // 定位失败
+                console.log('failed'+ this.getStatus());
+                currentPosition = 'failed'+ this.getStatus();
+            }
+        }, {
+            enableHighAccuracy: true // 高精度定位
+        });
+
+        /*if(currentPosition == ''){
+            alert('定位中，请稍后！');
+        }else{
+            console.log(currentPosition);
+        }*/
+
+
+
+    });
+</script>
+
+</body>
+</html>

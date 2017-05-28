@@ -28,6 +28,11 @@
             -ms-transform:translate3d(-200px, 0px, 0px);
             transform: translate3d(-200px, 0px, 0px);
         }
+
+        .s1 img, .s2 img, .s3 img, .s4 img, .s5 img {
+            width: 100%;
+            height: auto;
+        }
     </style>
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
@@ -37,23 +42,23 @@
     <div id="fullpage">
         <!--每一屏class名：jquery.fullpage.js里面变量 SECTION_DEFAULT_SEL -->
         <div class="section s1">
-            <img src="images/bg1.jpg" alt=""/>
+            <img src="images/bg1.jpg" alt="" />
             <h1>第一屏</h1>
         </div>
         <div class="section s2">
-            <img src="images/bg2.jpg" alt=""/>
+            <img src="images/bg2.jpg" alt="" />
             <h1 class="slideText2">第二屏</h1>
         </div>
         <div class="section s3">
-            <img src="images/bg3.jpg" alt=""/>
+            <img src="images/bg3.jpg" alt="" />
             <h1>第三屏</h1>
         </div>
         <div class="section s4">
-            <img src="images/bg4.jpg" alt=""/>
+            <img src="images/bg4.jpg" alt="" />
             <h1>第四屏</h1>
         </div>
         <div class="section s5">
-            <img src="images/bg5.jpg" alt=""/>
+            <img src="images/bg5.jpg" alt="" />
             <h1>第五屏</h1>
         </div>
     </div>
@@ -72,7 +77,7 @@
                     if(index == 2){
                         $('h1').addClass('active');
                     }
-                },
+                }
             });
         });
     </script>

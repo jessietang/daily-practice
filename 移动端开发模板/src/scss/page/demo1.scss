@@ -1,0 +1,19 @@
+@import '../reset';
+@import '../mixin';
+$standardNum: 75;
+
+.p1 {
+  color: red;
+  @include pxrem(width, 800);
+  @include pxrem(height,60);
+  @include pxrem(line-height,60);
+  text-align: center;
+}
+
+.p2 {
+  color: orange;
+  @include pxrem(width, 800);
+  @include pxrem(height,60);
+  @include pxrem(line-height,60);
+  text-align: center;
+}

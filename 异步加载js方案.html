@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <script>
+        // 1).defer 只支持IE
+        // 2).async:
+        /*async的定义和用法(是HTML5的属性)
+         async 属性规定一旦脚本可用，则会异步执行。
+         在script标签中写入 async="async"
+         注释：async 属性仅适用于外部脚本（只有在使用 src 属性时）。
+         注释：有多种执行外部脚本的方法：
+         •如果 async="async"：脚本相对于页面的其余部分异步地执行（当页面继续进行解析时，脚本将被执行）
+         •如果不使用 async 且 defer="defer"：脚本将在页面完成解析时执行
+         •如果既不使用 async 也不使用 defer：在浏览器继续解析页面之前，立即读取并执行脚本 */
+        // 3).创建script，插入到dom中，加载完毕后callback，见代码：
+        function loadScript(url, callback){
+            var script = document.createElement("script")
+            script.type = "text/javascript";
+            if(script.readyState){ //IE
+                script.onreadystatechange = function(){
+                    if (script.readyState == "loaded" ||script.readyState == "complete"){
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            } else {
+                //Others: Firefox, Safari, Chrome, and Opera
+                script.onload = function(){
+                    callback();
+                };
+            }
+            script.src = url;
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>

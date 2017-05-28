@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript数组去重</title>
+</head>
+<body>
+<script>
+    var arr = [1,2,3,4,3,2,1];
+
+    /*在一些版本的去重中，用到了 Array.prototype.indexOf()*/
+    function unique1(arr){
+        return arr.filter(function(item,index){
+            return arr.indexOf(item) === index;
+        });
+    }
+    console.log(unique1(arr)); // [1,2,3,4]
+
+    function unique2(arr) {
+        var ret = [];
+        arr.forEach(function(item){
+            if(ret.indexOf(item) === -1){
+                ret.push(item);
+            }
+        });
+        return ret;
+    }
+    console.log(unique2(arr)); // [1,2,3,4]
+
+    /*Array.prototype.includes()是ES2016中新增的方法，用于判断数组中是否包含某个元素，
+    所以上面使用indexOf()方法的第二个版本可以改写成如下版本*/
+    function unique3(arr){
+        var ret = [];
+        arr.forEach(function(item){
+            if(!ret.includes(item)){
+                ret.push(item);
+            }
+        });
+        return ret;
+    }
+    console.log(unique3(arr)); // [1,2,3,4]
+
+    /*对于includes,如果x和y都是NaN，则返回true！也就是includes()是可以正确判断是否包含了NaN的。*/
+    var test = [1, 2, NaN];
+    console.log(test.indexOf(NaN)); // -1
+    console.log(test.includes(NaN)); // true
+    /*可以看到indexOf()和includes()对待NaN的行为是完全不一样的。*/
+
+    /*双重遍历是最容易想到的去重方案*/
+    function unique4(arr){
+        var isRepeated,
+                ret = [];
+        var len = arr.length;
+        for(var i=0; i<len; i++){
+            isRepeated = false;
+            for(var j=i+1; j<len; j++){
+                if(arr[i] === arr[j]){
+                    isRepeated = true;
+                    break;
+                }
+            }
+            if(!isRepeated){
+                ret.push(arr[i]);
+            }
+        }
+        return ret;
+    }
+    console.log(unique4(arr)); // [4, 3, 2, 1]
+
+    //我以前用的数组去重方法
+    function unique5(arr){
+        var isRepeated, result = [];
+        for(var i=0; i<arr.length; i++){
+            isRepeated = false;
+            for(var j=0; j<result.length; j++){
+                if(arr[i] === result[j]){
+                    isRepeated = true;
+                    break;
+                }
+            }
+            if(!isRepeated){
+                result.push(arr[i]);
+            }
+        }
+        return result;
+    }
+    console.log(unique5(arr)); // [1, 2, 3, 4]
+
+    // 使用set
+    function unique6(arr){
+        var set = new Set(arr);
+        return Array.from(set);
+    }
+    console.log(unique6(arr)); // [1, 2, 3, 4]
+    /*然而，不要只顾着高兴了。有一句话是这么说的“不要因为走得太远而忘了为什么出发”。
+    我们为什么要为数组去重呢？因为我们想得到不重复的元素列表。而既然已经有Set了，
+    我们为什么还要舍近求远，使用数组呢？是不是在需要去重的情况下，直接使用Set就解决问题了？
+    这个问题值得思考。*/
+
+</script>
+</body>
+</html>
