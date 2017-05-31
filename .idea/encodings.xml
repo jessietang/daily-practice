@@ -8,19 +8,5 @@
     <file url="file://$PROJECT_DIR$/移动端开发模板/gulpfile.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/移动端开发模板/src/scss/page/demo1.scss" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/移动端开发模板/src/scss/reset.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/build/webpack.base.conf.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/components/button-cancel.vue" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/components/button-ok.vue" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/components/button-type.vue" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/components/button.vue" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/lib/button/button-gtor.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/lib/button/button-gtor.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/lib/button/button-sem-type.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/lib/button/button-sem.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../my-project/src/lib/button/button-sem.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../vue-notepad/build/webpack.prod.conf.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../vueQa/index-static.html" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../vueQa/src/components/question_list.vue" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../vueQa/src/main.js" charset="UTF-8" />
   </component>
 </project>
