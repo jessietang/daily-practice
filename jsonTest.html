@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // jsonStr是json对象，不能再用JSON.parse()或者eval()来转换
+    var jsonStr = {
+        "business": "",
+        "cityCode": "75",
+        "formatted_address": "四川省成都市武侯区云华路",
+        "location": {
+            "lat": 30.55226,
+            "lng": 104.068
+        },
+        "addressComponent": {
+            "district": "武侯区",
+            "adcode": "510107",
+            "city": "成都市",
+            "distance": "",
+            "street": "云华路",
+            "province": "四川省",
+            "direction": "",
+            "country": "中国"
+        }
+    };
+    //console.log(JSON.parse(jsonStr));
+
+    // t是json字符串
+    var t = '{"business":"","cityCode":"75","formatted_address":"四川省成都市武侯区云华路","location":{"lat":30.55226,"lng":104.068},"addressComponent":{"district":"武侯区","adcode":"510107","city":"成都市","distance":"","street":"云华路","province":"四川省","direction":"","country":"中国"}}';
+    console.log(JSON.parse(t).formatted_address);
+
+
+    console.log(typeof jsonStr);
+    console.log(typeof t);
+
+
+    var HCXD = {};
+    HCXD.getLocation = function() { return '{"business":"","cityCode":"75","formatted_address":"四川省成都市武侯区云华路","location":{"lat":30.55226,"lng":104.068},"addressComponent":{"district":"武侯区","adcode":"510107","city":"成都市","distance":"","street":"云华路","province":"四川省","direction":"","country":"中国"}}'};
+    var cl = {};
+    if(typeof (HCXD.getLocation()) == 'string'){
+        cl = JSON.parse(HCXD.getLocation());
+    }else{
+        cl = HCXD.getLocation();
+    }
+    var currentLocation = cl.formatted_address;
+    console.log(currentLocation);
+
+
+    var phone = "18380448313";
+    var phoneStr = phone.substring(0,3)+'****'+phone.substring(7);
+    console.log(phoneStr);
+
+
+</script>
+
+</body>
+</html>

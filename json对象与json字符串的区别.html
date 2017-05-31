@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.11.2.js"></script>
+</head>
+<body>
+<script>
+    // 1.什么是"JSON字符串"，什么是"JSON对象"，两者的区别?
+    /*a.JSON对象是直接可以使用JQuery操作的格式，如C#中可以用对象（类名）点出属性（方法）一样;
+     b.JSON字符串仅仅只是一个字符串，一个整体，不截取的话没办法取出其中存储的数据，不能直接使用，除非你只想alert()他;*/
+
+    // json对象
+    var str1 = {"name": "jessie", "sex": "female"};
+
+    // json字符串
+    var str2 = {"name": "jessie", "sex": "female"};
+
+
+    // 2.将"JSON字符串"转化为"JSON对象"的方法?
+    // 1).使用$.parseJSON(str) 依赖jquery
+    var test1 = '{"name": "jessie"}';
+    var obj1 = jQuery.parseJSON(test1);
+    console.log(obj1.name); // jessie
+    // ps:此种方式仅支持标准格式：var str='{ "name": "jessie" }';
+
+    // 2).JSON.parse(str)
+    var test2 = '{"name": "jessie", "sex": "female"}';
+    var obj2 = JSON.parse(test2);
+    console.log(obj2.name); // jessie
+    // ps:此种方式仅支持标准格式：var str='{ "name": "jessie" }';
+
+    // 3).使用eval('('+str+')');
+    var test3_1 = '{"name": "jessie"}';
+    var test3_2 = "{'name': 'jessie'}";
+    var test3_3 = "{name: 'jessie'}";
+    var obj3_1 = eval('('+test3_1+')');
+    var obj3_2 = eval('('+test3_2+')');
+    var obj3_3 = eval('('+test3_3+')');
+    console.log(obj3_1.name);
+    console.log(obj3_2.name);
+    console.log(obj3_3.name);
+    //console.log(JSON.parse(test3_3).name); // 报错： Uncaught SyntaxError: Unexpected token n in JSON at position 1
+    // Eval方式可以转换以下标准和非标准格式字符串：
+    /*var test3_1 = '{"name": "jessie"}';
+    var test3_2 = "{'name': 'jessie'}";
+    var test3_3 = "{name: 'jessie'}";*/
+
+    // 3.将"JSON对象"转化为"JSON字符串"的方法?
+    // 使用全局方法JSON.stringify()
+    var object1 = {"name": "jessie"};
+    console.log(JSON.stringify(object1));
+
+
+
+</script>
+
+</body>
+</html>

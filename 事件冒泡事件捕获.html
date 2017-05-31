@@ -48,6 +48,20 @@
             var $target = $(e.target);
             $target.css("background-color",'#ddd').siblings().css('background-color','#fff');
         });
+
+
+        // 一个简单的小测试
+        var testObj = {
+            "des": "it is me",
+            'id': '1'
+        };
+        console.log(testObj.name);
+        if(testObj.name){
+            alert(testObj.name);
+        }else{
+            alert(testObj.des);
+        }
+
     });
 </script>
 </body>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>top progress bar</title>
+    <link rel="stylesheet" href="node_modules/nprogress/nprogress.css"/>
+    <script type="text/javascript" src="../js/jquery-1.11.2.js"></script>
+    <script type="text/javascript" src="node_modules/nprogress/nprogress.js"></script>
+</head>
+<body>
+    <!--
+        NProgress.start() — 显示进度条
+
+        NProgress.set(0.4) —设置百分比
+
+        NProgress.inc() — 增加一点点
+
+        NProgress.done() — 完成进度条
+    -->
+<script type="text/javascript">
+    $(function(){
+        //NProgress.start();
+        NProgress.set(0.4);
+        $(window).load(function(){
+            NProgress.done();
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/电商网站响应式header布局/css/headerNav.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/电商网站响应式header布局/js/headerNav.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/百度map api定位/readme.txt" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/移动端全屏滚动插件zepto.fullpage.js/css/zepto.fullpage.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/移动端开发模板/gulpfile.js" charset="UTF-8" />
