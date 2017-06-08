@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .ul1 {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            /*父元素font-size置为零*/
+            font-size: 0;
+            letter-spacing: -4px;
+            word-spacing: -4px;
+        }
+
+        .ul1 li.nav {
+            display: inline-block;
+            zoom: 1;
+            *display: inline;
+
+            font-size: 16px;
+            letter-spacing: normal;
+            word-spacing: normal;
+
+            padding: 5px 10px;
+            color: #fff;
+            background-color: #000;
+            cursor: pointer;
+        }
+
+        .ul1 li.active {
+            background-color: red;
+        }
+
+        .tabContent div {
+            display: none;
+            width: 200px;
+            height: 100px;
+            background-color: red;
+            color: #fff;
+        }
+
+        .tabContent div.contentActive {
+            display: block;
+        }
+
+        /*float清除浮动*/
+        .clearfix:after {
+            content: "";
+            visibility: hidden;
+            display: block;
+            font-size: 0;
+            height: 0;
+            clear: both;
+        }
+        .clearfix {
+            zoom: 1;
+        }
+    </style>
+</head>
+<body>
+<!--tab标签切换-->
+<div class="tab">
+    <ul class="ul1">
+        <li class="active nav">夏雨</li>
+        <li class="nav">姗姗</li>
+        <li class="nav">虫子</li>
+    </ul>
+    <div class="tabContent">
+        <div class="tabDiv contentActive">1111111111</div>
+        <div class="tabDiv">2222222222</div>
+        <div class="tabDiv">3333333333</div>
+    </div>
+</div>
+</body>
+</html>

@@ -29,8 +29,11 @@ $.fn.aToOther = function(options){
     // 后，这样做的好处是所有值被合并到这个空对象上，保护了插件里面的默认值。
     var settings = $.extend({},defaults,options);
 
-    return this.css({
-        "color": settings.color,
-        "fontSize": settings.fontSize
+    return this.each(function(){
+        $(this).append('----' + $(this).attr('href'));
+    }).css({
+        "color": setting.color,
+        "fontSize": setting.fontSize
     });
+
 };

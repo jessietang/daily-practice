@@ -136,6 +136,16 @@
                     alert(num);
                 }
             }(i);
+            /*(function(m){
+                result[m] = function(){
+                    alert(m);
+                }
+            })(i);
+            result[i] = function(m){
+                retrun function(){
+                    alert(m);
+                }
+            }(i);*/
             //也可以这样写
             /*(function(m){
                 result[m] = function(){
@@ -191,7 +201,7 @@
     var object = {
         name : "My Object",
         getNameFunc : function(){
-            return function(){
+            return function(){ // 匿名函数
                 return this.name;
             };
         }
@@ -543,7 +553,7 @@
     console.log("toString" in myObj); // true
     //可看到无论是name，还是原形链上的toString，都能检测到返回true。
 
-    //2).hasProperty方法
+    //2).hasOwnProperty方法
     console.log(myObj.hasOwnProperty("width")); // true
     console.log(myObj.hasOwnProperty("toString")); // false
     //原型链上继承过来的属性无法通过hasOwnProperty检测到，返回false。
@@ -770,6 +780,14 @@
     // 封装成js函数
     function myAddEvent(obj, ev, fn){
         if(obj.attachEvent){ // ie
+            obj.attachEvent('on'+ev, fn);
+        }else{
+            obj.addEventListener(ev, fn, false);
+        }
+    }
+
+    function myAddEvent(obj, ev, fn){
+        if(obj.attachEvent){
             obj.attachEvent('on'+ev, fn);
         }else{
             obj.addEventListener(ev, fn, false);

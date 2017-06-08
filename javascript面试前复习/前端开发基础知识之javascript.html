@@ -11,11 +11,12 @@
 <button id="btn2">innerHTML</button>
 <div id="testDiv" style="width: 200px;height: 300px;border: 1px solid red;background-color:green;"></div>
     <script>
-        // 1.JS的基本数据类型
-        // Number String Boolean Undefined Null
+        // 1.JS的数据类型
+        // 基本数据类型: Number String Boolean Undefined Null
+        // js引用数据类型： Object
 
         // 18.写出下面的运算结果
-        console.log(typeof(null)); // object
+        console.log(typeof(null)); // object [null, 空指针对象]
         console.log(typeof(undefined)); // undefined
         console.log(typeof(NaN)); // number !!!
         console.log(isNaN(NaN)); // true
@@ -34,7 +35,7 @@
         console.log(typeof(str++)); // number
         console.log(str); // NaN
 
-        // 2.JS有哪些内置对象
+        // 2.JS有哪些内置对象 Object Array Boolean String Date Math Function Error RegExp Argument
         // Object是javascript中所有对象的父对象
         // 数据封装类对象：Object Array Boolean Number String
         // 其他对象: Function Argument Math Date RegExp Error
@@ -66,6 +67,7 @@
          在函数外（顶级作用域中）：在浏览器中this 指的是全局对象；在Node.js中指的是模块(module)的导出(exports)。
          传递到eval()中的字符串：如果eval()是被直接调用的，this 指的是当前对象；如果eval()是被间接调用的，this 就是指全局对象。
          延迟执行代码setTimeout中的this永远指向window[es6中用箭头函数除外]*/
+        // 延迟执行代码setTimeout中的this永远指向window
 
         // 7.介绍一下 JavaScript 原型，原型链，它们有何特点？
         /*每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，于是就这样一直找下去，也就是我们平时所说的原型链的概念。
@@ -73,8 +75,8 @@
          特点：JavaScript对象是通过引用来传递的，我们创建的每个新对象实体中并没有一份属于自己的原型副本，当我们修改原型时，与之相关的对象也会继承这一改变。
          当我们需要一个属性时，JavaScript引擎会先看当前对象中是否有这个属性，如果没有的话，就会查找它的prototype对象是否有这个属性，如此递推下去，一致检索到Object内建对象。
          function Func(){}
-             Func.prototype.name = "Xiaosong";
-             Func.prototype.getInfo = function() {
+         Func.prototype.name = "Xiaosong";
+         Func.prototype.getInfo = function() {
              return this.name;
          }
          var person = new Func();
@@ -83,7 +85,7 @@
 
         // 8.JavaScript 有几种类型的值？能否画一下它们的内存图？
         // 栈(stack)：原始数据类型（Undefined,Null,Boolean,Number,String）
-        // 堆(heap)：引用数据类型（对象，数组，函数）
+        // 堆(heap)：引用数据类型 Object（对象，数组，函数）
         // 两种类型区别：存储位置不同
         /*原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储；
          引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；
@@ -123,7 +125,9 @@
         };
 
         // 11.DOM 操作——怎样添加、移除、移动、复制、创建和查找节点？
-        // 添加
+        // 添加 父.appendChild(新子元素)  父.insertBefore(新子元素，已有的子元素)
+        // 移除 父.removeChild(已有子元素)
+        // 替换 父.replace(替换后的，替换前的)
         var oDiv = document.createElement('div');
         var oh2 = document.createElement('h2');
         var oh3 = document.createElement('h3');
@@ -155,9 +159,10 @@
         // setTimeout()的第一个参数使用字符串而非函数的话，会引发内存泄漏。
         // 闭包、控制台日志、循环（在两个对象彼此引用且彼此保留时，就会产生一个循环）
 
-        // 13.jQuery 中如何将数组转化为 json 字符串，然后再转化回来？
+        // 13.jQuery 中如何将json数组转化为 json 字符串，然后再转化回来？
         //JSON.stringify(arr)
         //JSON.parse(arr)
+        // JSON.parse()  JSON.stringify()
 
         // 14.怎样用js实现千位分隔符？
         // slice可以操作数组和字符串， splice只能操作数组
@@ -253,6 +258,21 @@
         //alert('test\ntt')
 
         // 24.请编写一个JavaScript函数 parseQueryString，它的用途是把URL参数解析为一个对象
+        function test(url){
+            var url = url ? url : window.location.href;
+            var query = url.substring(url.lastIndexOf('?') + 1);
+            var items = query.split('&');
+            var item, name, value;
+            var result = {};
+            for(var i in items){
+                item = items[i].split('=');
+                name = decodeURIComponent(item[0]);
+                value = decodeURIComponent(item[1]);
+                result[name] = value;
+            }
+            return result;
+        }
+
         var url = "http://witmax.cn/index.php?key0=0&key1=1&key2=2";
         function parseQueryString(url){
             var str = url.substring(url.indexOf('?')+1);
@@ -260,8 +280,8 @@
             var obj = {};
             for(var i in arr1){
                 var arr2 = arr1[i].split('=');
-                var key = arr2[0];
-                var val = arr2[1];
+                var key = decodeURIComponent(arr2[0]);
+                var val = decodeURIComponent(arr2[1]);
                 obj[key] = val;
             }
             return obj;
@@ -388,6 +408,9 @@
 
         // 36.函数记忆,判断是不是质数.
         // 质数定义为在大于1的自然数中，除了1和它本身以外不再有其他因数的数称为质数
+        function isPrimel(n){
+
+        }
         // 方法一：
         function isPrimel(n){
             if(n <= 3){
@@ -420,6 +443,28 @@
         })();
 
         // 37.数组去重
+        function test1(arr){
+            return Array.from(new Set(arr));
+        }
+
+        function unique2(arr){
+            var result = [];
+            var isRepeated;
+            for(var i=0; i<arr.length; i++){
+                isRepeated = false;
+                for(var j=0; j<result.length; j++){
+                    if(arr[i] === result[j]){
+                        isRepeated = true;
+                        break;
+                    }
+                }
+                if(!isRepeated){
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+        }
+
         // 方法一：
         var arr = [1,2,3,4,3,2,1];
         function repeat1(arr){
@@ -480,8 +525,9 @@
         console.log(String(arr2));
 
         // 快速排序
+
         function quickSort(arr){
-            if(arr.length <= 1){
+            if(arr.length <= 1){ // 一定要指定递归结束的条件，不然会报堆栈溢出
                 return arr;
             }
             var middleValue = arr[Math.floor(arr.length / 2)];
@@ -500,6 +546,21 @@
             return quickSort(leftArr).concat(quickSort(middleArr),quickSort(rightArr));
         }
         console.log(quickSort(arr2)); // [1, 2, 3, 4, 5]
+
+        // 冒泡排序
+        function bubbleSort(arr){
+            var temp;
+            for(var i=0; i<arr.length; i++){
+                for(var j=0; j<arr.length; j++){
+                    if(arr[j] > arr[j+1]){
+                        temp = arr[j];
+                        arr[j] = arr[j+1];
+                        arr[j+1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
 
         // 39.正则表达式
         // 得到结果："ryan5 is6 not7 a8 good9 man10"
@@ -553,6 +614,24 @@
         }
         console.log('出现次数最多的字符是：'+iValue+'，次数是：'+iMax); // 出现次数最多的字符是：b，次数是：4
 
+
+        var strTest = 'abcdefabcdaaa';
+        var strObj = {};
+        for(var i=0; i<strTest.length; i++){
+            if(!strObj[strTest.charAt(i)]){
+                strObj[strTest.charAt(i)] = 1;
+            }else {
+                strObj[strTest.charAt(i)]++;
+            }
+        }
+        var iMax = 0;
+        var iValue = '';
+        for(var i in strObj){
+            if(strObj[i] > iMax){
+                iMax = strObj[i];
+                iValue = i;
+            }
+        }
         // 41.数组降维
         var arr=[
             [0,0,0,0],
@@ -568,6 +647,11 @@
         }
         console.dir(arr1);
         //method 2:
+        //数组降维
+        for(var i=0, arr2=[]; i<arr.length; i++){
+            arr2 = arr2.concat(arr[i]);
+        }
+
         for(var r= 0,arr2=[];r<arr.length;r++){
             arr2 = arr2.concat(arr[r]);
         }
