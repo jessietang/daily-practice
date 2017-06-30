@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><style>
+    html, body {
+        height: 100%;
+    }
+
+    *{
+        margin: 0;
+        padding: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    ul, li {
+        list-style: none;
+    }
+
+    .locationBox {
+        width: 100%;
+        height: 100%;
+    }
+
+    #mapPanel {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        z-index: 0;
+    }
+
+    .searchContainer {
+        position: absolute;
+        z-index: 2;
+        width: 90%;
+        top: 5%;
+        left: 50%;
+        margin-left: -45%;
+        height: 100px;
+    }
+
+    .searchContainer .searchBox {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        padding-left: 2%;
+        font-size: 40px;
+        border: 1px solid #333;
+        box-sizing: border-box;
+    }
+
+    .searchContainer .searchBtn {
+        width: 80px;
+        height: 75px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 0 20px;
+        border-left: 1px solid #333;
+        margin-top: 10px;
+    }
+
+    .searchContainer .searchBtn img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .map-info-win, #OpenLayersDiv231 {
+        width: 600px;
+        padding: 10px;
+        font-size: 30px;
+    }
+
+    .autoComplete {
+        display: none;
+        width: 100%;
+        height: auto;
+        background-color: #fff;
+    }
+
+    .autoComplete .list {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 30px;
+    }
+    .autoComplete .list:hover {
+        background-color: #eee;
+        cursor: pointer;
+    }
+
+</style>
+    <script type="text/javascript" src="../static/js/jquery.min-64ec1b9cff.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
+</head>
+<body>
+<div class="locationBox">
+    <div id="mapPanel"></div>
+    <div class="searchContainer">
+        <input type="text" class="searchBox" placeholder="搜车牌号"/>
+        <div class="searchBtn">
+            <img src="../static/images/icons/magnify.png" alt="" id="searchBtn"/>
+        </div>
+        <ul class="autoComplete">
+            <li class="list">川AE6666</li>
+            <li class="list">川AE8888</li>
+            <li class="list">川AE0000</li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var map = new BMap.Map("mapPanel");            // 创建Map实例
+    function initdata(){ //页面初始化
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(showPosition,showError);//HTML5获取GPS设备地理位置信息
+        }else{
+            document.getElementById("mapPanel").innerHTML="Geolocation is not supported by this browser.";
+        }
+    }
+    function showPosition(position){
+        var x=position.coords.latitude;//获取纬度
+        var y=position.coords.longitude;//获取经度
+        //转为百度地图坐标
+        //注意点：1、coords的经度、纬度顺序（可多组坐标转换，以；（分号）隔开）。2、from与to的准确性。3、callback为回调函数
+        var positionUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+y+","+x+"&from=1&to=5&ak=Cu2gMKwvBltUntF3DUEZcZ6w&callback=getMap";
+        var script = document.createElement('script');
+        script.src = positionUrl;
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+    function getMap(data){
+        //返回的状态码，0为正常；1为内部错误；21为from非法；22为to非法；24为coords格式非法；25为coords个数非法，超过限制
+        if(data.status!=0){
+            alert("地图坐标转换出错");
+            return ;
+        }
+        //result为数组
+        var result = data.result;
+        var lon = result[0].x;//经度
+        var lat = result[0].y;//纬度
+
+        // 百度地图API功能
+        var point = new BMap.Point(lon,lat);
+        map.centerAndZoom(point, 14);
+        //map.addControl(new BMap.ZoomControl());          //添加地图缩放控件
+        var myIcon = new BMap.Icon("../static/images/icons/me.png", new BMap.Size(134,125));
+        var marker1 = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+        map.addOverlay(marker1);              // 将标注添加到地图中
+        //创建信息窗口
+        var infoWindow1 = new BMap.InfoWindow("您当前所处的位置,经度:"+lon+";纬度:"+lat);
+        marker1.addEventListener("click", function(){this.openInfoWindow(infoWindow1);});
+    }
+    //HTML5获取地理位置信息错误处理
+    function showError(error)
+    {
+        switch(error.code)
+        {
+            case error.PERMISSION_DENIED:
+                document.getElementById("allmap").innerHTML="User denied the request for Geolocation."
+                break;
+            case error.POSITION_UNAVAILABLE:
+                document.getElementById("allmap").innerHTML="Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                document.getElementById("allmap").innerHTML="The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                document.getElementById("allmap").innerHTML="An unknown error occurred."
+                break;
+        }
+    }
+    initdata();
+
+
+    // 零散车显示
+    var data = [
+        {
+            carNum: "川AE6666",
+            option: {
+                lng: 104.06792346,
+                lat: 30.67994285,
+                ico: 'icons/1.png',
+                zIndex: 100,
+                UnitName: "网阔信息", // 所属企业
+                PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
+                Location: "四川省成都市青羊区王家塘街84号",
+                SpeedCvt: "100",
+                LimitSpeed: "80",
+                GPSDateCvt: "2017-6-22"
+            }
+        },
+        {
+            carNum: "川AE8888",
+            option: {
+                lng: 103.67174,
+                lat: 30.84639,
+                ico: 'icons/1.png',
+                zIndex: 100,
+                UnitName: "网阔信息", // 所属企业
+                PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
+                Location: "四川省成都市都江堰市都江堰市徐渡小学西南319米",
+                SpeedCvt: "60",
+                LimitSpeed: "40",
+                GPSDateCvt: "2017-6-20"
+            }
+        }
+    ];
+    var opts = {
+        width : 600,     // 信息窗口宽度
+        height: 500,     // 信息窗口高度
+        title : "信息窗口" , // 信息窗口标题
+        enableMessage:true//设置允许信息窗发送短息
+    };
+
+    for(var i in data){
+        var option = data[i].option;
+        var html = '<div class="map-info-win"><table>' +
+                "<tr><td>所属企业：</td><td>" + option.UnitName + '</td></tr>' +
+                "<tr><td>所属接入平台：</td><td>" + option.PlatformName + '</td></tr>' +
+                '<tr><td>地址：</td><td>' + option.Location + '</td></tr>' +
+                "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
+                '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
+                "</table></div>";
+        var myIcon = new BMap.Icon("../static/images/icons/nearCar.png", new BMap.Size(34,25));// 附近车辆定位图标
+        var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
+        map.addOverlay(marker);
+        addClickHandler(html,marker,new BMap.Point(option.lng,option.lat));
+    }
+    function addClickHandler(content,marker,point){
+        marker.addEventListener("click",function(e){
+                    openInfo(content,point)}
+        );
+    }
+    function openInfo(content,point){
+        var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+
+
+    $(function(){
+        var searchKey = "";
+        $('.searchBox').on('focus', function(){
+            $('.autoComplete').show();
+            $('.autoComplete').on('click', '.list', function(){
+                searchKey = $(this).text();
+                $('.searchBox').val(searchKey);
+                $('.autoComplete').hide();
+                console.log($(this).text());
+            });
+        });
+
+        $('.searchBtn').on('click', function(){
+            searchKey = $('.searchBox').val();
+            if(searchKey.trim() == ''){
+                alert('请输入车牌号');
+            }else{
+                var flag = false;
+                for (var i in data) {
+                    if(data[i].carNum == searchKey){
+                        var option = data[i].option;
+                        var html = '<div class="map-info-win"><table>' +
+                                "<tr><td>所属企业：</td><td>" + option.UnitName + '</td></tr>' +
+                                "<tr><td>所属接入平台：</td><td>" + option.PlatformName + '</td></tr>' +
+                                '<tr><td>地址：</td><td>' + option.Location + '</td></tr>' +
+                                "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
+                                '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
+                                "</table></div>";
+                        var myIcon = new BMap.Icon("../static/images/icons/1.png", new BMap.Size(300,157));// 搜索到的车辆定位图标
+                        var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
+                        map.addOverlay(marker);
+                        openInfo(html, new BMap.Point(option.lng,option.lat));
+                        addClickHandler(html,marker,new BMap.Point(option.lng,option.lat));
+                        flag = true; // 存在
+                    }
+                }
+                if(!flag){
+                    alert("不存在该车辆，请输入测试车辆：川AE6666或者川AE8888");
+                }
+            }
+        });
+    });
+
+
+
+</script>
+</body>
+</html>

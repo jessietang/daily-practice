@@ -1,0 +1,51 @@
+.router {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 1.33333rem;
+    z-index: 1000;
+    background-color: #fff
+}
+
+.router .router-link {
+    float: left;
+    width: 33.3%;
+    height: 100%
+}
+
+.router .router-link:nth-child(1) {
+    background: url("../icons/router1.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}
+
+.router .router-link:nth-child(2) {
+    background: url("../icons/router2.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}
+
+.router .router-link:nth-child(3) {
+    background: url("../icons/router3.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}
+
+.router .router-link:nth-child(1).activeRouter {
+    background: url("../icons/routerActive1.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}
+
+.router .router-link:nth-child(2).activeRouter {
+    background: url("../icons/routerActive2.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}
+
+.router .router-link:nth-child(3).activeRouter {
+    background: url("../icons/routerActive3.png") no-repeat center center;
+    -webkit-background-size: .66667rem .66667rem;
+    background-size: .66667rem .66667rem
+}

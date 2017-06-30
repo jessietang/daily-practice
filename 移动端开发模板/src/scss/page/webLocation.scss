@@ -1,0 +1,131 @@
+@import '../reset';
+@import '../mixin';
+$standardNum: 75;
+
+.clearfix:after {
+  content: "";
+  display: block;
+  visibility: hidden;
+  font-size: 0;
+  height: 0;
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.locationBox {
+  width: 100%;
+  height: 100%;
+}
+
+#mapPanel {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+
+.searchContainer {
+  position: absolute;
+  z-index: 2;
+  width: 90%;
+  @include pxrem(height, 84);
+  top: 5%;
+  left: 50%;
+  margin-left: -45%;
+
+  .searchBox {
+    width: 100%;
+    height: 100%;
+    @include pxrem(border-radius,10);
+    @include pxrem(font-size,28);
+    @include pxrem(padding-left,20);
+    border: 1px solid #e3e3e3;
+  }
+
+  .searchBtn {
+    @include pxrem(width, 42);
+    @include pxrem(height, 42);
+    position: absolute;
+
+    @include pxrem(padding-left, 20);
+    @include pxrem(right, 40);
+    top: 0;
+    border-left: 1px solid #e3e3e3;
+    @include pxrem(margin-top, 21);
+
+    img {
+      @include pxrem(width, 42);
+      @include pxrem(height, 42);
+    }
+  }
+
+  .autoComplete {
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+  }
+
+  .autoComplete .list {
+    width: 100%;
+    @include pxrem(height, 50);
+    @include pxrem(line-height, 50);
+    @include pxrem(padding-left, 30);
+    border-bottom: 1px solid #eee;
+  }
+
+  .autoComplete .list:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+}
+
+/*==router导航样式 start==*/
+.router {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  @include pxrem(height,100);
+  z-index: 1000;
+  background-color: #fff;
+}
+
+.router .router-link {
+  float: left;
+  width: 33.3%;
+  height: 100%;
+}
+
+.router .router-link:nth-child(1) {
+  background: url('../../static/images/icons/router1.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}
+
+.router .router-link:nth-child(2) {
+  background: url('../../static/images/icons/router2.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}
+
+.router .router-link:nth-child(3) {
+  background: url('../../static/images/icons/router3.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}
+
+.router .router-link:nth-child(1).activeRouter {
+  background: url('../../static/images/icons/routerActive1.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}
+
+.router .router-link:nth-child(2).activeRouter {
+  background: url('../../static/images/icons/routerActive2.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}
+
+.router .router-link:nth-child(3).activeRouter {
+  background: url('../../static/images/icons/routerActive3.png') no-repeat center center;
+  @include pxrem(background-size, 50 50);
+}/*==router导航样式 end==*/

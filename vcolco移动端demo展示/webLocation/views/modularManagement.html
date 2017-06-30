@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <title>模块化管理</title>
+    <link rel="stylesheet" href="../themes/common.css"/>
+    <link rel="stylesheet" href="../themes/modularManagement.css"/>
+    <!--lib-flexible的库用来解决H5页面终端适配的。-->
+    <script type="text/javascript" src="../js/fileflex.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script src="../js/page/common.js"></script>
+    <script type="text/javascript" src="../js/page/modularManagement.js"></script>
+</head>
+<body>
+    <div class="modularManagement">
+        <p class="title">模块化管理</p>
+
+        <div class="modularBox clearfix">
+            <div class="modularList"><img src="../icons/modular1.png" alt=""/></div>
+            <div class="modularList"><img src="../icons/modular2.png" alt=""/></div>
+            <div class="modularList"><img src="../icons/modular3.png" alt=""/></div>
+            <div class="modularList"><img src="../icons/modular4.png" alt=""/></div>
+        </div>
+
+        <div class="modularBottom">
+            <div class="modularEchartBox">
+                <div id="modularPie"></div>
+            </div>
+        </div>
+    </div>
+    <ul class="router">
+        <li class="router-link"></li>
+        <li class="router-link"></li>
+        <li class="router-link activeRouter"></li>
+    </ul>
+</body>
+</html>

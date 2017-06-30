@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/graphicalReport.css"/>
+    <!--lib-flexible的库用来解决H5页面终端适配的。-->
+    <script type="text/javascript" src="../static/js/fileflex.js"></script>
+</head>
+<body>
+    <div class="graphicalReport">
+        <p class="title">图形化报表</p>
+
+        <ul class="tab clearfix">
+            <li class="tab-list activeTab">统计分析</li>
+            <li class="tab-list">六严禁</li>
+            <li class="tab-list">违章督办</li>
+        </ul>
+
+        <ul class="filterIndicator">
+            <li class="filter-list open">
+                数据指标
+                <img src="../static/images/icons/selectIcon.png" alt=""/>
+                <ul class="singleList dataIndicator">
+                    <li>1111</li>
+                    <li>2222</li>
+                    <li>3333</li>
+                </ul>
+            </li>
+            <li class="filter-list">
+                展示纬度
+                <img src="../static/images/icons/selectIcon.png" alt=""/>
+                <ul class="singleList showWay">
+                    <li>333</li>
+                    <li>34444</li>
+                    <li>55555</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="echartShow">
+            <div id="dataShow"></div>
+            <div id="banShow">
+                <div id="pieShow"></div>
+                <div id="barShow"></div>
+            </div>
+            <div id="supervision">
+                违章督办
+            </div>
+        </div>
+    </div>
+</body>
+</html>

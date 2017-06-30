@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/电商网站响应式header布局/css/headerNav.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/电商网站响应式header布局/js/headerNav.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/百度map api定位/readme.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/移动端全屏滚动插件zepto.fullpage.js/css/zepto.fullpage.css" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/移动端开发模板/gulpfile.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/移动端开发模板/src/scss/page/demo1.scss" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/移动端开发模板/src/scss/reset.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/scss/mixin.scss" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/1.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/local.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/magnify.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/me.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/near.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/images/icons/nearCar.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/awardRotate.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/common.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/fastclick.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/fileflex.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/jquery.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/lib/SE_JSAPI_New.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/lib/SE_JSLIB_New.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/lib/jquery-1.11.3.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/vconsole.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/移动端开发模板/src/static/js/zepto.js" charset="UTF-8" />
   </component>
 </project>
