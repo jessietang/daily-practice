@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul class="ul">
+    <li class="list">
+        <a href="javascript:void(0);">
+            <div>111</div>
+        </a>
+    </li>
+    <li class="list">222</li>
+    <li class="list">333</li>
+    <li class="list">444</li>
+</ul>
+<script type="text/javascript" src="../js/jquery-1.11.2.js"></script>
+<script>
+    // 1. 事件委托（事件代理）
+    // 面试官当时问的是，on里面第二个参数传什么，我是说的用target，结果这样的话，就会有问题，这个
+    // 问题，我之前也有意识到的，如果li里面再放其他的东西，这时的target.nodeName就会变了
+    /*$('.ul').on('click', function(e){
+        var e = e || window.event;
+        var target = e.target;
+        console.log(target.nodeName);
+        if(target.nodeName === 'LI'){
+            console.log($(target).text());
+            alert('have clicked');
+        }
+    });*/
+    $('.ul').on('click', '.list', function(){
+        console.log($(this)); // $(this)都是指的li标签
+        console.log($(this).html());
+        console.log($(this).text());
+        alert('have clicked');
+    });
+
+    // 2.es6中的箭头函数里面的this
+    window.val = 1;
+    var obj = {
+        val: 2,
+        dbl: function () {
+            console.log(this.val+'this.val');
+            this.val *= 2;
+            console.log(val+'val');
+            val *= 2;
+            console.log(val);
+            console.log(this.val);
+        }
+    };
+    // 说出下面的输出结果
+    obj.dbl();
+    var func = obj.dbl;
+    func();
+
+
+    // 3.JS面向对象基础篇（封装 继承 多态）
+    // 1).原始方法
+    // 通过new关键字生成一个对象，然后根据javascript是动态语言的特性来添加属性和方法，
+    // 构造一个对象。其中this表示调用该方法的对象。
+    /*var obj = new Object();
+    obj.name = 'jessie';
+    obj.age = 22;
+    obj.showName = function(){
+        alert(this.name);
+    };
+    obj.showAge = function(){
+        alert(this.age);
+    }
+    obj.showName(); //jessie
+    obj.showAge(); // 22*/
+    // 这种方式的问题是如果需要多次创建对象，那么需要重复代码多次，不利于代码的复用。
+
+
+    // 2).工厂模式
+    /*function createBlog(name, url) {
+        var obj = new Object();
+        obj.name = name;
+        obj.url = url;
+        obj.sayName = function(){
+            alert(this.name);
+        };
+        obj.sayUrl = function() {
+            alert(this.url);
+        };
+        return obj;
+    }
+    var blog1 = createBlog('jessie', 'http://www.cnblogs.com/xiayu25/');
+    var blog2 = createBlog('cuit', 'http://www.cuit.edu.cn');
+    blog1.sayName(); // jessie
+    blog1.sayUrl(); // http://www.cnblogs.com/xiayu25/
+    blog2.sayName(); // cuit
+    blog2.sayUrl(); // http://www.cuit.edu.cn*/
+
+    // 通过定义几个函数的对象，解决了不同对象持有函数对象的私有属性问题。
+    // 现在所有对象的方法都持有上面两个函数的引用，
+    // 但这么一来，对象的函数又和对象相互独立了，这和面向对象中持有方法属于与特定类的思想不符。
+    // 可以看到工厂模式的实现方法非常简单，解决了创建多个相似对象的问题，
+    // 但是工厂模式却无从识别对象的类型，因为全部都是Object，不像Date、Array等，因此出现了构造函数模式。
+
+
+    // 3).构造函数模式
+    /*function Blog(name, url){
+        //var this=new Object();  //系统模拟创建对象
+        this.name = name;
+        this.url = url;
+        this.sayName = function(){
+            alert(this.name);
+        };
+        this.sayUrl = function(){
+            alert(this.url);
+        };
+    }
+    var blog1 = Blog('jessie', 'http://www.cnblogs.com/xiayu25/');
+    var blog2 = Blog('cuit', 'http://www.cuit.edu.cn');
+    blog1.sayName(); // jessie
+    blog1.sayUrl(); // http://www.cnblogs.com/xiayu25/
+    blog2.sayName(); // cuit
+    blog2.sayUrl(); // http://www.cuit.edu.cn*/
+    // 这个例子与工厂模式中除了函数名不同以外，细心的童鞋应该发现许多不同之处：
+    // 函数名首写字母为大写(虽然标准没有严格规定首写字母为大写，但按照惯例，构造函数的首写字母用大写)
+    // 没有显示的创建对象
+    // 直接将属性和方法赋值给了this对象
+    // 没有return语句
+    // 使用new创建对象
+    // 能够识别对象(这正是构造函数模式胜于工厂模式的地方)
+    // 构造函数虽然好用，但也并非没有缺点
+    // 构造函数的方式与工厂加工方式一样，会为每个对象创建独享的函数对象，
+    // 当然也可以将这些函数对象定义在构造函数外面，这样又有了对象和方法相互独立的问题
+
+
+    // 4).原型模式
+    function Blog() {}
+    Blog.prototype.name = 'jessie';
+    Blog.prototype.url = 'http://www.cnblogs.com/xiayu25/';
+    Blog.prototype.friend = ['fr1', 'fr2', 'fr3', 'fr4'];
+    Blog.prototype.alertInfo = function() {
+        alert(this.name + this.url + this.friend );
+    };
+
+    var blog1 = new Blog(), blog2 = new Blog();
+    blog1.alertInfo();  // jessiehttp://www.cnblogs.com/xiayu25/fr1,fr2,fr3,fr4
+    blog2.alertInfo();  // jessiehttp://www.cnblogs.com/xiayu25/fr1,fr2,fr3,fr4
+    blog1.name = 'test1';
+    blog1.url = 'http://***.com';
+    blog1.friend.pop();
+    blog2.name = 'test2';
+    blog2.url = 'http://+++.com';
+    blog1.alertInfo();  // test1http://***.comfr1,fr2,fr3
+    blog2.alertInfo();  // test2http://+++.comfr1,fr2,fr3
+    // 上面的代码通过blog1向blog1的属性friend添加元素时，
+    // blog2的friend属性的元素也跟着受影响，原因是在于blog1和blog2对象的friend属性引用的是同一个Array
+    // 对象，那么改变这个Array对象，另一个引用Array对象的属性自然也会受到影响
+
+
+    //5).混合模式（原型模式 + 构造函数模式）
+    function Blog(name, url, friend) {
+        this.name = name;
+        this.url = url;
+        this.friend = friend;
+    }
+
+    Blog.prototype.alertInfo = function() {
+        alert(this.name + this.url + this.friend);
+    };
+
+    var blog1 = new Blog('jessie', 'http://www.cnblogs.com/xiayu25/', ['fr1', 'fr2', 'fr3']),
+            blog2 = new Blog('cuit', 'http://www.cuit.edu.cn', ['a', 'b']);
+
+    blog1.friend.pop();
+    blog1.alertInfo();  // jessiehttp://www.cnblogs.com/xiayu25/fr1,fr2
+    blog2.alertInfo();  // cuithttp://www.cuit.edu.cna,b
+
+    //属性私有后，改变各自的属性不会影响别的对象。
+    // 同时，方法也是由各个对象共享的。在语义上，这符合了面向对象编程的要求。
+
+
+    // 6).动态原型模式
+    // 动态原型模式将所有信息封装在了构造函数中，而通过构造函数中初始化原型（仅第一个对象实例化时初始化原型），
+    // 这个可以通过判断该方法是否有效而选择是否需要初始化原型。
+    function Blog(name, url) {
+        this.name = name;
+        this.url = url;
+
+        if (typeof this.alertInfo != 'function') {
+            // 这段代码只执行了一次
+            alert('exe time');
+            Blog.prototype.alertInfo = function() {
+                alert(thia.name + this.url);
+            }
+        }
+    }
+
+    var blog1 = new Blog('jessie', 'http://www.cnblogs.com/xiayu25/'),
+            blog2 = new Blog('cuit', 'http://www.cuit.edu.cn');
+    // 可以看到上面的例子中只弹出一次窗，'exe time'，即当blog1初始化时，
+    // 这样做blog2就不在需要初始化原型，对于使用这种模式创建对象，可以算是perfect了。
+
+    // 7).继承
+    function person(name, sex){
+        this.name=name;
+        this.sex=sex;
+    }
+    person.prototype.showName=function(){
+        alert(this.name);
+    };
+    person.prototype.showSex=function(){
+        alert(this.sex);
+    };
+
+    function worker(name,sex,job){
+        person.call(this,name,sex);//构造函数伪装   调用父级的构造函数--为了继承属性
+        this.job=job;
+    }
+    //原型链  通过原型来继承父级的方法
+    for(attr in person.prototype){
+        worker.prototype[attr]=person.prototype[attr];
+    }
+    worker.prototype.showJob=function(){
+        alert(this.job);
+    };
+
+    var op=new person('blue','女');
+    var ow=new worker('blue','女','程序员');
+    op.showName();  //blue
+    op.showSex();  //女
+    ow.showName();  //blue
+    ow.showSex();  //女
+    ow.showJob();  //程序员
+
+    //继承的好处：父类新加的功能，子类也具备该功能，子类新加的功能不会影响父类的功能
+</script>
+
+</body>
+</html>
