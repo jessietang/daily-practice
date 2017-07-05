@@ -1,3 +1,6 @@
 {
-  "demo1.css": "demo1-88a7d9af22.css"
+  "demo1.css": "demo1.css?v=88a7d9af22",
+  "graphicalReport.css": "graphicalReport.css?v=16e53149fc",
+  "modularManagement.css": "modularManagement.css?v=06f41f1d24",
+  "webLocation.css": "webLocation.css?v=3aa555d9e1"
 }

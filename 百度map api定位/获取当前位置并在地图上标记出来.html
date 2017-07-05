@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取当前位置并在地图上标识出来</title>
+    <style>
+        #mapPannel {
+            width: 600px;
+            height: 500px;
+            margin: 50px auto;
+        }
+    </style>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
+</head>
+<body>
+<div id="mapPannel">
+
+</div>
+<script type="text/javascript">
+    /*==可参照bai du map api demo==*/
+    // 创建map实例
+    var map = new BMap.Map('mapPannel');
+
+    // 添加地图类型控件 MapTypeControl负责切换地图类型的控件，此类继承Control所有功能
+    map.addControl(new BMap.MapTypeControl());
+
+    // NavigationControl表示地图的平移缩放控件，可以对地图进行上下左右四个方向的平移和缩放操作
+    map.addControl(new BMap.NavigationControl());
+
+    // 设置地图显示的城市，此项是必须设置的
+    map.centerAndZoom('四川', 12);
+
+    // 开启鼠标滚轮缩放
+    map.enableScrollWheelZoom(true);
+
+    // 启用双指操作缩放
+    map.enablePinchToZoom(true);
+
+    // 获取当前位置并在地图上标识出来
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            // Icon类表示覆盖物所使用的图标
+            var myIcon = new BMap.Icon('img/local.png',new BMap.Size(137,62));
+            // Marker类表示地图上一个图像标注
+            var marker = new BMap.Marker(r.point,{icon:myIcon});
+            //添加一个覆盖物
+            map.addOverlay(marker);
+            //map.panTo(r.point,16);
+            map.centerAndZoom(r.point, 16);
+            alert('您的位置：'+r.point.lng+','+r.point.lat);
+        }
+        else {
+            alert('failed'+this.getStatus());
+        }
+    },{enableHighAccuracy: true})
+
+
+</script>
+</body>
+</html>

@@ -2,224 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>web location test</title>
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        .locationBox {
-            width: 100%;
-            height: 100%;
-        }
-
-        #mapPanel {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-            z-index: 0;
-        }
-
-        .searchContainer {
-            position: absolute;
-            z-index: 2;
-            width: 90%;
-            top: 5%;
-            left: 50%;
-            margin-left: -45%;
-            height: 100px;
-        }
-
-        .searchContainer .searchBox {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-            padding-left: 2%;
-            font-size: 40px;
-            border: 1px solid #333;
-        }
-
-        .searchContainer .searchBtn {
-            width: 80px;
-            height: 75px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            padding: 0 20px;
-            border-left: 1px solid #333;
-            margin-top: 10px;
-        }
-
-        .searchContainer .searchBtn img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .map-info-win {
-            width: 600px;
-            padding: 10px;
-            font-size: 30px;
-        }
-
-        #test {
-            position: absolute;
-            width: 100%;
-            height: 100px;
-            background-color: red;
-            top: 30%;
-            left: 0;
-            z-index: 10000;
-        }
-
-    </style>
-    <script type="text/javascript" src="../static/js/zepto-186ebdabaf.js"></script>
-    <script type="text/javascript" src="../static/js/lib/SE_JSAPI_New-92c4ec0350.js"></script>
-    <script type="text/javascript" src="../static/js/lib/SE_JSLIB_New-48bfda260d.js"></script>
-    <script type="text/javascript">
-        var map;
-        var data = [
-            {
-                carNum: "川AE6666",
-                option: {
-                    lng: 104.06792346,
-                    lat: 30.67994285,
-                    ico: '../static/images/icons/1.png',
-                    zIndex: 100,
-                    UnitName: "网阔信息", // 所属企业
-                    PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
-                    Location: "四川省成都市青羊区王家塘街84号",
-                    SpeedCvt: "100",
-                    LimitSpeed: "80",
-                    GPSDateCvt: "2017-6-22"
-                }
-            },
-            {
-                carNum: "川AE8888",
-                option: {
-                    lng: 103.67174,
-                    lat: 30.84639,
-                    ico: '../static/images/icons/1.png',
-                    zIndex: 100,
-                    UnitName: "网阔信息", // 所属企业
-                    PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
-                    Location: "四川省成都市都江堰市都江堰市徐渡小学西南319米",
-                    SpeedCvt: "60",
-                    LimitSpeed: "40",
-                    GPSDateCvt: "2017-6-20"
-                }
-            }
-        ];
-
-        var option = {
-            lng: 104.06792346,
-            lat: 30.67994285,
-            zIndex: 100
-        };
-        function loadMap(){
-            map = new SE.Map("mapPanel");
-            map.setCenter("四川");
-            // 添加标准控件，骨头棒
-            map.addControl(new SE.MapControl());
-            // 添加 卫图, 矢量 和 融合控件
-            /*var switchControl=new SE.MapTypeControl();
-             map.addControl(switchControl);
-             map.removeMapType(SE.Traffic_MAP);
-             switchControl.setRight(5);*/
-            // 比例尺
-            var scale = new SE.ScaleControl();
-            scale.setLeft(20);
-            scale.setBottom(30);
-            map.addControl(scale);
-            // 鼠标滚动
-            map.handleMouseScroll(true);
-            // 键盘事件
-            map.handleKeyboard();
-        }
-
-        function convertLngLat(lng, lat) {
-            if (typeof (lng) == "object") {
-                return lng
-            }
-            else if (lng <= 360) {
-                return new SE.LngLat(lng, lat);
-            }
-            return new SE.LngLat(lng / 100000, lat / 100000);
-        }
-
-        function createIco(option) {
-            var _icon_url = option.url;
-            var _icon_size = new SE.Size(option.width, option.height);
-            var _icon_anchor = new SE.Point(option.width / 2, option.height / 2);
-            return new SE.Icon(_icon_url, _icon_size, _icon_anchor);
-        }
-
-
-
-        $(function(){
-            $(document).on('click', '#searchBtn', function(){
-                var searchKey = $('.searchBox').val();
-                if(searchKey.trim() == ''){
-                    alert('请输入车牌号');
-                }else{
-                    var flag = false;
-                    for (var i in data) {
-                        if(data[i].carNum == searchKey){
-                            var option = data[i].option;
-                            var lnglat = convertLngLat(option.lng, option.lat);
-                            console.log(lnglat);
-                            /*var _icon = option.ico;
-                             if (typeof option.ico === "string") {
-                             _icon = createIco({
-                             url: option.ico,
-                             width: 30,
-                             height: 30
-                             });
-                             }*/
-                            var marker = new SE.Marker(lnglat);
-                            map.addOverLay(marker);
-                            map.centerAndZoom(new SE.LngLat(option.lng, option.lat),16);
-                            var html = '<div class="map-info-win"><table>' +
-                                    "<tr><td>所属企业：</td><td>" + option.UnitName + '</td></tr>' +
-                                    "<tr><td>所属接入平台：</td><td>" + option.PlatformName + '</td></tr>' +
-                                    '<tr><td>地址：</td><td>' + option.Location + '</td></tr>' +
-                                    "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
-                                    '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
-                                    "</table></div>";
-                            var infoWin = marker.openInfoWinHtml(html); //开启信息窗口
-                            infoWin.setTitle('详细信息');
-                            SE.Event.addListener(marker, "click", function(){
-                                alert('test');
-                                this.destroy();
-                                marker.openInfoWinHtml(html); //开启信息窗口
-                            });
-                            document.getElementById("test").addEventListener("click", function(){
-                                alert('hello world!');
-                            });
-
-                            flag = true; // 存在
-                        }
-                    }
-                    if(!flag){
-                        alert("不存在改车辆，请输入测试车辆：川AE6666或者川AE8888");
-                    }
-                }
-            });
-
-        });
-    </script>
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/webLocation.css?v=3aa555d9e1"/>
+    <!--lib-flexible的库用来解决H5页面终端适配的。-->
+    <script type="text/javascript" src="../static/js/fileflex.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=Cu2gMKwvBltUntF3DUEZcZ6w"></script>
 </head>
-<body onload="loadMap()">
+<body>
+
 <div class="locationBox">
     <div id="mapPanel"></div>
-    <p id="test">111111111</p>
     <div class="searchContainer">
         <input type="text" class="searchBox" placeholder="搜车牌号"/>
+
         <div class="searchBtn">
             <img src="../static/images/icons/magnify.png" alt="" id="searchBtn"/>
         </div>
+        <ul class="autoComplete">
+            <li class="list">湘AE6666</li>
+            <li class="list">湘AE8888</li>
+            <li class="list">湘AE0000</li>
+            <li class="list">湘AE1111</li>
+            <li class="list">湘AE2222</li>
+            <li class="list">湘AE3333</li>
+        </ul>
     </div>
 </div>
 
+<ul class="router">
+    <li class="router-link activeRouter"></li>
+    <li class="router-link"></li>
+    <li class="router-link"></li>
+</ul>
 </body>
 </html>

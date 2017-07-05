@@ -9,13 +9,9 @@
     <meta content="yes" name="apple-touch-fullscreen">
     <meta content="telephone=no,email=no" name="format-detection">
     <title></title>
-    <link rel="stylesheet" href="../static/css/graphicalReport.css"/>
+    <link rel="stylesheet" href="../static/css/graphicalReport.css?v=16e53149fc"/>
     <!--lib-flexible的库用来解决H5页面终端适配的。-->
-    <script type="text/javascript" src="../static/js/fileflex-a29183acbb.js"></script>
-    <!--fastclick用于消除在移动浏览器上触发click事件与一个物理Tap(敲击)之间的300s延迟-->
-    <script type="text/javascript" src="../static/js/fastclick-1517c77ba1.js"></script>
-    <script type="text/javascript" src="../static/js/zepto-186ebdabaf.js"></script>
-    <script type="text/javascript" src="../static/js/page/demo1-2bdf62a1d9.js"></script>
+    <script type="text/javascript" src="../static/js/fileflex.js"></script>
 </head>
 <body>
     <div class="graphicalReport">
@@ -27,7 +23,37 @@
             <li class="tab-list">违章督办</li>
         </ul>
 
-        ul.filter
+        <ul class="filterIndicator">
+            <li class="filter-list open">
+                数据指标
+                <img src="../static/images/icons/selectIcon.png" alt=""/>
+                <ul class="singleList dataIndicator">
+                    <li>1111</li>
+                    <li>2222</li>
+                    <li>3333</li>
+                </ul>
+            </li>
+            <li class="filter-list">
+                展示纬度
+                <img src="../static/images/icons/selectIcon.png" alt=""/>
+                <ul class="singleList showWay">
+                    <li>333</li>
+                    <li>34444</li>
+                    <li>55555</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="echartShow">
+            <div id="dataShow"></div>
+            <div id="banShow">
+                <div id="pieShow"></div>
+                <div id="barShow"></div>
+            </div>
+            <div id="supervision">
+                违章督办
+            </div>
+        </div>
     </div>
 </body>
 </html>

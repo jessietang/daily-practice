@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Track</title>
+    <style type="text/css">
+        html{height:100%}
+        body{height:100%;margin:0px;padding:0px}
+        #controller{width:100%; border-bottom:3px outset; height:30px; filter:alpha(Opacity=100); -moz-opacity:1; opacity:1; z-index:10000; background-color:lightblue;}
+        #container{height:100%}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=D2b4558ebed15e52558c6a766c35ee73"></script>
+    <script type="text/javascript">
+        //获取所有点的坐标
+        var points = [
+            new BMap.Point(114.00100, 22.550000), new BMap.Point(114.00130, 22.550000),
+            new BMap.Point(114.00160, 22.550000), new BMap.Point(114.00200, 22.550000),
+            new BMap.Point(114.00300, 22.550500), new BMap.Point(114.00400, 22.550000),
+            new BMap.Point(114.00500, 22.550000), new BMap.Point(114.00505, 22.549800),
+            new BMap.Point(114.00510, 22.550000), new BMap.Point(114.00515, 22.550000),
+            new BMap.Point(114.00525, 22.550400), new BMap.Point(114.00537, 22.549500)
+        ];
+
+        var map;   //百度地图对象
+        var car;   //汽车图标
+        var label; //信息标签
+        var centerPoint;
+
+        var timer;     //定时器
+        var index = 0; //记录播放到第几个point
+
+        var followChk, playBtn, pauseBtn, resetBtn; //几个控制按钮
+
+        function init() {
+            followChk = document.getElementById("follow");
+            playBtn = document.getElementById("play");
+            pauseBtn = document.getElementById("pause");
+            resetBtn = document.getElementById("reset");
+
+            //初始化地图,选取第一个点为起始点
+            map = new BMap.Map("container");
+            map.centerAndZoom(points[0], 15);
+            map.enableScrollWheelZoom(); // 开启鼠标滚轮缩放
+            map.addControl(new BMap.NavigationControl());// 地图的平移缩放控件，可以对地图进行上下左右四个方向的平移和缩放操作
+            map.addControl(new BMap.ScaleControl()); // 比例尺控件
+            map.addControl(new BMap.OverviewMapControl({isOpen: true})); // 缩略地图控件
+
+            //通过DrivingRoute获取一条路线的point
+            // DrivingRoute获取驾车路线规划方案
+            var driving = new BMap.DrivingRoute(map); // 当参数为地图实例时，检索位置由地图当前的中心点确定
+            driving.search(new BMap.Point(114.00100, 22.550000), new BMap.Point(113.95100, 22.550000)); //发起检索（起点，终点）
+            // 设置检索结束后的回调函数
+            driving.setSearchCompleteCallback(function() {
+                //得到路线上的所有point
+                //driving.getResults() 返回最近一次检索的结果，返回值DrivingRouteResult
+                //DrivingRouteResult方法： getPlan(i:Number)返回索引指定的方案，索引0表示第一条方案 返回值RoutePlan
+                //RoutePlanl类(表示一条驾车或步行出行方案)
+                // RoutePlanl类 方法：getRoute(i: Number)返回值Route类型 返回方案中索引指定的线路
+                // Route类的getPath()方法，返回路线的地理坐标点数组 返回值类型Array<Point>
+                points = driving.getResults().getPlan(0).getRoute(0).getPath();
+                //画面移动到起点和终点的中间
+                centerPoint = new BMap.Point((points[0].lng + points[points.length - 1].lng) / 2, (points[0].lat + points[points.length - 1].lat) / 2);
+                map.panTo(centerPoint);
+                //连接所有点
+                // Polyline使用浏览器的矢量制图工具（如果可用）在地图上绘制折线的地图叠加层
+                map.addOverlay(new BMap.Polyline(points, {strokeColor: "black", strokeWeight: 5, strokeOpacity: 1}));
+
+                //显示小车子
+                // Label此类表示地图上的文本标注
+                label = new BMap.Label("", {offset: new BMap.Size(10, -30)});
+                car = new BMap.Marker(points[0]); // 创建Marker实例
+                car.setLabel(label); // 为标注添加文本标注
+                map.addOverlay(car);
+
+                //点亮操作按钮
+                playBtn.disabled = false;
+                resetBtn.disabled = false;
+            });
+        }
+
+        function play() {
+            playBtn.disabled = true;
+            pauseBtn.disabled = false;
+
+            var point = points[index];
+            if(index > 0) {
+                map.addOverlay(new BMap.Polyline([points[index - 1], point], {strokeColor: "red", strokeWeight: 1, strokeOpacity: 1}));
+            }
+            label.setContent("经度: " + point.lng + "<br>纬度: " + point.lat);
+            car.setPosition(point); // 设置标注的地理坐标
+            index++;
+            if(followChk.checked) { // 画面跟随
+                map.panTo(point);
+            }
+            if(index < points.length) {
+                timer = window.setTimeout("play(" + index + ")", 1000); // 在函数内部通过setTimeout再次调用函数本身，达到setInterval类似的的效果
+            } else {
+                playBtn.disabled = true;
+                pauseBtn.disabled = true;
+                map.panTo(point);
+            }
+        }
+
+        function pause() {
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+
+            if(timer) {
+                window.clearTimeout(timer);
+            }
+        }
+
+        function reset() {
+            followChk.checked = false;
+            playBtn.disabled = false;
+            pauseBtn.disabled = true;
+
+            if(timer) {
+                window.clearTimeout(timer);
+            }
+            index = 0;
+            car.setPosition(points[0]);
+            map.panTo(centerPoint);
+        }
+    </script>
+</head>
+
+<body onload="init();">
+<div id="controller" align="center">
+    <input id="follow" type="checkbox"><span style="font-size:12px;">画面跟随</span></input>
+    <input id="play" type="button" value="播放" onclick="play();" disabled />
+    <input id="pause" type="button" value="暂停" onclick="pause();" disabled />
+    <input id="reset" type="button" value="重置" onclick="reset()" disabled />
+</div>
+<div id="container"></div>
+</body>
+</html>  

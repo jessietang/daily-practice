@@ -30,6 +30,7 @@ geolocation.getCurrentPosition(function(r){
          }
          };*/
         var myIcon = new BMap.Icon("../icons/local.png", new BMap.Size(137,62));
+        // Marker类表示地图上一个图像标注
         var marker = new BMap.Marker(r.point,{icon:myIcon});
         map.addOverlay(marker);
         map.centerAndZoom(r.point,16);
