@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul id="ul1">
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+</ul>
+<script type="text/javascript">
+    var aLi = document.getElementById('ul1').getElementsByTagName('li');
+    for (var i=0; i<3; i++) {
+        var that = aLi[i];
+        that.addEventListener('click', function(num){
+            alert('test');
+            window.location.href='http://www.cuit.edu.cn';
+            return function(){
+                alert(num);
+            };
+
+        }(i));
+    }
+</script>
+</body>
+</html>
