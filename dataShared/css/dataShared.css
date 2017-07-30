@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #263046;
+    color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.connect-title {
+    margin: 40px auto 30px auto;
+    text-align: center;
+    font-size: 20px;
+}
+
+.connect-show {
+    width: 80%;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #666;
+    margin: 30px auto;
+}
+
+.connect-show .connect-header {
+    width: 30%;
+    height: 500px;
+    line-height: 500px;
+    text-align: center;
+    border-right: 1px solid #666;
+    background: url('../images/dashed.png') center no-repeat;
+    background-size: 100% auto;
+}
+
+.connect-show .connect-body {
+    width: 70%;
+    height: 500px;
+}
+
+.connect-show .connect-body .connect-list {
+    width: 100%;
+    border-bottom: 1px solid #666;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.connect-show .connect-body .connect-list:last-child {
+    border: none;
+}
+
+.connect-show .connect-body .connect-list span {
+    display: inline-block;
+    height: 100px;
+    line-height: 100px;
+}
+
+.connect-show .connect-body .connect-list .platform-name {
+    width: 60%;
+    border-right: 1px solid #666;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.connect-show .connect-body .connect-list .connect-state {
+    width: 35%;
+    height: 100px;
+    background: url('../images/connectBlue.png') no-repeat center;
+    background-size: 64px 64px;
+}
+
+.connect-show .connect-body .connect-list.connect-blue .platform-name {
+    color: #fff;
+}
+
+.connect-show .connect-body .connect-list.connect-blue .connect-state {
+    background: url('../images/connectBlue.png') no-repeat center;
+    background-size: 64px 64px;
+}
+
+.connect-show .connect-body .connect-list.connect-red .platform-name {
+    color: #d81e06;
+}
+
+.connect-show .connect-body .connect-list.connect-red .connect-state {
+    background: url('../images/connectRed.png') no-repeat center;
+    background-size: 64px 64px;
+}
