@@ -9,41 +9,43 @@ function init() {
 }
 
 function start() {
-    $('.connect-list2').addClass('connect-red');
-    $('.connect-list4').addClass('connect-red');
+    $('.connect-list1').addClass('connect-red');
 
     websocket = new WebSocket(wsUri);
 
-    //µ±BrowserºÍWebSocketServerÁ¬½Ó³É¹¦ºó£¬»á´¥·¢onopenÏûÏ¢
+    //å½“Browserå’ŒWebSocketServerè¿æ¥æˆåŠŸåï¼Œä¼šè§¦å‘onopenæ¶ˆæ¯
     websocket.onopen = function(evt) {
         websocket.send("WebSocket rocks");
     };
 
-    // µ±Browser½ÓÊÕµ½WebSocketServer·¢ËÍ¹ıÀ´µÄÊı¾İÊ±£¬
-    // ¾Í»á´¥·¢onmessageÏûÏ¢£¬²ÎÊıevtÖĞ°üº¬server´«Êä¹ıÀ´µÄÊı¾İ
+    // å½“Browseræ¥æ”¶åˆ°WebSocketServerå‘é€è¿‡æ¥çš„æ•°æ®æ—¶ï¼Œ
+    // å°±ä¼šè§¦å‘onmessageæ¶ˆæ¯ï¼Œå‚æ•°evtä¸­åŒ…å«serverä¼ è¾“è¿‡æ¥çš„æ•°æ®
     websocket.onmessage = function(evt) {
+        var data = evt.data;
+        data = "s1:æ­£å¸¸;s2:å¼‚å¸¸;s3:æ­£å¸¸;s4:å¼‚å¸¸;s5:æ­£å¸¸;";
+
         var spanHtml = '<span style="color: blue;">RESPONSE: '+ evt.data+'</span>';
     };
 
-    // µ±Browser½ÓÊÕµ½WebSocketServer¶Ë·¢ËÍµÄ¹Ø±ÕÁ¬½ÓÇëÇóÊ±£¬¾Í»á´¥·¢oncloseÏûÏ¢
+    // å½“Browseræ¥æ”¶åˆ°WebSocketServerç«¯å‘é€çš„å…³é—­è¿æ¥è¯·æ±‚æ—¶ï¼Œå°±ä¼šè§¦å‘oncloseæ¶ˆæ¯
     websocket.onclose = function(evt) {
-        console.error("ws¹Ø±Õ£º" + new Date().toLocaleString());
+        console.error("wså…³é—­ï¼š" + new Date().toLocaleString());
         onClose(evt)
     };
 
-    // Èç¹ûÁ¬½ÓÊ§°Ü£¬·¢ËÍ¡¢½ÓÊÕÊı¾İÊ§°Ü»òÕß´¦ÀíÊı¾İ³öÏÖ´íÎó£¬browser»á´¥·¢onerrorÏûÏ¢
+    // å¦‚æœè¿æ¥å¤±è´¥ï¼Œå‘é€ã€æ¥æ”¶æ•°æ®å¤±è´¥æˆ–è€…å¤„ç†æ•°æ®å‡ºç°é”™è¯¯ï¼Œbrowserä¼šè§¦å‘onerroræ¶ˆæ¯
     websocket.onerror = function(evt) {
-        console.error("ws´íÎó£º" + new Date().toLocaleString());
+        console.error("wsé”™è¯¯ï¼š" + new Date().toLocaleString());
     };
 }
 
-//¼àÌı´°¿Ú¹Ø±ÕÊÂ¼ş£¬µ±´°¿Ú¹Ø±ÕÊ±£¬Ö÷¶¯È¥¹Ø±ÕwebsocketÁ¬½Ó£¬
-// ·ÀÖ¹Á¬½Ó»¹Ã»¶Ï¿ª¾Í¹Ø±Õ´°¿Ú£¬server¶Ë»áÅ×Òì³£¡£
+//ç›‘å¬çª—å£å…³é—­äº‹ä»¶ï¼Œå½“çª—å£å…³é—­æ—¶ï¼Œä¸»åŠ¨å»å…³é—­websocketè¿æ¥ï¼Œ
+// é˜²æ­¢è¿æ¥è¿˜æ²¡æ–­å¼€å°±å…³é—­çª—å£ï¼Œserverç«¯ä¼šæŠ›å¼‚å¸¸ã€‚
 window.onbeforeunload = function () {
     closeWebSocket();
 };
 
-//¹Ø±ÕWebSocketÁ¬½Ó
+//å…³é—­WebSocketè¿æ¥
 function closeWebSocket() {
     websocket.close();
 }
