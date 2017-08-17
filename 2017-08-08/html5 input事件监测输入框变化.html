@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../js/jquery-1.11.2.js"></script>
+</head>
+<body>
+<input type="text" id="test1" placeholder="html5 input事件"/>
+
+<input type="text" oninput="onInput(event)" onpropertychange="onPropertychange(event)" placeholder="在html绑定的写法"/>
+
+<!--onchange事件与oninput(或者onpropertychange)区别：onchange事件要对象失去焦点才触发， 而oninput只要value值发生改变即可-->
+<input type="text" onchange="onChange(event)" placeholder="onchange 事件"/>
+
+<script type="text/javascript">
+    function onInput(event){
+        console.log('oninput ' + $(event.target).val().length);
+    }
+
+    function onpropertychange(event){ /*ie9以下*/
+        console.log('onpropertychange ' + $(event.target).val().length)
+    }
+
+    function onChange(event){
+        console.log($(event.target).val().length);
+    }
+    $(function(){
+        /*需要注意的是input事件是html5的东东，IE9以下版本中是无法支持的，所以需要用propertychange事件来代替*/
+        $(document).on('input propertychange', '#test1', function(){
+            console.log($(this).val().length);
+        });
+    });
+</script>
+</body>
+</html>

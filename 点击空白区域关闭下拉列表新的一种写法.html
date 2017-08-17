@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .myBox {
+            position: relative;
+            width: 200px;
+            height: 40px;
+            margin: 50px auto;
+        }
+
+        .myBox .input-box {
+            width: 100%;
+            height: 100%;
+        }
+
+        .myBox .select-box, .myBox .select-box .select-list {
+            list-style: none;
+        }
+
+        .myBox .select-box {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 40px;
+            width: 100%;
+            height: auto;
+            border: 1px solid #e3e3e3;
+        }
+
+        .myBox .select-box .select-list {
+            width: 100%;
+            height: 35px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .myBox .select-box .select-list:last-child {
+            border: 0;
+        }
+
+        .myBox .select-box .select-list:hover {
+            background-color: #303030;
+        }
+
+        .myBox .select-box .select-list:hover a {
+            color: #fff;
+        }
+
+        .myBox .select-box .select-list a {
+            display: block;
+            width: 100%;
+            height: 35px;
+            line-height: 35px;
+            padding: 0 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .myBox .select-box .select-list a:hover {
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="myBox" id="myBox">
+    <input type="text" class="input-box"/>
+    <ul class="select-box">
+        <li class="select-list"><a href="">aaaaa</a></li>
+        <li class="select-list"><a href="">bbbbb</a></li>
+        <li class="select-list"><a href="">ccccc</a></li>
+        <li class="select-list"><a href="">ddddd</a></li>
+        <li class="select-list"><a href="">eeeee</a></li>
+    </ul>
+</div>
+
+<script src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript">
+    $(function(){
+        // 点击输入框切换下拉列表的隐藏显示
+        $(document).on('click', '.input-box', function(){
+            $('.select-box').slideToggle();
+        });
+
+        // 使用事件委托，给每个li添加一个点击事件
+        $('.select-box').on('click', '.select-list a', function(e){
+            e.preventDefault();
+            var inputVal = $(this).text();
+            $('.input-box').val(inputVal);
+            $('.select-box').slideUp();
+        });
+
+        // 点击除了输入框和下拉列表之外的其他地方，关闭下拉列表
+        $(document).click(function(e){
+            var e = e || window.event;
+            var elem = e.target || e.srcElement;
+            while (elem) { // 循环判断至跟节点(这里的根节点指的是最外层的myBox)，防止点击的是myBox子元素
+                if(elem.id && elem.id == 'myBox'){
+                    return;
+                }
+                elem = elem.parentNode;
+            }
+            $('.select-box').slideUp();
+        });
+    });
+</script>
+</body>
+</html>

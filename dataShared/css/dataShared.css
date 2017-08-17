@@ -10,12 +10,12 @@ ul, li {
 body {
     width: 100%;
     height: 100%;
-    background-color: #263046;
+    background-color: #181f27;
     color: #fff;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .connect-title {
@@ -25,88 +25,153 @@ body {
 }
 
 .connect-show {
-    width: 80%;
-    height: 300px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #666;
-    margin: 100px auto;
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    left: 50%;
+    top: 50%;
+    margin-left: -400px;
+    margin-top: -450px;
 }
 
 .connect-show .connect-header {
-    width: 30%;
-    height: 300px;
-    line-height: 300px;
-    text-align: center;
-    border-right: 1px solid #666;
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    line-height: 800px;
     background: url('../images/dashed.png') center no-repeat;
     background-size: 100% auto;
-}
-
-.connect-show .connect-body {
-    width: 70%;
-    height: 300px;
-}
-
-.connect-show .connect-body .connect-list {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    border-bottom: 1px solid #666;
-    height: 100px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.connect-show .connect-body .connect-list:last-child {
-    border: none;
-}
-
-.connect-show .connect-body .connect-list span {
-    display: inline-block;
-    height: 100px;
-    line-height: 100px;
-}
-
-.connect-show .connect-body .connect-list .platform-name {
-    width: 60%;
-    border-right: 1px solid #666;
-    height: 100%;
+    left: 0;
+    top: 0;
     text-align: center;
-    color: #fff;
 }
 
-.connect-show .connect-body .connect-list .connect-state {
-    width: 35%;
-    height: 100px;
-    background: url('../images/connectBlue.png') no-repeat center;
-    background-size: 30px 30px;
+.connect-show .connect-header img {
+    width: 106px;
+    height: 70px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -42px;
+    margin-top: -35px;
 }
 
-.connect-show .connect-body .connect-list.connect-blue .platform-name {
-    color: #fff;
+.connect-show .connect-header .main-text {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    top: 54%;
+    left: 50%;
+    margin-left: -390px;
 }
 
-.connect-show .connect-body .connect-list.connect-blue .connect-state {
-    background: url('../images/connectBlue.png') no-repeat center;
-    background-size: 30px 30px;
+.connect-show .connect-list {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    background: url('../images/yellowSys.png') center no-repeat;
+    background-size: 150px 150px;
+    text-align: center;
 }
 
-.connect-show .connect-body .connect-list.connect-red .platform-name {
-    color: #d81e06;
+.connect-show .connect-list1 {
+    top: 20%;
+    left: 0;
+    margin-left: -66px;
+}
+
+.connect-show .connect-list1 .connect-state {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 140%;
+    top: 16%;
+    -webkit-transform: rotate(-30deg);
+    -moz-transform: rotate(-30deg);
+    -ms-transform: rotate(-30deg);
+    -o-transform: rotate(-30deg);
+    transform: rotate(-30deg);
+    margin-left: -75px;
+    background: url('../images/arrowBlue1.png') center no-repeat;
+    background-size: 100px 100px;
+}
+
+.connect-show .connect-list1.connect-red .connect-state {
+    background: url('../images/arrowRed1.png') center no-repeat;
+    background-size: 100px 100px;
     animation: blink .75s linear infinite;
     /* 其它浏览器兼容性前缀 */
     -webkit-animation: blink .75s linear infinite;
     -moz-animation: blink .75s linear infinite;
     -ms-animation: blink .75s linear infinite;
     -o-animation: blink .75s linear infinite;
+}
+
+.connect-show .connect-list2 {
+    top: 20%;
+    right: -10%;
+    line-height: inherit;
+}
+
+.connect-show .connect-list2 .connect-state {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: -84%;
+    top: 16%;
+    -webkit-transform: rotate(25deg);
+    -moz-transform: rotate(25deg);
+    -ms-transform: rotate(25deg);
+    -o-transform: rotate(25deg);
+    transform: rotate(25deg);
+    background: url('../images/arrowBlue2.png') center no-repeat;
+    background-size: 100px 100px;
+}
+
+.connect-show .connect-list2.connect-red .connect-state {
+    background: url('../images/arrowRed2.png') center no-repeat;
+    background-size: 100px 100px;
+    animation: blink .75s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink .75s linear infinite;
+    -moz-animation: blink .75s linear infinite;
+    -ms-animation: blink .75s linear infinite;
+    -o-animation: blink .75s linear infinite;
+}
+
+
+.connect-show .connect-list3 {
+    top: 92%;
+    left: 50%;
+    margin-left: -70px;
+}
+
+.connect-show .connect-list3 .connect-state {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 3%;
+    top: -80%;
+    background: url('../images/arrowBlue3.png') center no-repeat;
+    background-size: 100px 100px;
+}
+
+.connect-show .connect-list3.connect-red .connect-state {
+    background: url('../images/arrowRed3.png') center no-repeat;
+    background-size: 100px 100px;
+    animation: blink .75s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink .75s linear infinite;
+    -moz-animation: blink .75s linear infinite;
+    -ms-animation: blink .75s linear infinite;
+    -o-animation: blink .75s linear infinite;
+}
+
+.connect-show .connect-list2 .platform-name {
+    display: inline-block;
+    margin-top: 50px;
 }
 
 .connect-show .connect-body .connect-list.connect-red .connect-state {
