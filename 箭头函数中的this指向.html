@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="one">
+    <p>111
+        <h2>1</h2>
+    </p>
+    <a href="">aaa</a>
+</div>
+<div class="one">
+    <p>222<h2>1</h2></p>
+    <a href="">bbb</a>
+</div>
+<div class="one">
+    <p>333<h2>1</h2></p>
+    <a href="">ccc</a>
+</div>
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+    $(function(){
+        //$('.one').get(0).hide(); /*这就是jquery对象和dom对象不分，乱写*/
+        $('.one').each(function(index){
+            if($(this).index() <= 1){
+                console.log($(this).find('h2').text());
+            }
+        });
+		
+		
+    });
+	
+	// 1.由于javascript函数对this绑定的错误处理，下面的例子无法得到预期结果
+	var obj = {
+		birth: 1994,
+		getAge: function () {
+			var b = this.birth; // 1994
+			var fn = function () {
+				return new Date().getFullYear() - this.birth; // this指向window或undefined
+			};
+			return fn();
+		}
+	};
+	//console.log(obj.getAge());
+	
+	// 2.现在，箭头函数完全修复了this的指向，this总是指向词法作用域，也就是外层调用者obj(其实是一层一层往上找)
+	var obj2 = {
+		birth: 1994,
+		getAge: function(){
+			var b = this.birth; // 1994
+			var fn = () => {
+				return new Date().getFullYear() - this.birth; // this指向obj对象
+			}
+			return fn();
+		}
+	};
+	console.log(obj2.getAge()); // 23
+	
+	// 3.如果使用箭头函数，以前的那种hack写法就不再需要了
+	// hack写法
+	var obj3 = {
+		birth: 1994,
+		getAge: function(){
+			var b = this.birth;
+			var that = this; // 单独保存this
+			var fn = function(){
+				return new Date().getFullYear() - that.birth;
+			}
+			return fn();
+		}
+	};
+	console.log(obj3.getAge()); // 23
+	
+	// 4.由于this在箭头函数中已经按照词法作用域绑定了，，所以，用call()或者apply()调用箭头函数时，无法对this进行绑定，即传入的第一个参数被忽略：
+	var obj4 = {
+		birth: 1994,
+		getAge: function(year){
+			var b = this.birth;
+			var fn = (y) => {
+				return y - this.birth;
+			}
+			return fn.call({birth: 2018}, year);
+		}
+	}
+	console.log(obj4.getAge(2017)); // 23
+	
+	
+	// 箭头函数所改变的并非把this局部化，而是完全不把this绑定到里面去。
+	// 虽然箭头函数没有一个自己的this,但当你在内部使用了this,常规的局部作用域准则就起作用了，他会指向最近一层作用域的this.
+	function foo () {
+		return () => {
+			return () => {
+				return () => {
+					console.log("id: "+ this.id);
+				}
+			}
+		}
+	}
+	foo.call({id: 45})()()(); // id: 45
+	
+	
+</script>
+</body>
+</html>
