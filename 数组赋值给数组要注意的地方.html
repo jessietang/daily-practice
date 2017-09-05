@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组赋值给数组</title>
+</head>
+<body>
+
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+    var data = [
+		{"Id":79087,"Name":"湘G30958黄","UpUnitId":998,"UpUnitName":"暂无企业归属的车辆","Role":159383552,"Zone":43000000,"ZoneName":"湖南省","GnsscenterId":43010055,"PlateName":"天行北斗车联网云服务平台","VehicleType":0,"ReUpUnitId":998,"Role1":159383552},
+		{"Id":86135,"Name":"湘U30958黄","UpUnitId":998,"UpUnitName":"暂无企业归属的车辆","Role":159383552,"Zone":43000000,"ZoneName":"湖南省","GnsscenterId":43010052,"PlateName":"中交兴路运营平台","VehicleType":0,"ReUpUnitId":998,"Role1":159383552}
+	];
+	var dataTemp = data;
+	console.log(dataTemp);
+	for(var i=0; i<dataTemp.length; i++){
+		if (dataTemp[i].UpUnitId == '998') {
+			console.log(dataTemp[i].Name);
+		}
+	}
+	
+	var data2 = [
+		{
+			id: 1, 
+			face: {
+				face1: 'big smile',
+				face2: 'big cry'
+			},
+			name: 'jessie'
+		},
+		{
+			id: 2, 
+			face: {
+				face1: 'smile···',
+				face2: 'cry···'
+			},
+			name: 'jessie'
+		},
+		{
+			id: 3, 
+			face: {
+				face1: 'smile',
+				face2: 'cry'
+			},
+			name: 'cassie'
+		},
+		
+	];
+	// 浅拷贝
+	//var dataTemp2 = data2; // 二者共用一个引用
+	//console.log(dataTemp2);
+	//dataTemp2[0].face.face1 = 'small smile';
+	//console.log(dataTemp2[0].face.face1); // small smile
+	//console.log(data2[0].face.face1); // small smile
+	
+	//var dataTemp2 = [];
+	//for (var i=0; i<data2.length; i++){
+	//	dataTemp2.push(data2[i]); // 这样赋值，也是共用一个引用
+	//}
+	//dataTemp2[0].face.face1 = 'ha ha ha';
+	//console.log(dataTemp2[0].face.face1); // ha ha ha 
+	//console.log(data2[0].face.face1); // ha ha ha
+	
+	
+	
+	//清除掉数组中name == jessie的对象. 下面是典型的逻辑错误：splice会改变原来的数组，同时i++也在进行，所有这样当jessie个数 >= 2时，会有问题。
+	//【这个问题跟车辆监控里面的筛选不合格车牌的车一样的逻辑错误】
+	//for(var i=0; i<data2.length; i++){
+	//	if (data2[i].name == 'jessie'){
+	//		data2.splice(i, 1);
+	//	}
+	//}
+	//console.log(data2);
+	
+	
+	// 正确逻辑 
+	var dataTemp2 = [];
+	for (var i=0; i<data2.length; i++){
+		dataTemp2.push(data2[i]);
+	}
+	for (var i=0; i<dataTemp2.length; i++){
+		if (dataTemp2[i].name == 'jessie'){
+			for (var j=0; j<data2.length; j++){
+				if(dataTemp2[i].name == data2[j].name){
+					data2.splice(i, 1);
+				}
+			}
+		}
+	}
+	console.log(data2); // [{id: 2, face: {…}, name: "jessie"}]
+	
+	
+	
+</script>
+</body>
+</html>
