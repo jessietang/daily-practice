@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .cornflowerblue{color:cornflowerblue;}
+        textarea{margin-top: 16px;height: 70px;width: 300px;display: block;float: left;}
+        input{margin-top: 16px;}
+        .burlywood{color: white;background-color: burlywood;height: 30px;width: 100px; border: none;border-radius: 6px; valign="top"}
+    </style>
+</head>
+<body>
+<script>
+// 密码验证（要求密码必须8位非空白字符（空白字符：\t, \n, \r, \f, \v），且要包含字母或符号）
+    function pwdValidate(password) {
+        var pattern = /[\S]{8,}?/g; // 所有非空白字符 长度>=8
+        if( pattern.test(password)){
+        	password = password.replace(/\d/g,'');
+        	//console.log((/[\S]+?/g).test(password));
+        	return (/[\S]+?/g).test(password); // 去掉数字干扰，然后判断是否包含字母或符号
+        }
+		return  false;
+    }
+	console.log(pwdValidate('12345678'));
+	/*解释：\S 匹配所有非空白，而 \w 只匹配单词字符，等价于 [a-zA-Z0-9_] 共63个字符（字母数字下划线）
+		  + : 一次或多次
+		  * : 零次或多次
+		  ? : 零次或一次*/
+</script>
+</body>
+</html>
