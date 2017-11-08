@@ -1,0 +1,1765 @@
+2017/2/7:
+1.关于px rem转换的问题
+首先html页面首先引入<script type="text/javascript" src="../static/js/fileflex.js"></script>， 参考：https://github.com/amfe/article/issues/17 
+执行这个JS后，会在<html>元素上增加一个data-dpr属性，以及一个font-size样式。JS会根据不同的设备添加不同的data-dpr值，比如说2或者3，同时会给html加上对应的font-size的值，比如说75px。
+如此一来，页面中的元素，都可以通过rem单位来设置。他们会根据html元素的font-size值做相应的计算，从而实现屏幕的适配效果。
+D:\workspace\activity\src\scss\mixin.scss下面的pxrem这个混合宏模块
+@mixin pxrem($property, $px-values) {
+    @if type-of($px-values) == "number"{
+        #{$property}: $px-values / $standardNum * 1rem;
+    }
+    @else {
+        $rem-values:();
+        @each $value in $px-values{
+            @if $value == 0 or type-of($value) != "number"{
+                $rem-values: append($rem-values, $value);
+            }
+            @else{
+                $rem-values: append($rem-values, $value / $standardNum * 1rem);
+            }
+        }
+        #{$property}: $rem-values;
+    }
+}
+在scss里面这样用：@include pxrem(padding, 240 30 15 30);
+$standardNum: 75; 这个看给的设计图的宽度是多少，如果是750px,这里就写75，如果是650px，这里就写65.
+scss文件里面公共的部分：
+@import '../mixin';
+@import '../rest';
+@import '../flexmixin';
+@import '../common';
+$standardNum: 75;
+
+body {
+	height: 100%;
+	position: relative;
+	margin: 0 auto;
+	width: 10rem;
+	overflow-x: hidden;
+	background-color: #2a00e0;
+	color: #fff;
+}
+
+关于sass的补充知识：
+1).混合宏：@mixin pxrem($property, $px-values) 这个就是定义一个混合宏
+混合宏的调用：@include pxprem(width,200);  or  @include pxprem(padding, 240 30 15 30);
+2).占位符：%fx {display: flex;}   or   %fxd-r {flex-direction: row;}
+占位符的调用：@extend %fx;   or   @extend %fxd-r;
+
+
+
+2.flex布局 多列垂直居中对齐
+容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）
+
+父容器{
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;//横向排列
+	justify-content: center;//定义项目在主轴上的对齐方式---居中
+	align-items: center;//交叉轴的中点对齐
+}
+参考代码：
+.reckon {
+	@include pxrem(width, 730);
+	overflow: hidden;
+	@include pxrem(padding, 30 0);
+	@include pxrem(margin, 8 auto);
+	background: linear-gradient(to right, #d02cd4, #121068);
+	display: flex;
+	@extend %fxd-r;
+	@extend %jc-c;
+	@extend %ai-c;
+}
+
+3.app页面展示
+D:\workspace\activity\src\module 在这里新增页面，然后cmd里面进到D:\workspace\activity，执行gulp serve，就跑起来了，
+具体查看某一个页面这样访问http://localhost:3000/src/module/artCoefficient.html。
+修改或者新增完成后，执行gulp命令，将scss文件打包成这个D:\workspace\activity\src\static\css下面的css文件，
+记住scss只是一个编译工具，html页面中调用的还是css文件。
+
+
+2017/2/8：
+1.正则表达式
+首先，让我们看看两个特别的字符：'^' 和 ‘$' 他们是分别用来匹配字符串的开始和结束，以下分别举例说明
+"^The": 匹配以 "The"开头的字符串;
+"of despair$": 匹配以 "of despair" 结尾的字符串;
+"^abc$": 匹配以abc开头和以abc结尾的字符串，实际上是只有abc与之匹配
+"notice": 匹配包含notice的字符串
+
+项目中：
+function getStatus(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if (r !== null) return unescape(r[2]);
+	return null;
+};
+其中的var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");是用来获取页面url的某个url参数的方法。
+(^|&)这个是匹配以&开头或前面没有字符的内容。([^&]*)表示不包含&的任意个字符。(&|$)表示以&结尾或者后面没有字符的内容。
+这个正则是寻找& + url参数名字 = 值 + &; &可以不存在。
+var r = window.location.search.substr(1).match(reg);
+if (r !== null) return unescape(r[2]);
+return null;
+这里是开始匹配，找到了返回对应url值，没找到返回null.
+举个栗子： http://www.cuit.edu.cn?channelCode=android&name=cuit&msg=test
+
+window.location.search.substr(1).match(new RegExp("(^|&)"+ 'channelCode' +"=([^&]*)(&|$)"));  ===> 返回的是 ["channelCode=android&", "", "android", "&"]
+window.location.search.substr(1).match(new RegExp("(^|&)"+ 'name' +"=([^&]*)(&|$)"));  ===> 返回的是 ["&name=cuit&", "&", "cuit", "&"]
+
+2.zepto.js
+
+
+3.box-sizing: border-box；
+W3C的盒模型方式被称为“content-box”，IE盒模型的被称为“border-box”，
+使用box-sizing: border-box;就是为了在设置有padding值和border值的时候不把宽度撑开。
+
+4.JavaScript toFixed() 方法把Number四舍五入为指定小数位数的数字。
+
+
+2017/2/9：
+1.angular作用域的理解，参考D:\others\myWorks\angular-base\再学Angular\demo
+AngularJS有了三种自定义的作用域绑定方式：
+
+　　1 基于【字符串】的绑定：使用@操作符，双引号内的内容当做字符串进行绑定。
+
+　　2 基于【变量】的绑定：使用=操作符，绑定的内容是个变量。
+
+　　3 基于【方法】的绑定：使用&操作符，绑定的内容时个方法。
+2.angular-myphonecat项目复习，重新看了一遍原理，但是没有自己敲代码来看。
+
+3.git常用命令复习
+查看当前分支：git branch (显示结果中带有*号的是当前分支)
+查看所有分支： git branch -a
+切换到test1分支： git checkout test1
+创建分支test2并切换到test2分支：git checkout -b test2
+删除分支test3：git checkout -d test3
+合并分支test4到dev分支：先切换到dev分支（git checkout dev）,再合并分支test4（git merge test4）
+
+4.git命令应用
+1).创建一个本地分支并切换到该分支 
+	git checkout -b branchForBug1
+2).远程分支就是本地分支Push到服务器，比如master就是一个最典型的远程分支（默认）。下面是把分支推到远程分支。
+	git push origin branchForBug1
+推送本地分支到远程分支上面去语法：git push origin local_branch:remote_branch
+这个操作，local_branch必须为你本地存在的分支，remote_branch为远程分支，如果remote_branch不存在则会自动创建分支。
+
+3).一个例子示范：
+	当前分支在master
+	git checkout -b bug1
+	修改test1.html
+	git status
+	git add test1.html
+	git commit -m"modify test1.html"
+	git push origin bug1 (把本地分支bug1推送到远程分支上面去了)
+	修改完成后，合并bug1分支到master
+	git checkout master  (这时test1.html又回到未修改前的版本)
+	git merge bug1
+	merge完成之后，把本地master分支的修改提交到远程master
+	git push
+	现在远程和本地的master分支上面的test1.html文件都是修改后的文件了
+	
+4).切换到web branch
+	git checkout web
+	git pull origin web
+	git push origin web
+	然后修改web分支里面的东西，最后直接add,commit,push就可以了。
+
+5).修改了代码，commit了，但是没有push, 突然发现有问题了（比如pull代码的时候发生了冲突），想回退到commit之前，执行代码：git reset --hard origin/dev	
+2017/2/10：
+1.复习vue.js基础
+
+
+2017/2/13：
+1.复习正则
+//正则表达式复习
+    // 1).过滤出一个字符串中的数字
+    var string1 = '#@1.309$';
+    //把所有不是数字不是.也不是$的字符替换成空字符串
+    //i : ignore  g: global
+    var str1 = string1.replace(/[^\d,^{.},^{$}]/ig, '');
+    var str1_1 = string1.replace(/[^\d,{.},{$}]/ig, '');
+    console.log(str1); // 1.309$
+    console.log(str1_1); // 1.309$
+    var str1_11 = string1.replace(/[^{\d,{.},{$}}]/ig,'');  // 这个算是标准写法把！！！
+    console.log(str1_11); // 1.309$
+    //把所有数字和.替换成字母t
+    var str1_2 = string1.replace(/[\d,{.}]/ig,'t');
+    console.log(str1_2); //#@ttttt$
+
+    //2).找到第一个出现数字的位置
+    var string2 = 'fdjk@1.23efj';
+    console.log(string2.search(/\d/)); // 5
+
+    //3).三个数字连着的
+    var string3 = 'tyd35h345fsa';
+    var str3 = string3.match(/\d\d\d/g);
+    console.log(str3); //["345"]
+
+    //4).若干个数字
+    var string4 = 'hs5624mf734f32f5dd0';
+    var str4 = string4.match(/\d+/g);
+    console.log(str4); // ["5624", "734", "32", "5", "0"]
+
+    //5).除了大写字母和数字以外的
+    var string5 = '#jTyhT$T78s0s';
+    var str5 = string5.replace(/[^\d,^A-Z]/g,'Q');
+    console.log(str5); // QQTQQTQT78Q0Q
+
+    //6).除了小写字母和数字以外的
+    var string6 = '#jTyhT$T78s0s';
+    var str6 = string6.replace(/[^a-z,^\d]/g,'H');
+    console.log(str6); // HjHyhHHH78s0s
+
+    //7).^ 和 $ 分别用来匹配字符串的开头和结束
+    // ^匹配开头，注意与‘非’区分开
+    var testStr1 = 'mabcde123';
+    var testStr2 = 'abcde123';
+    var testStr3 = '12ab34cd';
+    //匹配以ab字符串开头的字符串，如果匹配到了就返回字符串构成的数组，没匹配到就返回null
+    console.log(testStr1.match(/(^ab)/g)); // null
+    //把以字符串m开头的字符替换成M
+    console.log(testStr1.replace(/(^m)/g,'M')); // Mabcde123
+    //把不是字符m的所有字符替换成M
+    console.log(testStr1.replace(/[^{m,c}]/g,'M')); // mMMcMMMMM
+    //把不是字符m的所有字符替换成M
+    console.log(testStr1.replace(/[^m,^c]/g,'M')); // mMMcMMMMM
+    //把所有不是小写字母的字符替换成6
+    console.log(testStr1.replace(/[^a-z]/g,'6')); // mabcde666
+    //把以小写字母开头的字符替换成6
+    console.log(testStr1.replace(/^[a-z]/g,'6')); // 6abcde123
+    //匹配以ab字符串开头的字符串，如果匹配到了就返回字符串构成的数组，没匹配到就返回null
+    console.log(testStr2.match(/(^ab)/g)); // ["ab"]
+    //把所有非数字字符替换成T
+    console.log(testStr3.replace(/[^\d]/g,'T')); // 12TT34TT
+    //把所有非数字字符替换成T
+    console.log(testStr3.replace(/[^0-9]/g,'T')); //12TT34TT
+    //把以数字开始的字符替换成T
+    console.log(testStr3.replace(/^[\d]/g,'T')); // T2ab34cd
+    //把以数字开始的字符替换成T
+    console.log(testStr3.replace(/^[0-9]/g, 'T')); //T2ab34cd
+    // 从一个字符串中截取出浮点数
+    console.log("kl$100.08".replace(/[^{(0-9),{.}}]/ig,"")); // 100.08
+	
+2.D:\workspace\truck\truck-web\outside\src\static\js\share\couponShare.js
+感觉这个js好像这里有问题：
+if (!app.isGet) {
+			return
+		}
+【没有任何问题，isGet=false代表已经领过了， isGet = true代表没有领取过】
+
+
+2017/2/14：
+1).查看gulpfile.js文件，复习和学习gulp知识。查看：D:\others\gulpfile.js
+2).写了两个博客
+
+
+
+2017/2/15：
+1.background-origin: padding-box(default) / border-box / content-box;  背景图像相对于内边距框、边框盒、内容框来定位；
+2.transform: rotate3d(1,0,0,30deg); 《==》transform: rotateX(30deg);  沿着x轴旋转30度。
+3.text-shadow: h-shadow v-shadow blur color;
+h-shadow 水平阴影的距离
+v-shadow 垂直阴影的距离
+blur 可选 模糊的距离
+color 阴影的颜色
+正负代表的方向：右下(+)  左上(-) 
+text-shadow: -1px 0 #000,/*为文本的四条边添加1px的实体阴影*/ /*左*/
+            0 -1px #000, /*上*/
+            1px 0 #000, /*右*/
+            0 1px #000; /*下*/
+			
+text-shadow: 0 0 4px #fff,
+            2px -10px 4px #ff3,
+            -2px -15px 11px #f80,
+            2px -25px 18px #f20;/*text-shadow阴影叠加出燃烧的文字特效*/			
+4.	webstorm替换快捷键： ctrl+r
+			查找快捷键： ctrl+f
+			
+jsp
+D:\workspace\truck\truck-app\src\main\webapp\WEB-INF\module\recommendInfo\
+			
+http://localhost:3000/src/module/artTypeCoefficient.html  还有一个分享出去的页面！！！下周一来做
+
+			
+2017/2/20：
+1.检查完善上周做的页面：
+D:\workspace\truck\truck-app\src\main\webapp\appInline\static\js\page\rating.js
+
+2.gulp环境安装：
+1).先全局安装gulp:  cnpm install gulp -g
+2).然后在本地安装gulp， cnpm install gulp
+3).安装package里面的依赖包： cnpm install
+4).执行gulp:  gulp  (其实就是执行的gulp default)
+5).
+
+
+2017/2/21:
+D:\workSpace\truck\truck-app\src\main\webapp\tactivity\module\artSharedTyreCoefficient.html   title 改成：轮胎接单奖励
+
+artFuelUp.js?v=169df24223
+
+
+2017/2/22:
+
+此页面（技工端邀请注册 artSendFriendsCoupon.html）与 司机端邀请注册页面（sendFriendsCoupon.html）
+    已合并为同一个邀请注册页面，即：hotfix branch的regRecommand.jsp
+    另外一个由此页面分享出去的然后点进来是输入号码领取优惠券的页面是 hotfix branch的recommend.jsp
+
+../static/js/page/dirInsurance.js?v=3052017c3e	
+
+sendFriendsCoupon.html对应regRecommand.jsp  改了html页面里的<br/> 、新增了class shareGuide1 shareGuide2 shareGuide3 shareGuide4, 替换css文件的时候，注意css里面图片的路径background:url("../img/sendFriendsCouponBtn.png")
+
+
+
+
+2017/2/23:
+1.把reactQa项目重新做了一遍
+2. 
+
+
+
+
+2017/2/24:
+
+1.更新npm版本到最新版本：npm install -g npm
+打开命令行工具 npm -version 查看是否是最新版本
+如果不是 运行npm install -g npm 升级
+打开C:\Users\用户名用户目录找到node_modules 文件夹下的npm文件夹，复制一份。
+打开node.js 安装目录 E:\install\nodejs\node_modules，找到npm，替换为刚刚复制的那一份。
+如果要使用cnpm,更新完之后需重新进行淘宝镜像安装。
+
+2.slice and splice
+[1,2,3,4,5].slice(2,4); // ==> [2,4) => [3,4] 返回被截取的数组，不会改变原来的数组。
+slice() 方法可从已有的[数组]中返回选定的元素。
+slice()方法可提取[字符串]的某个部分，并以新的字符串返回被提取的部分。
+注意： slice() 方法不会改变原始数组。
+
+['1','2','3','4','5'].splice(2,2,'10','0'); // 返回被删除的元素 ["3", "4"]
+
+var num = ['1','2','3','4','5'];
+num.splice(2,2,'10','0'); // arr.splice(start,deleteCount,item1,.....,itemX);
+console.log(num); // => ['1','2','10','0','5'] => 会改变原来的数组
+
+重要事项：与 slice() 和 substr() 方法不同的是，【substring() 不接受负的参数】。
+所以，如果要截取倒数几位，如倒数四位，则可以用splice(-4)
+
+关于splice有个问题：
+var phone = "18380448313";
+phone.splice(3,4,'*','*','*','*'); // 会报错，splice is not a function
+因为splice是数组的方法，所以应该这样写：
+phone.split('').splice(3,4,'*','*','*','*').join('');
+或者：
+或者这样写：
+phone.substring(0,3)+'****'+phone.substring(7);
+substring 左闭右开 [0,3)
+
+
+
+2017/2/27：
+1. vue-Meizi 简单看完了，边看边把不懂得去看了一下， 特别注重看了一下vue-router
+2. js前端开发月报 2015.10
+
+
+2017/2/28：
+1. .babelrc文件  【注意bower安装里面用来定义下载目录的文件是 .bowerrc, 跟这个文件不一样】
+{
+  "presets": ["es2015", "stage-2"],  // presets 字段是用来设定转码规则 , 先下载所要使用的转码规则插件然后将其写到  .babelrc文件中
+  "plugins": ["transform-runtime"],
+  "comments": false,
+  "env": {
+    "test": {
+      "plugins": [ "istanbul" ]
+    }
+  }
+}
+官网是这么说的，那些需要修改内置api才能达成的功能，譬如：扩展String.prototype，给上面增加includes方法，就属于修改内置API的范畴。这类操作就由polyfill提供。
+babel-runtime 为什么适合 JavaScript 库和工具包的实现？
+1).避免 babel 编译的工具函数在每个模块里重复出现，减小库和工具包的体积；
+2).在没有使用 babel-runtime 之前，库和工具包一般不会直接引入 polyfill。
+否则像 Promise 这样的全局对象会污染全局命名空间，这就要求库的使用者自己提供 polyfill。
+这些 polyfill 一般在库和工具的使用说明中会提到，比如很多库都会有要求提供 es5 的 polyfill。
+在使用 babel-runtime 后，库和工具只要在 package.json 中增加依赖 babel-runtime，交给 babel-runtime 去引入 polyfill 就行了；
+
+总结：
+具体项目还是需要使用 babel-polyfill，只使用 babel-runtime 的话，实例方法不能正常工作（例如 "foobar".includes("foo")）；
+JavaScript 库和工具可以使用 babel-runtime，在实际项目中使用这些库和工具，需要该项目本身提供 polyfill；
+
+2.vuex学习 gitbook
+
+
+2017/3/2:
+1.jquery判断一个元素是否存在【】
+jquery判断一个元素是否存在，通过length来判断
+jquery中判断一个元素dom节点是否存在,不能像js中，
+if（document.getElementById('example')）,而要用到.size属性
+注意，如果这个元素是display：none;的，size和length都会有值，这个时候不能这样来判断，可以用hasClass('hidden')来判断。
+
+
+
+2017.3.3：
+1.新增两个页面，先得到链接，后面图给了再修改
+truckTreasureCI4.html
+truckTreasureCH4.html
+
+2.js中event的target和currentTarget的区别：【来自vue-notepad项目的event.currentTarget.nextElementSibling】
+js中的event对象包含很多有用的信息
+target：触发事件的元素。
+currentTarget：事件绑定的元素。
+两者在没有冒泡的情况下，是一样的值，但在用了事件委托的情况下，就不一样了，例如：
+<ul id="ulT">
+                <li class="item1">fsda</li>
+                <li class="item2">ewre</li>
+                <li class="item3">qewe</li>
+                <li class="item4">xvc</li>
+                <li class="item5">134</li>
+     </ul>
+　　<script type="text/javascript">
+        document.getElementById("ulT").onclick = function  (event) {
+            console.log(event.target);
+            console.log(event.currentTarget);
+        }
+    </script>
+结果：如果点击li，console上的情况如下：
+<li class="item5">------target
+<ul id="ulT">---------currentTarget
+
+nextSibling：节点的后一个节点，如果该节点是最后一个节点，则为null。注意有可能拿到的节点是文本节点，与预期的不符，要进行处理一下。
+nextElementSibling：返回后一个元素节点，后一个节点必须是Element，注意IE9以下浏览器不支持。
+
+
+
+2017-3-6:
+1.关于vue安装：
+1).我们将会使用webpack去为我们的模块打包，预处理，热加载。如果你对webpack不熟悉，它就是可以帮助我们把多个js文件打包为1个入口文件，并且可以达到按需加载。
+这就意味着，我们不用担心由于使用太多的组件，导致了过多的HTTP请求，这是非常有益于产品体验的。但我们并不只是为了这个而使用webpack，我们需要用webpack去编译.vue文件，
+如果没有使用一个loader去转换我们.vue文件里的style、js和html，那么浏览器就无法识别。
+
+2).模块热加载是webpack的一个非常碉堡的特性，将会为我们的单页应用带来极大的便利。通常来说，当我们修改了代码刷新页面，那应用里的所有状态就都没有了。
+这对于开发一个单页应用来说是非常痛苦的，因为需要重新在跑一遍流程。如果有模块热加载，当你修改了代码，你的代码会直接修改，页面并不会刷新，所以状态也会被保留。
+
+3).Vue也为我们提供了CSS预处理，所以我们可以选择在.vue文件里写LESS或者SASS去代替原生CSS。
+
+4).我们过去通常需要使用npm下载一堆的依赖，但是现在我们可以选择Vue-cli。这是一个vue生态系统中一个伟大创举。这意味着我们不需要手动构建我们的项目，而它就可以很快地为我们生成。
+
+首先，安装vue-cli。(确保你有node和npm)
+
+npm i -g vue-cli
+
+然后创建一个webpack项目并且下载依赖
+
+vue init webpack vue-time-tracker
+cd vue-time-tracker
+npm i
+
+接着使用 npm run dev 在热加载中运行我们的应用
+
+这一行命令代表着它会去找到package.json的scripts对象，执行node bulid/dev-server.js。在这文件里，配置了Webpack，会让它去编译项目文件，并且运行服务器，我们在localhost:8080即可查看我们的应用。
+
+
+2.npm i 只是 npm install 的简写
+
+3.vue项目开发中去除掉Eslint验证： 在webpack.base.conf.js里面，删除掉 含有loader: 'eslint-loader' 的这一个rules即可。
+
+4.创建另一个匿名函数强制让闭包的行为符合预期
+(function(m){
+	checkbox[m].onclick = function(){
+		console.log(m);
+	}
+})(i);
+或者是：
+checkbox[i].onclick = function(m){
+	return function(){
+		console.log(m);
+	}
+}(i)
+
+5.$route.path 是当前路由对象的路径，会被解析为绝对路径
+for example 01:
+<router-link
+      v-if="$route.path !== '/time-entries/log-time'"
+      to="/time-entries/log-time"
+      class="btn btn-primary">创建</router-link>
+for example 02:
+ <ul class="nav navbar-nav">
+            <li :class="{active : $route.path == '/home'}"><router-link to="/home">首页</router-link></li>
+            <li :class="{active : $route.path == '/time-entries' || $route.path == '/time-entries/log-time'}"><router-link to="/time-entries">计划列表</router-link></li>
+          </ul>
+
+
+2017-3-8:
+artRepair.html: 修改了html,css, js,images	
+明天来问需求!!!!	 
+
+2017-3-9：
+接口对接：
+第一个，传入名字跟电话号码到后台
+$.ajax({
+                type:'post',
+                url: 'http://test.dadachefu.com/truck/coupon/receiveCouponLog',
+				// 传json字符串对象过去
+                data: JSON.stringify({
+                    nickName: name,
+                    phone: phone,
+                    clientType: 5,
+                    channelCode: 'web',
+                    responseStatus: 200,
+                    actionCode: 'downloadRecommend'
+                }),
+                dataType: 'json', /*预期服务器返回的数据类型，如果这里写了json,那么请求返回的结果res就不用再用eval转了 */
+                contentType: 'application/json', /*(默认: "application/x-www-form-urlencoded") 发送信息至服务器时内容编码类型*/
+                success: function(res){
+                    if(res.code == 0){ // 接口请求成功
+                        window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.jiajiabao.ucar';
+                    }else{
+                        alert(res.msg);
+                    }
+                },
+                error: function(){
+
+                }
+            }); 
+第二个，直接请求获得剩下的优惠券的数量渲染在页面上
+$.ajax({
+        type: 'post',
+        url: 'http://test.dadachefu.com/truck/coupon/countRecommendedDownloadRecord',
+        dataType: 'json',
+        success: function(res){
+            //var resData = eval("("+res+")");
+            var resData = res;
+            if(resData.code == 0){
+                $restCoupons.text(resData.data);
+            }
+        }
+    });
+
+
+
+2017-3-10：
+104.04339-----30.641982000000002
+四川省, 成都市, 武侯区, 广福桥街, 14-21号
+
+104.04339-----30.641982000000002
+test2.html:108 四川省, 成都市, 武侯区, 武侯祠横街, 13号	
+
+104.04339-----30.641982000000002
+
+准确的：30.5524480000,104.0676850000
+
+test2.html:35 104.052164687519-----30.638236683120883
+104.052164687519-----30.638236683120883
+
+
+
+2017-3-13:
+1.baidu map api and geocoding api learning
+F:\me\daily-practice\百度map api定位\Geocoding API之地址解析.html
+F:\me\daily-practice\百度map api定位\Geocoding API之逆地址解析.html
+
+2.D:\workSpace\truck\truck-web\activity\src\module\couponShare.html
+D:\workSpace\truck\truck-web\activity\src\module\couponShareShow.html
+D:\workSpace\truck\truck-web\activity\src\module\couponShareState.html
+通过接口返回的状态，跳不同的页面，在页面url后面携带参数，如?status=1
+web-activity这个branch已经提了这三个静态页面了
+
+
+
+/*$(document).on('click', '.guideIcon img', function(){
+        var _this = $(this);
+        console.log($('.caption').length);
+        if($('.caption').hasClass('hidden')){
+            $('.caption').removeClass("hidden");
+            $('.footer').css('background-color','#fff');
+            _this.attr('src','../static/images/tireManagerAwardShowIcon.png');
+        }else{
+            $('.caption').addClass("hidden");
+            $('.footer').css('background-color','#fff1c9');
+            _this.attr('src','../static/images/tireManagerAwardHideIcon.png');
+        }
+
+    });*/
+	
+2017-3-14：
+1.修改了D:\workSpace\truck\truck-web\activity\src\static\js\page\artRepair.js
+D:\workSpace\truck\truck-web\activity\src\static\js\page\tireManagerAward.js 这两个页面（css js）的活动说明切换， 把click事件从原来的绑定到图片上改为了绑定到footer上。
+modify the click event on artRepair.html and tireManagerAward.html
+2.修改了D:\workSpace\truck\truck-web\activity\src\module\grabCouponForTyre.html 页面（html css）
+fixed the click event on artRepair.html and tireManagerAward.html， modify the grabCouponForTyre.html
+
+
+
+2017-3-15：
+1.jquery ajax参数：
+type: get or post, 默认是get, GET 请求中将附加在 URL 后
+contentType: 默认是application/x-www-form-urlencoded 表示发送信息至服务器时内容编码。 类似的还有application/json
+dataType: 预期服务器返回的数据类型。如果不指定，jquery将根据HTTP包MIME信息返回responseXML或者responseText,并作为回调函数参数传递。即function(res){}里面的res
+async:默认true,默认设置下，所有请求均为异步请求。如果需要发送同步请求，请将此选项设置为false.注意，同步请求将锁住浏览器，用户其他操作必须等待请求完成才可以执行。
+
+2.从web-activity转战到hotfix进行开发了，把web-activity的activity文件重命名为xActivity复制到了D:\workSpace\truck\truck-app\src\main\webapp下面，以前的路径不变，新的路径会在最外面多一层路径xActivity
+
+3.JSON与JSONP：参考 http://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html， 写的很好
+【说到AJAX就会不可避免的面临两个问题，第一个是AJAX以何种格式来交换数据？第二个是跨域的需求如何解决？这两个问题目前都有不同的解决方案，比如数据可以用自定义字符串或者用XML来描述，跨域可以通过服务器端代理来解决。
+但到目前为止最被推崇或者说首选的方案还是用JSON来传数据，靠JSONP来跨域。而这就是本文将要讲述的内容。
+ 
+【
+	针对ajax与jsonp的异同再做一些补充说明：
+
+1、ajax和jsonp这两种技术在调用方式上“看起来”很像，目的也一样，都是请求一个url，然后把服务器返回的数据进行处理，因此jquery和ext等框架都把jsonp作为ajax的一种形式进行了封装；
+
+2、但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加<script>标签来调用服务器提供的js脚本。
+
+3、所以说，其实ajax与jsonp的区别不在于是否跨域，ajax通过服务端代理一样可以实现跨域，jsonp本身也不排斥同域的数据的获取。
+
+4、还有就是，jsonp是一种方式或者说非强制性协议，如同ajax一样，它也不一定非要用json格式来传递数据，如果你愿意，字符串都行，只不过这样不利于用jsonp提供公开服务。
+
+总而言之，jsonp不是ajax的一个特例，哪怕jquery等巨头把jsonp封装进了ajax，也不能改变着一点！
+】
+
+ // 1）这里展示了jQuery如何实现jsonp的调用
+                $.ajax({
+                    url: 'http://api.map.baidu.com/geocoder/v2/?ak=Cu2gMKwvBltUntF3DUEZcZ6w&location=' + r.point.lat + ',' + r.point.lng + '&output=json&pois=2',
+                    dataType: 'jsonp',
+                    jsonp: 'callback',
+                    success: function(d){
+                        var result = d.result;
+                        console.log(result);
+                        if(result){
+                            currentPosition = result.formatted_address;
+                            console.log(currentPosition);
+                        }else{
+                            console.log('地址解析失败');
+                            currentPosition = '地址解析失败';
+                        }
+                    },
+                    error: function(d){
+                        console.log('解析地址失败：' + d.msg);
+                        currentPosition = '解析地址失败：' + d.msg;
+                    }
+
+                });
+				
+ // 2）这里展示了jQuery如何实现jsonp的调用		【jquery在处理jsonp类型的ajax时（还是忍不住吐槽，虽然jquery也把jsonp归入了ajax，但其实它们真的不是一回事儿），自动帮你生成回调函数并把数据取出来供success属性方法来调用】	
+$.ajax({
+             type: "get",
+             async: false,
+             url: "http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998",
+             dataType: "jsonp",
+             jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+             jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+             success: function(json){
+                 alert('您查询到航班信息：票价： ' + json.price + ' 元，余票： ' + json.tickets + ' 张。');
+             },
+             error: function(){
+                 alert('fail');
+             }
+         });
+【在js中，我们直接用XMLHttpRequest请求不同域上的数据时，是不可以的。但是，在web页面上引入不同域上的js脚本文件却是可以的，jsonp正是利用这个特性来实现的】 		 
+2）的原理是下面的代码：
+<script type="text/javascript">
+    // 得到航班信息查询结果后的回调函数
+    var flightHandler = function(data){
+        alert('你查询的航班结果是：票价 ' + data.price + ' 元，' + '余票 ' + data.tickets + ' 张。');
+    };
+    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
+    var url = "http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&callback=flightHandler";
+    // 创建script标签，设置其属性
+    var script = document.createElement('script');
+    script.setAttribute('src', url);
+    // 把script标签加入head，此时调用开始
+    document.getElementsByTagName('head')[0].appendChild(script); 
+</script>		 
+
+
+？？？什么是跨域？-协议、端口、域名任何一个不同即代表跨域。【参考：https://segmentfault.com/a/1190000000718840】
+URL                      说明       是否允许通信
+http://www.a.com/a.js
+http://www.a.com/b.js     同一域名下   允许
+http://www.a.com/lab/a.js
+http://www.a.com/script/b.js 同一域名下不同文件夹 允许
+http://www.a.com:8000/a.js
+http://www.a.com/b.js     同一域名，不同端口  不允许
+http://www.a.com/a.js
+https://www.a.com/b.js 同一域名，不同协议 不允许
+http://www.a.com/a.js
+http://70.32.92.74/b.js 域名和域名对应ip 不允许
+http://www.a.com/a.js
+http://script.a.com/b.js 主域相同，子域不同 不允许
+http://www.a.com/a.js
+http://a.com/b.js 同一域名，不同二级域名（同上） 不允许（cookie这种情况下也不允许访问）
+http://www.cnblogs.com/a.js
+http://www.a.com/b.js 不同域名 不允许
+
+举个栗子：
+我的url：http://localhost:3000/src/module/grabCouponForFuelUp.html
+请求的url：http://test.hcxdi.com/truck/coupon/countRecommendedDownloadRecord 是跨域
+请求的url: http://test.hcxdi.com/truck/recommend/insertRecommendLog  是跨域
+ 
+什么浏览器允许跨域？【A上的页面获取B上的资源，浏览器会检查服务器B的HTTP头(HEAD请求)，如果Access-Control-Allow-Origin中有A，或者是通配符*，浏览器就会[允许跨域请求]。这叫CORS(跨域资源共享)】
+举个栗子：http://localhost:3000/src/module/grabCouponForTyre.html页面请求这个接口：http://test.hcxdi.com/truck/coupon/countRecommendedDownloadRecord，
+network中headers里面的Access-Control-Allow-Origin: * 这个就表示允许跨域。[Access-Control-Allow-Origin: Origin:http://localhost:3000 也表示允许跨域请求。]
+通过jsonp跨域：在js中，我们直接用XMLHttpRequest请求不同域上的数据时，是不可以的。但是，在页面上引入不同域上的js脚本文件却是可以的，jsonp正是利用这个特性来实现的。
+CORS和JSONP对比
+CORS与JSONP相比，无疑更为先进、方便和可靠。
+
+    1、 JSONP只能实现GET请求，而CORS支持所有类型的HTTP请求。
+
+    2、 使用CORS，开发者可以使用普通的XMLHttpRequest发起请求和获得数据，比起JSONP有更好的错误处理。
+
+    3、 JSONP主要被老的浏览器支持，它们往往不支持CORS，而绝大多数现代浏览器都已经支持了CORS）。
+	
+Math.random()  === > [0,1)的随机数	
+
+
+
+2017-3-17:
+1.使用ajax时要注意的点：
+1).使用get请求时，参数在url中显示，跟form表单的默认提交方式get一样，会把参数显示在url中。使用post的话，则不会显示出来。
+$.ajax({
+                url: src.api + '/coupon/findCouponRecordsWithCoupon',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    bill: bill
+                },
+				success: function(){
+					
+				}
+});
+这个例子中，type是get，这个等价于下面这个例子
+$.ajax({
+                url: src.api + '/coupon/findCouponRecordsWithCoupon?bill='+bill,
+                type: 'get',
+                dataType: 'json',
+				success: function(){
+					
+				}
+});
+
+2).区别:
+	a.get请求需注意缓存问题,post请求不需担心这个问题
+	b.post请求【必须设置Content-Type值】为application/x-form-www-urlencoded
+	c.发送请求时,因为get请求的参数都在url里,所以send函数发送的参数为null,而post请求在使用send方法时,却需赋予其参数
+
+3).何时使用get,何时使用post？
+Get请求的目的是给予服务器一些参数,以便从服务器获取列表.例如:list.aspx?page=1,表示获取第一页的数据
+Post请求的目的是向服务器发送一些参数,例如form中的内容.
+下面使用实例来表示Get请求和Post请求在发送同一段数据时的区别.
+下面我们来看一个post请求：
+$.ajax({
+        url: src.api + '/coupon/issueCouponRecord',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            bill: bill, //第一个接口返回的bill
+            channelCode: "web",
+            clientType: getStatus('clientType'),
+            orderType: getStatus('orderType')
+        }),
+		success: function(){
+			
+		}
+});
+
+4).以后给的接口，如果是[post请求]，必须要给的参数有以下几个：
+第一个, dataType: 'json'
+第二个, contentType: 'application/json'
+第三个, data: JSON.stringify({}) 用这个转为json字符串
+第四个, success函数：
+success: function(res){
+	var bill = res && res.data && res.data.bill; 
+	// 这样写，最后获取到的值是res.data.bill. 而不是直接var bill = res.data.bill这样写，因为这样写，如果res.data.bill没有值，就会报错Cannot read property 'bill' of undefined
+	var totalDiscount = res.data[i].couponRecordInfo && res.data[i].couponRecordInfo.totalDiscount;
+}
+
+
+
+2017-3-20：
+1.设置透明度用rgba来设置比用opacity设置更好
+RGBA比元素设置CSS的透明度更好，因为单独的颜色可以在不影响整个元素的透明度，
+他不会影响到元素其他的属性，比如说边框，字体同时也不会影响到其他元素的相关透明度。
+opacity后代元素会随着一起具有透明性，所以我们Opacity中的字随着透明值下降越来越看不清楚，
+而RGBA不具有这样的问题，但是其支持的浏览器中有一个占在大市场份额的IE不支持，这也就是让我们需要去做兼容。
+用rgba ==> background: rgba(255,255,255,.5);
+用opacity ==> background-color: #fff; opacity: 0.5; filter: alpha(opacity=50);
+
+2.FastClick消除点击延时提高程序的运行效率
+引入插件的javascript文件到你的HTML网页中，像这样：
+<script type='application/javascript' src='fastclick.js'></script>
+注意：type属性在HTML5网页中可以省略不写。
+脚本必须加载到实例化fastclick在页面的任何元素之前。
+实例化 fastclick 最好在body元素的前面
+$(function(){
+	//fastclick用于消除在移动浏览器上触发click事件与一个物理Tap(敲击)之间的300s延迟
+	FastClick.attach(document.body);
+});
+
+3.
+//活动说明切换
+    // 事件动态绑定到document上面在iphone上面点不开
+    /*$(document).on('click', '.guideIcon img', function(){
+        var _this = $(this);
+        console.log($('.caption').length);
+        if($('.caption').hasClass('hidden')){
+            $('.caption').removeClass("hidden");
+            $('.footer').css('background-color','#fff');
+            $('.title').css('color','#fc3343');
+            _this.attr('src','../static/images/artRepairShowIcon.png');
+        }else{
+            $('.caption').addClass("hidden");
+            $('.footer').css('background-color','#fc3343');
+            $('.title').css('color','#fbee0c');
+            _this.attr('src','../static/images/artRepairHideIcon.png');
+        }
+    });*/
+	// 修改为：
+    $('.guideIcon').click(function(){
+        var $img = $('.guideIcon img');
+        if($('.caption').hasClass('hidden')){
+            $('.caption').removeClass("hidden");
+            $('.footer').css('background-color','#fff');
+            $('.title').css('color','#fc3343');
+            $img.attr('src','../static/images/artRepairShowIcon.png');
+        }else{
+            $('.caption').addClass("hidden");
+            $('.footer').css('background-color','#fc3343');
+            $('.title').css('color','#fbee0c');
+            $img.attr('src','../static/images/artRepairHideIcon.png');
+        }
+    });
+
+4. 图片垂直居中
+.guideIcon {
+    @include pxrem(width,108);
+    @include pxrem(height,56);
+    @include pxrem(line-height,56); //两个都要设置
+    @include pxrem(margin, 0 auto 10 auto);
+    text-align: center;
+
+    img {
+      @include pxrem(width,28);
+      vertical-align: middle;  //两个都要设置
+    }
+}
+
+还有一种垂直居中比较好的方法：
+.demo5 {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: green;
+        }
+
+        .demo5 .child {
+            position: absolute;
+            width: 50%;
+            height: 30%;
+            background-color: grey;
+            margin: auto;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+<!--5.Absolute Positioning and Stretching  通用，但在IE版本低于7时不能正常工作-->
+    <div class="demo5">
+        <div class="child"></div>
+    </div>
+
+2017-3-22：
+1.关于px rem转换的问题
+首先html页面首先引入<script type="text/javascript" src="../static/js/fileflex.js"></script>， 参考：https://github.com/amfe/article/issues/17 
+执行这个JS后，会在<html>元素上增加一个data-dpr属性，以及一个font-size样式。JS会根据不同的设备添加不同的data-dpr值，比如说2或者3，同时会给html加上对应的font-size的值，比如说75px。
+如此一来，页面中的元素，都可以通过rem单位来设置。他们会根据html元素的font-size值做相应的计算，从而实现屏幕的适配效果。
+我们的页面里面，比如,设置一个： @include pxrem(width, 200px); ===> 
+实际页面上渲染出来的是：（我们假设<html>根据当前设备添加的font-size=42）,那么 200 / 75 = 2.66667rem   2.66667 * 42 = 112px [computer style: 112px]	
+
+rem是相对于根元素<html>的font-size来计算的
+em首先是相对于他自己的font-size来算，如果当前对行内文本的字体未被设置，则相对于父级元素的font-size来计算	
+
+
+2017-3-27：
+1.把转盘的逻辑大概理清了，就等接口过来。还有，这边需要app那边传一个userId过来。
+
+
+2017-3-28：
+1.改一点资讯页面
+2.改技工加油页面,改了
+
+
+2017-3-29：
+1.vue and webpack:
+关于webpack，参考：Webpack 中文指南 http://webpackdoc.com/
+Webpack 的特点
+
+【Webpack 和其他模块化工具有什么区别呢？
+
+代码拆分
+
+Webpack 有两种组织模块依赖的方式，同步和异步。异步依赖作为分割点，形成一个新的块。在优化了依赖树后，每一个异步区块都作为一个文件被打包。
+
+Loader
+
+Webpack 本身只能处理原生的 JavaScript 模块，但是 loader 转换器可以将各种类型的资源转换成 JavaScript 模块。这样，任何资源都可以成为 Webpack 可以处理的模块。
+
+智能解析
+
+Webpack 有一个智能解析器，几乎可以处理任何第三方库，无论它们的模块形式是 CommonJS、 AMD 还是普通的 JS 文件。甚至在加载依赖的时候，允许使用动态表达式 require("./templates/" + name + ".jade")。
+
+插件系统
+
+Webpack 还有一个功能丰富的插件系统。大多数内容功能都是基于这个插件系统运行的，还可以开发和使用开源的 Webpack 插件，来满足各式各样的需求。
+
+快速运行
+
+Webpack 使用异步 I/O 和多级缓存提高运行效率，这使得 Webpack 能够以令人难以置信的速度快速增量编译。】
+
+
+2.vue-loader 使用 style-loader 把 component 当中的样式编译成字符串后插入到 <head> 中去。但我们希望把 css 文件独立出去，
+那么可以使用上一篇文章提到的 ExtractTextPlugin 插件，配合 vue-loader 的 withLoaders() 方法实现生成独立样式文件:
+// webpack.config.js
+var vue = require('vue-loader')
+  , ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+module.exports = {
+  entry: './app.js',
+  output: {
+    path: './build',
+    filename: 'app.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.vue$/, loader: vue.withLoaders({
+          sass: ExtractTextPlugin.extract("css!sass") // 编译 Sass
+        })
+      }
+    ]
+  },
+  plugins: [
+    new ExtractTextPlugin('app.css') // 输出到 output path 下的 app.css 文件
+  ]
+}
+
+3.
+(1).commonJS模块 [react就是用的这种模块]
+服务器端的 Node.js 遵循 CommonJS规范，该规范的核心思想是允许模块通过 require 方法来[同步加载]所要依赖的其他模块，然后通过 exports 或 module.exports 来导出需要暴露的接口。
+require("module");
+require("../file.js");
+exports.doStuff = function() {};
+module.exports = someValue;
+优点：
+服务器端模块便于重用
+NPM 中已经有将近20万个可以使用模块包
+简单并容易使用
+缺点：
+同步的模块加载方式不适合在浏览器环境中，同步意味着阻塞加载，浏览器资源是异步加载的
+不能非阻塞的并行加载多个模块
+
+(2).AMD模块 [requireJS, 之前visionworks项目就是用的这种模块]
+Asynchronous Module Definition 规范其实只有一个主要接口 define(id?, dependencies?, factory)，它要在声明模块的时候指定所有的依赖 dependencies，并且还要当做形参传到 factory 中，对于依赖的模块提前执行，依赖前置。
+define("module", ["dep1", "dep2"], function(d1, d2) {
+  return someExportedValue;
+});
+require(["module", "../file"], function(module, file) { /* ... */ });
+优点：
+适合在浏览器环境中异步加载模块
+可以并行加载多个模块
+缺点：
+提高了开发成本，代码的阅读和书写比较困难，模块定义方式的语义不顺畅
+不符合通用的模块化思维方式，是一种妥协的实现
+
+(3).ES6模块 [vue，angular2都是用的这种模块]
+ES6 模块
+EcmaScript6 标准增加了 JavaScript 语言层面的模块体系定义。ES6 模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS 和 AMD 模块，都只能在运行时确定这些东西。
+import "jquery";
+export function doStuff() {}
+module "localModule" {}
+优点：
+容易进行静态分析
+面向未来的 EcmaScript 标准
+缺点：
+原生浏览器端还没有实现该标准
+全新的命令字，新版的 Node.js才支持
+实现：
+Babel
+
+4.什么是WebPack，为什么要使用它？
+
+为什要使用WebPack
+
+现今的很多网页其实可以看做是功能丰富的应用，它们拥有着复杂的JavaScript代码和一大堆依赖包。为了简化开发的复杂度，前端社区涌现出了很多好的实践方法
+
+模块化，让我们可以把复杂的程序细化为小的文件;
+类似于TypeScript这种在JavaScript基础上拓展的开发语言：使我们能够实现目前版本的JavaScript不能直接使用的特性，并且之后还能能装换为JavaScript文件使浏览器可以识别；
+Scss，less等CSS预处理器
+...
+这些改进确实大大的提高了我们的开发效率，但是利用它们开发的文件往往需要进行额外的处理才能让浏览器识别,而手动处理又是非常繁琐的，这就为WebPack类的工具的出现提供了需求。
+
+什么是Webpack
+
+WebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。
+
+WebPack和Grunt以及Gulp相比有什么特性
+
+其实Webpack和另外两个并没有太多的可比性，Gulp/Grunt是一种能够优化前端的开发流程的工具，而WebPack是一种模块化的解决方案，不过Webpack的优点使得Webpack可以替代Gulp/Grunt类的工具。
+
+Grunt和Gulp的工作方式是：在一个配置文件中，指明对某些文件进行类似编译，组合，压缩等任务的具体步骤，这个工具之后可以自动替你完成这些任务。
+
+
+
+
+2017-3-30：
+1.关于webpack讲得很好的一篇文章： http://www.jianshu.com/p/42e11515c10f#
+
+2.下午vue 问答
+
+
+
+2017-4-5:
+1.driInsuranceFor315页面修改 
+路径也换了：/xActivity/tactivity/module/driInsuranceFor315.html
+
+2.
+给老大替换"315保险"路径：
+html: \truck\truck-app\src\main\webapp\xActivity\tactivity\module
+css: \truck\truck-app\src\main\webapp\xActivity\tactivity\static\css
+images: \truck\truck-app\src\main\webapp\xActivity\tactivity\static\images
+js: \truck\truck-app\src\main\webapp\xActivity\tactivity\static\js\page
+
+3.把vue基础看完了，明天来了再来复习，vue-router, vuex, 以及其他vue插件什么的。
+
+
+2017-4-6：
+1.need to do : vue插件
+
+2017-4-10：
+1.基础知识复习： $.each() 循环， html的data属性的合理利用
+2.need to do, 下午：vue其他相关的插件：
+vue-resource 
+3.瞿通说：
+dev里面的改成 HCXD.setTitle('活动详情'); 用来覆盖html里面<head>里面的<title>里面的文字。 但是现在先不慌改！！！不能改在hotfix里面。
+4.vue2-happyfri分数计算有误。！！！
+
+
+2017-4-11：
+1.给老大替换315保险活动：
+html：truck\truck-app\src\main\webapp\xActivity\tactivity\module
+css: truck\truck-app\src\main\webapp\xActivity\tactivity\static\css
+image: truck\truck-app\src\main\webapp\xActivity\tactivity\static\images
+
+
+2.vue-chart
+
+3.需要token的url [to 任涛]
+/tactivity/module/artTyreCoefficient.html
+/tactivity/module/rewardCoefficient.html
+/qActivity/module/julyStatistics.html
+/qActivity/module/julyStatisticsService.html
+/qActivity/module/myInvitation.html
+
+/qActivity/module/artCoefficient.html
+/qActivity/module/rewardCoefficient.html
+/xActivity/tactivity/module/artTyreCoefficient.html
+/xActivity/tactivity/module/rewardCoefficient.html
+/outside/module/share/couponShare.html
+/activity/module/three.html
+/activity/module/julyStatistics.html
+
+4.分享页面：优惠券注册，优惠券领取
+里程补贴
+http://xapi.hcxdi.com/truck/qActivity/module/artMileage.html
+加油接单奖励
+http://xapi.hcxdi.com/truck/xActivity/tactivity/module/artFuelUp.html
+邀请活动
+http://xapi.hcxdi.com/truck/xActivity/tactivity/module/sendFriendsCoupon.html
+保险活动
+http://xapi.hcxdi.com/truck/xActivity/tactivity/module/driInsuranceFor315.html
+优惠券介绍
+http://xapi.hcxdi.com/truck/tactivity/module/couponDescription.html
+轮胎接单奖励
+http://xapi.hcxdi.com/truck/tactivity/module/artTyreCoefficient.html
+维修厂奖励
+http://xapi.hcxdi.com/truck/tactivity/module/artRepair.html
+邀请加油
+http://test.dadachefu.com/truck/xActivity/tactivity/module/fuelRecommendAward.html
+机油ch-4
+/xActivity/tactivity/module/truckTreasureCH4.html
+机油ci-4
+/xActivity/tactivity/truckTreasureCI4.html
+
+
+5 .gitignore文件：
+/truck-app/src/main/hcxdweb/node_modules
+/truck-app/src/main/webapp/xActivity/node_modules
+/truck-app/src/main/webapp/xActivity/cache
+
+6.看NeteaseCloudWebApp项目代码，还没来得及看。。。
+
+2017-4-12:
+1. vue直接绑定变量给某属性
+<mu-appbar :title="fname">
+    <mu-icon-button icon='arrow_back' @click="back" slot="left"/>       
+	<!--<div class="play-title">
+            <div class="play-name"><span>{{fname}}</span></div>
+    </div>-->
+</mu-appbar>
+data(){
+	return {
+		fname: "歌单"
+	}
+}
+记住不是下面这样写的哈：
+<mu-appbar :title="{{fname}}">  <--错误写法-->
+    <mu-icon-button icon='arrow_back' @click="back" slot="left"/>       
+	<!--<div class="play-title">
+            <div class="play-name"><span>{{fname}}</span></div>
+    </div>-->
+</mu-appbar>
+
+2017-4-13：
+1.-webkit-filter:none | blur(px) | brightness() | contrast() | grayscale() | hue-rotate(deg) | invert() | opacity() | saturate() | sepia() | drop-shadow( radius )| url()
+blur(<number>px)	设置对象的模糊效果。
+for example:
+.bg-player{
+	background-image: url(http://p1.music.126.net/pzwuL0a4DFvQcEJRqQfTYw==/109951162901875051.jpg?param=300y300);
+	width: 400px;
+	height: 300px;
+	filter: blur(40px);
+	-webkit-filter: blur(40px);
+	background-size: cover;
+    background-position: bottom right;
+}
+
+return _baseUrl + '?type=topPlayList&cat=' + cat + '&offset=' + offset + '&limit=' + limit
+http://musicapi.duapp.com/api.php?type=topPlayList&cat=全部&offset=0&limit=6
+
+_baseUrl2 + '?type=playlist&id=' + id
+https://api.imjad.cn/cloudmusic/?type=playlist&id=630863306
+
+_baseUrl + '?type=url&id=' + id
+http://musicapi.duapp.com/api.php?type=url&id=188556
+
+2.Vue 原本有一个官方推荐的 ajax 插件 vue-resource，但是自从 Vue 更新到 2.0 之后，官方就不再更新 vue-resource
+目前主流的 Vue 项目，都选择 axios 来完成 ajax 请求，而大型项目都会使用 Vuex 来管理数据，所以这篇博客将结合两者来发送请求
+安装其他插件的时候，可以直接在 main.js 中引入并 Vue.use()，但是 axios 并不能 use，只能每个需要发送请求的组件中即时引入
+为了解决这个问题，有两种开发思路，一是在引入 axios 之后，修改原型链，二是结合 Vuex，封装一个 aciton。
+首先在 main.js 中引入 axios
+import Axios from 'axios'
+这时候如果在其它的组件中，是无法使用 axios 命令的。但如果将 axios 改写为 Vue 的原型属性，就能解决这个问题
+Vue.prototype.$http = Axios // 类似于vue-resource的调用方法，之后可以在实例里直接用this.$http.get()等
+在 main.js 中添加了这两行代码之后，就能直接在组件的 methods 中使用 $http.get() 命令
+Axios.get(api.getSong(id)).then(res => {
+        // 统一数据模型，方便后台接口的改变
+        var url = res.data.data[0].url
+        commit('setAudio')
+        commit('setLocation', url)
+      })
+      .catch((error) => {     // 错误处理
+        console.log(error)
+        window.alert('获取歌曲信息出错！')
+      })
+	  
+当我们ajax获取数据成功后会返回一个response对象，它包含了以下内容：
+{
+  // `data` is the response that was provided by the server
+  data: {},
+
+  // `status` is the HTTP status code from the server response
+  status: 200,
+
+  // `statusText` is the HTTP status message from the server response
+  statusText: 'OK',
+
+  // `headers` the headers that the server responded with
+  headers: {},
+
+  // `config` is the config that was provided to `axios` for the request
+  config: {}
+}	
+所以，response.data.data.msg  
+3.
+大转盘活动需求：
+1）进入抽奖页面，如果当前用户是认证失败的，则弹出“认证失败”。
+2）点击“开始抽奖”按钮，判断当前用户是否完成认证，如果没有，则弹出“赶紧去认证”。
+如果当前用户认是证失败的，（可能刚进app的时候就弹出来了，但是用户又把弹框关了），那就弹出“认证失败”弹框。
+如果是已经认证成功的，则可以进行抽奖
+
+4.点击某一首进行播放，最下面的document.getElementById('audioPlay').pause()是怎么出来的？？？
+5.HTML5中的<time>标签:
+<p>我们在每天早上 <time>9:00</time> 开始营业。</p>
+
+
+2017-4-14：
+补胎券：60
+200元大礼包：120
+再来一次： 180
+机油：240
+小米：300
+iphone: 360
+
+
+按照瞿通的意思就是，要把hotfix的分支删了，以dev分支为准，hotfix上面活动相关的删了。
+下周来了应该就是在dev分支去开发了，hotfix分支4.0之后就不再用了，把hotfix分支新改动的拷贝出来，放在dev分支去，以后就在dev分支上面开发了，hotfix就不再用了。
+
+
+2017-4-17：
+1.D:\workSpace\truck\truck-app\src\main\webapp\hcxdweb\src\components\driInsuranceUpload\upload.vue
+
+//fastclick用于消除在移动浏览器上触发click事件与一个物理Tap(敲击)之间的300延迟
+    FastClick.attach(document.body);
+	
+2. 瞿通写的vue代码里面：
+(1).
+import {
+    Indicator,
+    Toast
+} from 'mint-ui';
+mint-ui是基于vue.js的移动端组件库 [http://mint-ui.github.io/docs/#!/zh-cn2]，其中：
+Indicator：js components 加载提示框，支持自定义文本和加载图标。
+Toast: js components 简短的消息提示框，支持自定义位置、持续时间和样式。
+
+(2). rootSrc.link and rootSrc.api, rootSrc对象定义在hcxdweb\src\assets\js\common\config.js里面。
+
+(3). vue class 绑定：
+<p id="register" @click="getPackage" class="receiveSpreeBtn jq-receive-btn" :class="{receiveSpreeBtnActive: codeOk}">领取大礼包</p>
+
+3.vue-router路由信息对象的属性：【http://router.vuejs.org/zh-cn/api/route-object.html】
+$route.path
+类型: string
+字符串，对应当前路由的路径，总是解析为绝对路径，如 "/foo/bar"。
+
+$route.params
+类型: Object
+一个 key/value 对象，包含了 动态片段 和 全匹配片段，如果没有路由参数，就是一个空对象。
+
+$route.query
+类型: Object
+一个 key/value 对象，表示 URL 查询参数。例如，对于路径 /foo?user=1，则有 $route.query.user == 1，如果没有查询参数，则是个空对象。
+
+$route.hash
+类型: string
+当前路由的 hash 值 (带 #) ，如果没有 hash 值，则为空字符串。
+
+receiveSpree.js:
+// 新增电话号码超出验证
+phone.on('keyup', function(){
+		var phoneVal = $(this).val();
+		if($(this).val().length > 11){
+			$(this).val(phoneVal.substring(0,11));
+		}
+	});
+或者可以给phone的input加一个 maxlength="11"
+
+
+
+2017-4-19：
+文字重新更订一下：
+9.9元补胎券：60
+200元大礼包：120
+再来一次： 180  （这个度数你写成了108，逗比）
+货车宝机油：240
+小米充电器：300
+iphone: 360
+
+
+{"code":0,"data":{"createTime":1492139230000,"id":2,"name":"200元大礼包","position":120,"probability":0.200000,"quantity":98,"type":3},"msg":"","serverTime":1492583588277}
+{"code":0,"data":{"createTime":1492139501000,"id":4,"name":"机油","position":240,"probability":0.100000,"quantity":1,"type":1},"msg":"","serverTime":1492584923858}
+{"code":0,"data":{"createTime":1492139540000,"id":5,"name":"小米","position":300,"probability":0.100000,"quantity":10,"type":1},"msg":"","serverTime":1492586235285}
+{"code":0,"data":{"createTime":1492139303000,"id":3,"name":"再来一次","position":108,"probability":0.500000,"quantity":999999996,"type":0},"msg":"","serverTime":1492583814970}
+{"code":1,"msg":"没有抽取机会了","serverTime":1492584019109}
+
+
+2017-4-20:
+1.大转盘活动，还需要: 
+第一，小艾修改接口，res.code ； 
+第二，客户端写一个方法，“HCXD。重定向到认证页面”； 
+第三，分享出去的页面，两个接口，第一个，获取验证码(已有)，第二个，注册用户（已有： /userDriver/public/register ？）
+
+
+2017-4-24:
+1.js基础复习
+2.司机端技工端专用机油切图
+
+
+2017-4-25：
+司机端技工端专用机油
+司机端：/xActivity/tactivity/module/driEngineOilGuide.html
+技工端：/xActivity/tactivity/module/artEngineOilGuide.html
+
+
+2017-4-26：
+1.把大转盘的未认证和认证失败的弹框修改了。
+2.
+
+
+2017-4-27:
+1.background-size: cover 和 contain的区别：
+不同之处在于：
+1).  在no-repeat情况下，如果容器宽高比与图片宽高比不同，
+cover：图片宽高比不变、铺满整个容器的宽高，而图片多出的部分则会被截掉；
+contain:图片自身的宽高比不变，缩放至图片自身能完全显示出来，所以容器会有留白区域；
+PS:其实，从英文的意思来说：cover意味着“遮罩、遮盖”---此处理解为“塞满”较恰当，contain意为“包含”--也就是：我图片虽然缩放了，但是整个图是被“包含”在你里面的，你必须把我显示完整、不能裁剪我一丝一毫~
+2).  在repeat情况下：cover:与上述相同；contain:容器内至少有一张完整的图，容器留白区域则平铺背景图，铺不下的再裁掉。
+
+2.webSocket?
+polling(轮询) and long polling(长轮询、推送)：
+服务端推送技术应用越来越普遍，应用范围也越来越宽广，技术解决方案也越来越成熟且丰富。很多SNS网站的chat功能就有用到了Long Polling技术。比如fackebook, kaixin001。
+
+Long Polling原理其实很简单，也很讨巧。与Polling相比，Long Polling客户端也许不会马上收到来自服务端的响应，需要等待一些时间(直到有新消息，或者连接timeout了等等)。同样的，客户端也不再需要定时向服务发送请求了，而是直到收到服务端响应之后，或者连接丢失之后，客户端接着马上请求客户端。
+
+这里，我打个比方，传统的Polling一般是由C向S询问：“有我的信件吗？”。S接到询问之后，会立即查询，并且把查询结果告诉C，不管有没有C的信件，要么回复：“嗯，你有X封信。”，要么回复：“没，没有你的信”。
+
+而Long Polling更像是这样，C向S发出询问：“有我的信件吗？”，S开始查询，如果有则回复C：“嗯，有你x封信”。如果没有，则不作任何回复，而是让C等着，自己一遍一遍地查询是否有订阅者的信。
+
+换句话说：当S收到C的查询请求之后，Polling则只查询一次，并且把查询结果告诉C;而Long Polling收到请求之后，则会一遍一遍地查询，直到有消息才会响应C，不然一直hold Client。
+
+Long Polling相较传统的Polling而言，最大的实惠在于：减少了请求次数。举个例子，假定一个用户每2小时内，有可能收到2条新消息。如果采用传通的Polling方式，每30秒发向服务端发送一次查询请求的话。则在这2小时内，服务器需要处理240(60*60*2/30)次请求，其中至少有238次请求是没有实际意义的。试想，如果是10000的并发量的话，这种浪费是很惊人的。相较而方，Long Polling没有那么浪费服务器资源来处理这些没有实际意义的请求。
+
+
+2017-4-28：
+atg_store_catSubNv jq-navigation-subNav
+
+
+
+2017-5-2：
+1.
+
+
+2017-5-8：
+1.大转盘的代码： hotfix上面还是之前测试时候改的代码，今天该邀请注册的时候被覆盖了，一定记得！！！
+
+
+2017-5-9:
+第一.总结：
+1.大转盘的问题，最开始以为是代码逻辑或者接口有问题，后来发现其实是ios里面，对alert()方法的不兼容，这个我也觉得很奇怪。后来改用的是app内置的HCXD.toast()方法就可以了。
+这个问题，后来查明了，iphone里面都不支持alert，ios分为uiwebview和wkwebview，我们可以理解为直接打开的没有经过修改的wkwebview不支持alert。
+2.邀请注册分享出去的页面，今天第一个问题是，input和=输入框在ios上面不能获取焦点，但是已经启动了输入框。查资料显示是：
+移动端webview中写页面的时候发现个别Android和iphone机型会导致input、textareat输入框无法输入（键盘可以弹起，不是webView.requestFocus(View.FOCUS_DOWN);的问题）
+出现这个的原因是，之前我们做大转盘的时候，在点击转按钮的时候，会出现图片阴影，然后我们就给他加了个
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+然后，经过试错发现是-webkit-user-select:none;所导致的原因，当然如果你确实需要这个-webkit-user-select这个属性，css初始化代码改写为如下即可：
+* {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+-webkit-tap-highlight-color: transparent;
+outline: none;
+}
+*:not(input,textarea) { 
+-webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+}
+3.邀请注册分享出去的页面，后来又出现一个问题，就是不能注册，后来，原因就是我把接口的域名什么的path写死了，写成测试服的了。妈的，智障！！！
+
+
+2017-5-10：
+1.昨天下班的时候跟陈然提起了那天晚上我们几个人测试了很久的问题。大转盘活动，在电脑上跑起来访问，同时在手机上访问，电脑上总是走success里面，手机上总是走error里面。
+经陈然偶然提起，好吧，真的是跨域的问题，因为我电脑上chrome浏览器进行了跨域的设置。所以，那一晚上在干嘛，我也不知道，我不敢跟老大说，我怕他打我！！！哈哈哈。
+
+
+
+2017-5-11：
+1.
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
+// 路由跳转有progress，加在vue-router的beforeEach和afterEach中
+router.beforeEach(() => {
+  NProgress.start()
+})
+router.afterEach(() => {
+  NProgress.done()
+})
+
+2.任涛那边给方法：【等他们发版之后就可以用了】
+var currentLocation = HCXD.getLocation();
+currentLocation = {
+	location: {
+		lat: 30.67994271991261, // 纬度坐标
+		lng: 104.06792345999995 // 经度坐标
+	},
+	addressComponent: {
+		adcode: "510105",  // 行政区划代码【取不到】
+		city: "成都市",  // 城市名
+		country: "中国",  // 国家
+		district: "青羊区",  // 区县名
+		provience: "四川省",  // 省名
+		street: "王家塘街",  // 街道名
+		street_number: "84号"  // 街道门牌号
+	},
+	formatted_address: "四川省成都市青羊区王家塘街84号",  // 结构化地址信息
+	cityCode: 75   // 城市id
+}
+console.log(HCXD.getLocation()); // 得到的是json字符串，要记得转一下
+
+
+3.http://test.dadachefu.com/activity/findTop100UserPrizes?userId=19475  这个接口报错502，记得看一下原因！！！
+
+
+2017-5-16:
+1.替换路径：
+html:
+\truck\truck-app\src\main\webapp\xActivity\tactivity\module
+js：
+\truck\truck-app\src\main\webapp\xActivity\tactivity\static\js\page
+
+2.切换到dev去开发， hotfix分支的还是之前的内容【大转盘没有修缮前的代码，记得最后的最后一起提一下哦】
+
+
+2017-5-17:
+1.vue项目运行报错：
+ component lists rendered with v-for should have explicit keys.
+原因： In 2.2.0+, when using v-for with a component, a key is now required.
+for example:
+<my-component v-for="item in items" :key="item.id"></my-component>
+
+2.json对象与json字符串的区别？
+
+
+
+2017-5-18:
+1.vue router编程式导航：
+2.vue watch用法
+
+
+2017-5-19：
+1..$route.query and $route.params
+2. axios
+3.有个问题，在项目里面用了nprogress，就不能切换router了，卡住了，这是什么原因，之前也遇到过！！！！
+已经可以了，这样在main.js里面使用：
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  next()
+})
+router.afterEach(() => {
+  NProgress.done()
+})
+
+
+2017-5-23:
+1.angular-tour-of-heroes 项目参考教程重新做了一遍。
+2.打算用vue把这个项目也做一遍
+最后： 搜索筛选功能还没做！！！
+
+2017-5-24：
+1. vue-tour-of-heroes完成
+
+
+2017-5-25：
+1.my-houtai 
+渲染活动列表，查看详情
+发布活动，存在本地！（明天来做）
+
+2017-5-26：
+发布活动，时间处理！
+
+
+2017-5-27：
+1.angular,react,vue对比：
+react的redux 跟 vue 的vuex类似，都是store
+如果你的应用有以下场景，可以考虑使用 Redux:
+某个组件的状态，需要共享
+某个状态需要在任何地方都可以拿到
+一个组件需要改变全局状态
+一个组件需要改变另一个组件的状态
+对比：
+1).模块使用不同，vue 和 angular2用的是ES6模块；react使用的是commonJS模块。
+
+
+2017-6-5：
+1.bootstrap优缺点？
+优点：
+1). 栅格系统(结构)。
+bootstrap的优势之一是可以根据用户屏幕尺寸调整页面，使其在各个尺寸上都表现良好。
+实现这个东西依赖两个东西，一个是view, 一个是max-width, min-width。
+bootstrap栅格系统的本质就是通过CSS3的媒体查询实现的。
+这里要特别提一下的就是BT的盒模型，BT强制把所有元素的盒模型都设置成了border-box，这是IE首创的，
+用于混杂模式下显示网页，但W3C认为这个属性是个逗逼一直没采用，但最后发现自己才是逗逼，因此在CSS3
+中新增了这个属性。border-box盒模型的尺寸包含了padding+border+content ，content-box盒模型的尺寸仅
+仅包含content部分，设置padding，border还的重新计算包含块尺寸，使用上要比border-box麻烦的多。
+2). css模块化(表现)
+BT预先定义了很多CSS类，使用的时候直接给class赋予对应的类名即可，如text-left，text-align，.table等。
+最有代表性的就是btn类，BT定义了一个.bt的基础类，如果还想要其他样式可以在这个基础类上进行扩展，实现不同的视觉效果。
+.btn类之所以典型在于他的样式定义，CSS大牛和菜鸟的区别表现在三个方面，文件大小，后期维护以及hack，
+大牛的CSS文件都比较小（具体多少为小要看项目的大小）；后期维护容易，能快速定位，修改一个样式需要动的地方比较少；
+hack使用也少。相反菜牛则会出一个庞大的文件，后期维护一团乱麻，改一个样式需要改很多地方，hack，内联，important满天飞。
+CSS很多值都是有相互依赖关系的，比如em，我们都知道em是相对单位，浏览器渲染的时候是必须明确到具体值的，因此必须进行计算。
+正因为这些相对单位我们才可以实现模块化，.btn类就是利用相对单位和字体大小之间的关系实现的，
+将按钮的line-height设置为相对单位，字体大小，padding，border-radius设置为绝对单位，需要大按钮的时候增加字体，需要小按钮的时候减小字体
+3). javascript插件(交互)。
+BT的JavaScript插件非常丰富，既可以用现成的也可以自己扩充，BT提供了一个集成板的BT.js您可以直接拿过来使用也可以单个使用引入*.js即可。
+JS插件优秀的地方在于，哪怕是不懂JS的开发人员也可以使用，只要按照官方文档提供的格式写即可，比如模态框，您只要按要求设置好class，data-toggle，data-target即可，一句JS都不用写，是不是很方便。
+BT的插件开发模式基本都是相似的，先定义一个类，实现主体功能，然后是个Plugin函数，再把这个函数扩展到JQuery原型上，最后通过委托的方式给特定元素绑定事件。
+
+缺点：
+对IE兼容也存在不小的问题，BT将所有的元素盒模型都设置成了border-box，这是IE混杂模式下的盒模型，光这点就导致了不能兼容IE。
+此外还用到了大量的H5标签以及CSS3语法，这些语法标签兼容性方面同样存在不小的问题，当然网上存在很多兼容IE的办法，但需要引入其他文件，有些还不小，势必导致加载速度变慢，影响用户体验。
+BT对IE6，7的兼容性肯定不好，对IE8的支持也需要一些额外的文件。
+IE8的媒体查询需要response.js的配合才能实现
+BT 不支持 IE 古老的兼容模式。为了让 IE 浏览器运行最新的渲染模式下，建议将此 <meta> 标签加入到你的页面中：
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+按 F12 键打开 IE 的调试工具，就可以看到 IE 当前的渲染模式是什么。
+
+
+2.js前端开发月报，五月份的记得看
+
+3.git 仓库迁移了，修改本地工程目录下.git/config文件，修改url = dada@dada@114.55.73.189:~/git/项目名称.git ---> url = git@120.26.10.20:~/项目名称.git
+
+
+
+2017-6-7:
+javascript模块规范： 目前，通行的Javascript模块规范共有两种：CommonJS和AMD
+
+CommonJS模块规范： 【服务端的规范】
+node.js的模块系统，就是参照CommonJS规范实现的。在CommonJS中，有一个全局性方法require()，用于加载模块。
+假定有一个数学模块math.js，就可以像下面这样加载。
+　　var math = require('math');
+然后，就可以调用模块提供的方法：
+　　var math = require('math');
+　　math.add(2,3); // 5
+由于一个重大的局限，使得CommonJS规范不适用于浏览器环境。
+第二行math.add(2, 3)，在第一行require('math')之后运行，因此必须等math.js加载完成。也就是说，如果加载时间很长，整个应用就会停在那里等。
+这对服务器端不是一个问题，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。
+但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于"假死"状态。
+因此，浏览器端的模块，不能采用"同步加载"（synchronous），只能采用"异步加载"（asynchronous）。这就是AMD规范诞生的背景。
+
+AMD模块规范：
+AMD是"Asynchronous Module Definition"的缩写，意思就是"异步模块定义"。它采用异步方式加载模块，模块的加载不影响它后面语句的运行。
+所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。
+AMD也采用require()语句加载模块，但是不同于CommonJS，它要求两个参数：
+　　require([module], callback);
+第一个参数[module]，是一个数组，里面的成员就是要加载的模块；第二个参数callback，则是加载成功之后的回调函数。如果将前面的代码改写成AMD形式，就是下面这样：
+　　require(['math'], function (math) {
+　　　　math.add(2, 3);
+　　});
+math.add()与math模块加载不是同步的，浏览器不会发生假死。所以很显然，AMD比较适合浏览器环境。
+目前，主要有两个Javascript库实现了AMD规范：require.js和curl.js。
+
+CMD模块规范：
+关于这个规范呢玉伯在知乎是这么说的
+”AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。
+CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。"
+所以这个规范实际上是为了Seajs的推广然后搞出来的。那么看看SeaJS是怎么回事儿吧，基本就是知道这个规范了
+同样Seajs也是预加载依赖js跟AMD的规范在预加载这一点上是相同的，明显不同的地方是调用，和声明依赖的地方。
+AMD和CMD都是用difine和require，但是CMD标准倾向于在使用过程中提出依赖，就是不管代码写到哪突然发现需要依赖另一个模块，
+那就在当前代码用require引入就可以了，规范会帮你搞定预加载，你随便写就可以了。
+但是AMD标准让你必须提前在头部依赖参数部分写好（没有写好？ 倒回去写好咯）。这就是最明显的区别。
+
+
+
+
+//===10.25日之前文件丢失，我心好痛===//
+四川弱密码修改：
+// 密码验证（要求密码必须8位非空白字符（空白字符：\t, \n, \r, \f, \v），且要包含字母或符号）
+    function pwdValidate(password) {
+        var pattern = /[\S]{8,}?/g; // 所有非空白字符 长度>=8
+        if (pattern.test(password)) {
+            password = password.replace(/\d/g, '');
+            return (/[\S]+?/g).test(password); // 去掉数字干扰，然后判断是否包含字母或符号
+        }
+        return false;
+    }
+	解释：\S 匹配所有非空白，而 \w 只匹配单词字符，等价于 [a-zA-Z0-9_] 共63个字符（字母数字下划线）
+		  + : 一次或多次
+		  * : 零次或多次
+		  ? : 零次或一次
+
+正则表达式：
+\s是指空白，包括空格、换行、tab缩进等所有的空白；
+而\S刚好相反这样一正一反下来，就表示【所有的字符，完全的，一字不漏的】。
+正则表达式中test()方法的用法：
+objReg.test(objStr); 
+// objReg 必选项 RegExp对象名称
+// objStr 要进行匹配检测的字符串
+
+
+2017-10-25:
+1.周报： D:\workspace\GovSupervisionPlatform\Trunk\Common\Docs\00 项目\05-项目周报
+代码审查： D:\workspace\GovSupervisionPlatform\Trunk\Common\Docs\04 开发\03代码审查
+2.本地用这个ip,更快一些： 10.50.75.102
+3.在检查一下，改报表
+最高限速   最高速度
+4.修改了山西运城首页的一些东西
+
+2017-10-26:
+1.移动端websocket完成
+2.山西运城网约车权限看到单独的网约车页面
+
+2017-10-27：
+1.四川线上新哥账号： test_wjx  wjx520366
+2.796环比同比数据绑定（发现一个查询）
+3.山西太原首页左上角接入平台监管模块之前由于市级权限被隐藏了
+
+2017-10-31：
+1.box-sizing: border-box; (怪异模式) 这样就是为了在设置有padding和border的时候不把宽度撑开。
+ie盒模型对应的就是box-sizing: border-box;
+w3c和模型就是对应的box-sizing: content-box; (默认值)
+
+2017-11-1:
+做websocket服务需要改到的几个文件：
+1.WSData.js: 定义命令
+SUBCMD_YUNWEI_Minitor: 322          // 服务监控
+
+2.WS.js: 定义结构体（定义内容的长度、类型等等）
+// 服务监控
+  struct.YUNWEI_Minitor = function () {
+    this.content = {
+      value: 0,
+      type: nType.String.name,
+      length: 400,
+      isEncode: true
+    };
+  };
+
+3.WebSocketPartial.js: 利用子命令和结构体，定义事件名称
+// 服务监控
+    case WSData.Subcmd.SUBCMD_YUNWEI_Minitor:
+      struct = new WSData.Struct.YUNWEI_Minitor();
+      data = getResponseData(struct, head, reader);
+      //console.log(data)
+      eventName = "YunWei_Minitor";
+      break;
+
+4.然后在js里面这样使用：
+Gov.getWSThread().on({
+          bag: "YunWei_Minitor",
+          reply: function (data) {
+            var ret = data.data.response.content;
+            console.log(ret);
+          }
+        });
+
+		
+2017-11-2：
+1.websocket前端发送消息给后端：（vehicle.js）
+	setVehicleTrack: function (data, fn) {
+		if (!Gov.getWSThread().getWsState()) return;
+        var obj = new Gov.WS.Struct.VehicleTrack(); // WS.js
+        var wsObj = obj.getWSObject();
+        wsObj.sourceH = sessionStorage.userId;
+        wsObj.deviceH = data.id;
+        wsObj.featureH = data.type;
+        Gov.getWSThread().sendMessage({
+            bag: obj.toString(),
+            data: wsObj,
+            reply: function (data) {
+                Gov.Pages.Monitor.map.queueShift1();
+                Gov.Pages.Monitor.map.removeAllMarker();
+                Gov.Controls.ObjectArtDialog.msg("跟踪设置成功,正在准备数据...", 6);
+                fn && fn(); // 执行回调函数
+            }
+        });
+        Gov.Controls.SaveLogs({ Type: 4, Operation: "跟踪车辆" });
+    },
+    setVehicleCancelTrack: function (fn) {
+        if (!Gov.getWSThread().getWsState()) return;
+        var obj = new Gov.WS.Struct.VehicleCancelTrack();
+        var wsObj = obj.getWSObject();
+        wsObj.sourceH = sessionStorage.userId;
+        Gov.getWSThread().sendMessage({
+            bag: obj.toString(),
+            data: wsObj,
+            reply: function (data) {
+                Gov.Pages.Monitor.map.queueShift();
+                Gov.Pages.Monitor.map.removeAllMarker();
+                Gov.Controls.ObjectArtDialog.msg("已取消跟踪", 6);
+                fn && fn();
+            }
+        });
+        Gov.Controls.SaveLogs({ Type: 4, Operation: "取消跟踪车辆" });
+    }
+	
+2.ES6 对正则表达式添加了u修饰符，含义为“Unicode模式”，用来正确处理大于\uFFFF的 Unicode 字符。也就是说，会正确处理四个字节的 UTF-16 编码。
+// 正确返回字符串长度的函数：
+	function codePointLength(text){
+		var result = text.match(/[\s\S]/gu);
+		return result ? result.length : 0;
+	}
+	var s = "hello world!";
+	console.log(s.length); // 12
+	var s2 = "𠮷𠮷";
+	console.log(s2.length); // 4  这个不对
+	console.log(codePointLength(s2)); // 2  这个才正确
+\s是指空白，包括空格、换行、tab缩进等所有的空白；
+而\S刚好相反这样一正一反下来，就表示【所有的字符，完全的，一字不漏的】(\S 匹配所有非空白)。
+
+3."^abc$": 匹配以abc开头和以abc结尾的字符串，实际上是只有abc与之匹配
+所以验证数字的正则是： var rule = /^[0-9]*$/;
+验证n位的数字： var rule = /^\d{n}$/;
+验证至少n位数字： var rule = /^\d{n,}/;
+验证m-n位的数字： var rule = /^\d{m,n}/;
+
+2017-11-3：
+1.js删除一个对象的某个属性, 用delete obj[key]
+			var vehicleTypeObj = {
+                dbName: "VehicleType",
+                showName: "VehicleType",
+                label: "车辆类型",
+                mustChoose: true,
+                isMultiselect: false
+            };
+            if (isNotes) {
+                vehicleTypeObj.disabled = true;
+            } else {
+                if (vehicleTypeObj.disabled) {
+                    delete vehicleTypeObj.disabled; // 这样用
+                }
+            }
+			
+2017-11-6:
+1.内蒙车辆修改，要求几个字段不可以编辑，text文本（输入文本框）的根据封装的直接添加readOnly属性即可，
+但是select下拉框本身就是readOnly（只可选择不可输入的），但是在编辑的时候也要达到相应的不能修改该字段的值，
+所以重写了Gov.Control.Select组件，添加了一个disabled属性，并且该属性只在disabled=true的时候才添加到input上面。
+【这里这样做了，就可以不用在页面上delete了，因为我只在disabled=true的时候才添加了一个disabled="true"到input上面， 如： <input disabled="true"/>, 
+false的时候并没有添加disabled属性到input上面， false的时候就只有这样：<input/>】
+内蒙：BaseIfo/Vehicle.js:
+var vecType16Obj = {
+                dbName: "VehicleType",
+                selItems: [
+                    { name: "三类以上班线客车", val: 0x20080000 },
+                    { name: "高速客车", val: 0x08080000 },
+                    { name: "超长客车", val: 0x01080000 },
+                    { name: "旅游客车", val: 0x02080000 },
+                    { name: "包车客车", val: 0x10080000 },
+                    { name: "危险品运输车", val: 0x00100000 },
+                    //{ name: "重型货物运输车", val: 0x40001 },
+                    //{ name: "半挂牵引车", val: 0x40020 },
+                    { name: "普通货车", val: 0x40000 },
+                    { name: "农村客运", val: 0x04080000 },
+                    { name: "驾培车", val: 0x400000 },
+                    { name: "出租车", val: 0x800000 },
+                    { name: "公交车", val: 0x10000 },
+                    { name: "租赁客车", val: 0x00081000 },
+                    { name: "校园车辆", val: 0x40000 },
+                    { name: "其他车", val: -1 }
+                ],
+                showName: "VehicleType",
+                label: "车辆类型",
+                mustChoose: true,
+                isMultiselect: false
+            };
+            if (isNotes) {
+                vecType16Obj.disabled = true;
+            } else {
+                if (vecType16Obj.disabled) {
+                    delete vecType16Obj.disabled;
+                }
+            }
+            var vecType16 = Gov.Control.Select(vecType16Obj);
+这里特别要注意的一点是：只要有disabled属性，不管值是true or false, 
+都会被disabled掉，这里就有个移除js对象的某个属性，用delete obj.disabled;
+NOTICE: 
+1.只要存在disabled属性，不管是true还是false，都会被disabled掉！
+2.只要存在readOly属性，不管是true还是false，都会使文本框变成只可读！
+3.select下拉选择框，要设置成不能选的话，只能设置disabled属性，readOnly属性不起作用，因为select默认就是只可读不可写的！
+4.readOnly和disabled区别：
+	1).disabled会被置灰，readOnly不会; <br/>
+	2).使用tab聚焦，readOnly可以，disabled不可以;<br/>
+	3).当提交表单时，disabled的这个表单输入项将不会被提交，readOnly会作为form表单的一项进行提交<H3>
+
+	
+2017-11-7：
+1.

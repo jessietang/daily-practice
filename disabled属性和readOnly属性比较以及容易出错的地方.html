@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    
+</head>
+<body>
+	<h3>只要存在disabled属性，不管是true还是false，都会被disabled掉！</h3>
+	<div>1.disabled="disabled"  <input value="test" disabled="disabled" /> </div>
+	<div>2.disabled="true"  <input value="test" disabled="true" /> </div>
+	<div>3.disabled="false"  <input value="test" disabled="false" /> </div>
+	<div>4.disabled=true  <input value="test" disabled=true /> </div>
+	<div>5.disabled=false  <input value="test" disabled=false /> </div>
+	
+	<h3>只要存在readOly属性，不管是true还是false，都会使文本框变成只可读！</h3>
+	<div>1.readOnly="readOnly"  <input value="test" readOnly="readOnly" /> </div>
+	<div>2.readOnly="true"  <input value="test" readOnly="true" /> </div>
+	<div>3.readOnly="false"  <input value="test" readOnly="false" /> </div>
+	<div>4.readOnly=true  <input value="test" readOnly=true /> </div>
+	<div>5.readOnly=false  <input value="test" readOnly=false /> </div>
+	
+	<h3>select下拉选择框，要设置成不能选的话，只能设置disabled属性，readOnly属性不起作用，因为select默认就是只可读不可写的！</h3>
+	<div>
+	1.readOnly状态：
+		<select readOnly="readOnly">
+			<option>1111</option>
+			<option>2222</option>
+			<option>3333</option>
+		</select>
+	</div>
+	
+	<div>
+	2.不可选择状态(disabled)：
+		<select disabled="disabled">
+			<option>1111</option>
+			<option>2222</option>
+			<option>3333</option>
+		</select>
+	</div>
+	
+	<H3>readOnly和disabled区别：1).disabled会被置灰，readOnly不会; <br/>
+	2).使用tab聚焦，readOnly可以，disabled不可以;<br/>
+	3).当提交表单时，disabled的这个表单输入项将不会被提交，readOnly会作为form表单的一项进行提交<H3>
+	
+	<br/>
+	<h3>js操作disabled属性和readOnly属性：</h3>
+	<input id="input1" disabled/>
+	<input id="input2" readOnly="readOnly"/>
+	
+	<div>
+		//$('#input1').removeAttr("disabled");  // not disabled
+		//$('#input1').attr("disabled", false); // not disabled
+		//$('#input1').attr("disabled"); // disabled
+		//$('#input1').attr("disabled", true); // disabled
+		
+		//$('#input2').removeAttr("readOnly"); // not readOnly
+		//$('#input2').attr("readOnly", false); // not readOnly
+
+	</div>
+	
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>	
+<script>
+$(function(){
+	//$('#input1').removeAttr("disabled");  // not disabled
+	//$('#input1').attr("disabled", false); // not disabled
+	//$('#input1').attr("disabled"); // disabled
+	//$('#input1').attr("disabled", true); // disabled
+	
+	//$('#input2').removeAttr("readOnly"); // not readOnly
+	//$('#input2').attr("readOnly", false); // not readOnly
+});
+</script>
+</body>
+</html>

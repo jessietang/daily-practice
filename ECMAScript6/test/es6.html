@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script src="../../js/jquery-1.11.2.js"></script>
+<script src="../js/browser.min.js"></script>
+<script type="text/babel">
+	/*1.ES6, ES2015, ES2016, ES2017...名字之间的关系：
+	2011年，ECMAScript 5.1版发布后，就开始制定6.0版了。因此，ES6 这个词的原意，就是指 JavaScript 语言的下一个版本。
+	标准委员会决定，标准在每年的6月份正式发布一次，作为当年的正式版本。接下来的时间，就在这个版本的基础上做改动，直到下一年的6月份，草案就自然变成了新一年的版本。
+	这样一来，就不需要以前的版本号了，只要用年份标记就可以了。
+	ES6的第一个版本，就这样在2015年6月发布了，正式名称是《ECMAScript 2015标准》（简称ES2015）
+	2016年6月，小幅修订的《ECMAScript 2016标准》（简称ES2016）如期发布
+	2017年6月，《ECMAScript 2017标准》发布
+	因此，ES6既是一个历史名词，也是一个泛指，含义是5.1版以后的JavaScript的下一代标准，涵盖了ES2015，ES2016，ES2017...等等，而ES2015则是正式名称，特指该年发布的正式版本的语言标准。*/
+    /*1. let申明的变量只在它所在的代码块内有效*/
+	/*像for循环就很适合用let变量*/
+	for (var m=0; m<5; m++) {}
+	for (let i=0; i<5; i++) {}
+	//console.log(m); // 5
+	//console.log(i); // i is not defined  计数器i只在for循环体内有效，在循环体外引用就会报错
+	
+	/*闭包只能取得所有函数中的最后一个值*/
+	var a = [];
+	for (var i=0; i<10; i++) {
+		a[i] = function(){
+			console.log(i);
+		};
+	}
+	a[6](); // 10 所有的都是10
+	
+	/*如果使用let，声明的变量仅在块级作用域内有效，最后输出的是6*/
+	var b = [];
+	for (let i=0; i<10; i++) {
+		b[i] = function(){
+			console.log(i);
+		};
+	}
+	b[6](); // 6
+	/*上面代码中，变量i是let声明的，当前的i只在本轮循环有效，所以每一次循环的i其实都是一个新的变量，所以最后输出的是6。
+	你可能会问，如果每一轮循环的变量i都是重新声明的，那它怎么知道上一轮循环的值，从而计算出本轮循环的值？
+	这是因为 JavaScript 引擎内部会记住上一轮循环的值，初始化本轮的变量i时，就在上一轮循环的基础上进行计算。*/
+
+	/*2.es6中不存在变量提升*/
+	console.log(foo); // undefined
+	var foo = 2;
+	
+	console.log(bar); // 报错ReferenceError   但这里输出的是undefined 记住：【let 定义的变量是没有变量提升的】，let babel 编译的代码其实是用 var 定义的，所以看到的是有变量提升的，千万注意别以为是 let 本身带有变量提升。
+	let bar = 3;
+	
+	/*3.暂时性死区*/
+	/*只要块级作用域内存在let命令，它所申明的变量就“绑定”这个区域，不再受外部的影响*/
+	var temp = 123;
+	if (true) {
+		temp = 'abc'; // ReferenceError  应该是要报这个错的，跟上面变量提升一个道理（跟babel编译有关系）
+		let temp;
+	}
+	
+	/*有些“死区”比较隐蔽，不太容易发现。*/
+	function bar(x = y, y = 2){
+		return [x,y];
+	}
+	//bar(); // 报错， 原因是参数x默认值等于另一个参数y,而这个时候y还没有申明，属于“死区”
+	
+	/*下面的代码也会报错, 与var的行为不同*/
+	var x = x; // 不报错
+	
+	//let x = x; // 报错 // ReferenceError: x is not defined
+	
+	/*不允许重复申明*/
+	// let 不允许在相同作用域内，重复申明同一个变量
+	
+	// 报错
+	/*function func1(){
+		let a = 10;
+		var  a = 20;
+	}*/
+	
+	// 报错
+	/*function func2(){
+		let a = 10;
+		let a = 20;
+	}*/
+	
+	// 因此不能在函数内部重新申明参数
+	/*function func(arg){
+		let arg; // 报错
+	}*/
+	
+	// 不报错
+	function func(arg){
+		{
+			let arg;
+		}
+	}
+	
+	/*4. 块级作用域*/
+	
+	// 为什么需要块级作用域：ES5只有全局作用域和函数作用域，这带来很多不合理的场景:
+	
+	// 第一种场景，内层变量可能会覆盖外层变量
+	var date = new Date();
+	function f(){
+		console.log(date);
+		if(false){
+			var date = "hello world";
+		}
+	}
+	f(); // undefined
+	// 这段代码的原意是：if代码块外部使用外层的date变量，内部使用内层的date变量，但是f执行后，输出结果为undefined,原因在于变量提升，导致内部的date变量覆盖了外层的date变量
+	// 变量提升后代码如下：
+	/*var date = new Date();
+	function f(){
+		var date; 
+		console.log(date);
+		if(false){
+			date = "hello world";
+		}
+	}
+	f(); // undefined  */
+	
+	// 第二种场景，用来计数的循环变量泄漏为全局变量
+	var s = 'hello';
+	for (var i=0; i<s.length; i++) {
+		console.log(s[i]);
+	}
+	console.log(i); // 5
+	
+	/*5.ES6的块级作用域*/
+	// let实际上为javascript新增了块级作用域
+	function f1(){
+		let n = 5;
+		if (true) {
+			let n = 10;
+		}
+		console.log(n); // 5
+	}
+	f1(); // 5
+	
+	// 外层作用域无法读取内层作用域的变量
+	/*
+	{{{{
+		{let test = 'hello worldd!'}
+		console.log(test); // 报错 Uncaught ReferenceError: test is not defined
+	}}}}
+	*/
+	
+	// 内层作用域可以定义外层作用域的同名变量
+	{{{{
+		let test = 1;
+		{let test = 2;}
+	}}}}
+	
+	var aFun = [];
+	for (var i=0; i<6; i++) {
+		aFun[i] = function(){
+			console.log(i);
+		};
+	}
+	aFun[2](); // 6
+	
+	var bFun = [];
+	for (var i=0; i<6; i++) {
+		{
+			bFun[i] = function(){
+				{console.log(i);}
+			};
+		}
+		
+	}
+	bFun[2](); // 6
+	
+	/*6.块级作用域与函数申明*/
+	/*ES5规定，函数只能在顶层作用域与函数作用域中申明，不能在块级作用域中申明*/
+	// 情况一
+	if (true) {
+		function f(){}
+	}
+	// 情况二
+	try{
+		function f(){}
+	}catch(e){
+		//...
+	}
+	// 上面两种函数申明，根据ES5的规定都是非法的
+	// 但是浏览器并没有遵守这个规定，为了兼容以前的旧代码，还是支持在块级作用域中申明函数，因此上面两种情况实际上都能运行，不会报错。
+	
+	// ES6引入了块级作用域，明确允许在块级作用域之中申明函数
+	// ES6规定，块级作用域中，函数申明语句的行为类似于let,在块级作用域之外不可引用。
+	
+	// ES5环境 会得到 I am inside
+	function f(){
+		console.log("i am outside!");
+	}
+	(function(){
+		if(false){
+			function f(){
+				console.log("i am inside!");
+			}
+		}
+		f();
+	})();
+	//ES5中会做函数申明提升，提升到所在作用域的头部，即：
+	
+	/*
+	function f(){
+		console.log("i am outside!");
+	}
+	(function(){
+		function f(){ // 函数申明提升到所在块级作用域的头部
+			console.log("i am inside!");
+		}
+		if(false){
+			
+		}
+		f();
+	})();*/
+	
+	// ES6环境下，理论上会得到 I am outside.因为块级作用域内申明的函数类似于let,对作用域之外没有影响。
+	// 但是如果真的在ES6环境中运行一下，是会报错的
+	/*
+	原来，如果改变了块级作用域内声明的函数的处理规则，显然会对老代码产生很大影响。为了减轻因此产生的不兼容问题，ES6在附录B里面规定，浏览器的实现可以不遵守上面的规定，有自己的行为方式。
+		允许在块级作用域内声明函数。
+		函数声明类似于var，即会提升到全局作用域或函数作用域的头部。
+		同时，函数声明还会提升到所在的块级作用域的头部。
+	*/
+	/*
+	注意，上面三条规则只对 ES6 的浏览器实现有效，其他环境的实现不用遵守，还是将块级作用域的函数声明当作let处理。
+	根据这三条规则，在浏览器的 ES6 环境中，块级作用域内声明的函数，行为类似于var声明的变量。
+	*/
+	// 浏览器的 ES6 环境
+	function f() { console.log('I am outside!'); }
+
+	(function () {
+	  if (false) {
+		// 重复声明一次函数f
+		function f() { console.log('I am inside!'); }
+	  }
+
+	  f();
+	}());
+	// Uncaught TypeError: f is not a function
+	//上面的代码在符合 ES6 的浏览器中，都会报错，因为实际运行的是下面的代码
+	// 浏览器的 ES6 环境
+	/*function f() { console.log('I am outside!'); }
+	(function () {
+	  var f = undefined;
+	  if (false) {
+		function f() { console.log('I am inside!'); }
+	  }
+
+	  f();
+	}());*/
+	// Uncaught TypeError: f is not a function
+	
+	// 考虑到环境导致的行为差异太大，应该避免在块级作用域内申明函数。如果确实需要，也应该写成函数表达式，而不是函数申明语句：
+	// 函数申明语句
+	{
+		let a = 'secret';
+		function f(){
+			return a;
+		}
+	}
+	// 函数表达式
+	{
+		let a = 'secret';
+		let f = function(){
+			return a;
+		}
+	}
+	
+	// const命令
+	// const申明一个只读的常量。一旦申明，常量的值就不能再改变
+	const pi = 3.14152;
+	console.log(pi);
+	//pi = 3;
+	//console.log(pi); // 报错： "pi" is read-only
+	
+	// const的作用域与let命令相同：只在声明所在的块级作用域内有效。
+	if(true){
+		const max = 5;
+	}
+	//console.log(max); // Uncaught ReferenceError: max is not defined
+	
+	// const命令申明的常量也是不提升，同样存在暂时性死区，只能在申明的位置后面使用
+	if(true){
+		console.log(max); // 这里会输出undefined（var 变量提升，babel会解析成var）, 但是在ES6环境下，会报错，因为const命令申明的常量不提升
+		var max = 10;
+	}
+	
+	// 本质：const实际上保证的，并不是变量的值不得改动，而是变量指向的那个内存地址不得改动。
+	
+	//* ES6申明变量的六种方法：*//
+	// var命令， function命令，ES6中let命令和const命令，后面还有两种申明变量的方法：import命令和class命令
+	
+	
+	/* 顶层对象的属性 */
+	// 顶层对象，在浏览器环境指的是window对象，在Node中指的是global对象。
+	// ES5中，顶层对象的属性赋值与全局变量的赋值是同一件事情
+	/*ES6为了改变这一点，一方面规定，为了保持兼容性，var命令和function命令声明的全局变量，依旧是顶层对象的属性；
+	另一方面规定，let命令、const命令、class命令声明的全局变量，不属于顶层对象的属性。
+	也就是说，从ES6开始，全局变量将逐步与顶层对象的属性脱钩。*/
+	var a = 1;
+	// 如果在Node的REPL环境，可以写成global.a
+	// 或者采用通用方法，写成this.a
+	console.log(window.a);
+	//let b = 2;
+	//window.b
+	//console.log(window.b);  // Uncaught TypeError: embedded: Line 299: Duplicate declaration "b"
+	
+	
+	/*7.变量的解构赋值*/
+	
+	// 数组的解构赋值
+	// 匹配模式
+	let [aa,bb,cc] = [1,2,3];
+	console.log(aa+'-'+bb+'-'+cc); // 1-2-3
+	
+	let [xx, yy, ...zz] = ['aa'];
+	console.log(xx); // aa
+	console.log(yy); // undefined
+	console.log(zz); // []
+	
+	// 如果解构不成功，变量的值就等于undefined
+	let [ccc, dd] = [6];
+	console.log(dd); // undefined
+	let [ee] = []
+	console.log(ee); // undefined
+	
+	// 另一种情况是不完全解构
+	let [x1, [y1], z1] = [1,[2,4],3];
+	console.log(x1); // 1
+	console.log(y1); // 2
+	console.log(z1); // 3
+	
+	// 如果等号的右边不是数组（或者严格地说，不是可遍历的结构，参见《Iterator》一章），那么将会报错
+	//let [t1] = 1;
+	//let [t1] = undefined;
+	//let [t1] = false;
+	//let [t1] = NaN;
+	//let [t1] = null;
+	//let [t1] = {};
+	
+	// 解构赋值允许指定默认值
+	let [test1 = true] = [];
+	console.log(test1); // true
+	let [t1, t2='t2'] = ['a', 'undefined'];
+	console.log(t1); // a
+	console.log(t2); // undefined
+	let [t3 = 1] = [null];
+	console.log(t3);
+	
+	// 对象的解构赋值
+	// 对象的解构与数组有一个重要的不同。数组的元素是按次序排列的，变量的取值由它的位置决定；而对象的属性没有次序，变量必须与属性同名，才能取到正确的值。
+	let {bar2, foo2} = {foo2: 'aaa', bar2: 'bbb'};
+	console.log(bar2); // bbb
+	console.log(foo2); // aaa
+	
+	// 如果变量名与属性名不一致，必须写成下面的样子
+	let {foo3: bar3} = {foo3: 'a', bar3: 'b'};
+	console.log(bar3); // a
+	
+	// 字符串也可以解构赋值
+	const [a1,b1,c1,d1,e1] = 'hello';
+	console.log(a1 + '-'+b1+'-'+c1+'-'+d1+'-'+e1); // h-e-l-l-o
+	
+	// 函数参数的解构赋值
+	function add([a,b]){
+		return a+b
+	}
+	console.log(add([1,2])); // 3
+	
+	// 字符串的遍历接口 for ... of
+	for (let codepoint of 'jessie'){
+		console.log(codepoint); // j,e,s,s,i,e
+	} 
+	
+	console.log('test'.charAt(0)); // t
+	
+	// 判断一个字符串是否包含在另一个字符串中：indexOf(), includes(), startsWith(), endsWith()
+	let myName = 'jessietang';
+	console.log(myName.indexOf('ss')); // 2 首次出现的位置 （不等于-1表示存在）
+	console.log(myName.includes('ang')); // true
+	console.log(myName.startsWith('essie')); // false
+	console.log(myName.endsWith('ang')); // true
+	
+	// repeat()方法返回一个新字符串，表示将原来的字符串重复n次
+	console.log('hello'.repeat(2)); // hellohello
+	// 参数如果是小数，会被取整
+	console.log('jasper'.repeat(2.3)); // jasperjasper
+	// 参数如果是负数或者Infinity,会报错
+	//console.log('tj'.repeat(-1));
+	//console.log('tj'.repeat(Infinity));
+	// 参数如果是0到-1之间的小数，则等同于0，这是因为会先进行取整运算，0到-1之间的数取整为0
+	console.log('jasper'.repeat(-0.6)); // ""
+	// 参数NaN等同于0
+	console.log('jasper'.repeat(NaN)); // ""
+	// 参数如果是字符串，则会先转换成数字
+	console.log('jasper'.repeat('na')); // ""
+	console.log('jasper'.repeat('3')); // jasperjasperjasper
+	
+	
+	// 正确返回字符串长度的函数：
+	function codePointLength(text){
+		var result = text.match(/[\s\S]/gu);
+		return result ? result.length : 0;
+	}
+	var s = "hello world!";
+	console.log(s.length); // 12
+	var s2 = "𠮷𠮷";
+	console.log(s2.length); // 4
+	console.log(codePointLength(s2)); // 2  这个才正确
+	
+	// 具名组匹配
+	const RE_DATE = /(\d{4})-(\d(2))-(\d(2))/;
+	// 使用exec方法，可以将这三组匹配结果提取出来
+	const matchObj = RE_DATE.exec('1992-12-31');
+	//const year = matchObj[1];
+	//const month = matchObj[2];
+	//const day = matchObj[3];
+	console.log(matchObj);
+	//console.log(year + month + day);
+</script>
+<div id="result"></div>
+<div id="list"></div>
+</body>
+</html>

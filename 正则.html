@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .cornflowerblue{color:cornflowerblue;}
+        textarea{margin-top: 16px;height: 70px;width: 300px;display: block;float: left;}
+        input{margin-top: 16px;}
+        .burlywood{color: white;background-color: burlywood;height: 30px;width: 100px; border: none;border-radius: 6px; valign="top"}
+    </style>
+</head>
+<body>
+<script>
+// 1.密码验证（要求密码必须8位非空白字符（空白字符：\t, \n, \r, \f, \v），且要包含字母或符号）
+    function pwdValidate(password) {
+        var pattern = /[\S]{8,}?/g; // 所有非空白字符 长度>=8
+        if( pattern.test(password)){
+        	password = password.replace(/\d/g,'');
+        	//console.log((/[\S]+?/g).test(password));
+        	return (/[\S]+?/g).test(password); // 去掉数字干扰，然后判断是否包含字母或符号
+        }
+		return  false;
+    }
+	console.log('tj123456' + pwdValidate('tj123456'));
+	console.log('@1234560' + pwdValidate('@1234560'));
+	console.log('tj!@#$%^' + pwdValidate('tj!@#$%^'));
+	console.log('t@123456' + pwdValidate('t@123456'));
+	/*解释：\S 匹配所有非空白，而 \w 只匹配单词字符，等价于 [a-zA-Z0-9_] 共63个字符（字母数字下划线）
+		  + : 一次或多次
+		  * : 零次或多次
+		  ? : 零次或一次*/
+		  
+
+// 2.关于数字的正则表达式集
+	// 1).数字验证
+	// "^abc$": 匹配以abc开头和以abc结尾的字符串，实际上是只有abc与之匹配
+	var rule1 = /^[0-9]*$/;  // * : 零次或多次
+	console.log(rule1.test('0925')); // true
+	
+	// 2).验证n位数字  /^\d{n}$/
+	var rule2 = /^\d{5}$/;
+	console.log(rule2.test('201206')); // false
+	console.log(rule2.test('20120')); // true
+	console.log(rule2.test('2012')); // false
+	
+	// 3).验证至少n位数字  /^\d{n,}$/
+	var rule3 = /^\d{5,}$/;
+	console.log(rule3.test('201206')); // true
+	console.log(rule3.test('20120')); // true
+	console.log(rule3.test('2012')); // false
+	
+	// 4).验证m-n位的数字（即：[m,n]） /^\d{m,n}$/
+	var rule4 = /^\d{5,6}$/;
+	console.log(rule4.test('201206')); // true
+	console.log(rule4.test('20120')); // true
+	console.log(rule4.test('2012')); // false
+	
+	// 5).验证0 和 非0开头的数字 (排除01,02,03等非正规其他自然数)
+	var rule5 = /^(0|[1-9][0-9]*)$/; // 这样理解：以(0|[1-9][0-9]*)开头以(0|[1-9][0-9]*)结尾，实际上只有 (0 | [1-9][0-9]*) 匹配， 要不是0， 要不是[1-9][0-9]*
+	console.log(rule5.test('1008')); // true
+	console.log(rule5.test('0118')); // false
+	console.log(rule5.test('0')); // true
+	console.log(rule5.test('1')); // true
+	console.log(rule5.test('2')); // true
+	console.log(rule5.test('9')); // true
+	console.log(rule5.test('10')); // true
+	console.log(rule5.test('100')); // true
+	console.log(rule5.test('010')); // false
+	console.log(rule5.test('100')); // true
+	console.log(rule5.test('0909')); // false
+	
+	var rule5_1 = /^(0)/;
+	console.log(rule5_1.test('01')); // true
+	var rule5_2 = /^(0)$/; // 以0匹配开头，以0匹配结尾，实际上只有0符合要求
+	console.log(rule5_2.test('01')); // false
+	console.log(rule5_2.test('0')); // true
+	
+	// 6).验证有两位小数的正实数
+	var rule6 = /^[0-9]+(.[0-9]{2})?$/;  // ?: 零次或一次   +：一次或多次   *：零次或多次
+	console.log(rule6.test('0.00')); // true
+	console.log(rule6.test('1.01')); // true
+	console.log(rule6.test('1')); // true
+	console.log(rule6.test('.12')); // false
+	
+	// 7).验证有1到3位小数的正实数
+	var rule7 = /^[0-9]+(.[0-9]{1,3})$/;
+	console.log(rule7.test('1.0123')); // false
+	console.log(rule7.test('1.023')); // true
+	
+	// 8).验证非0的正整数
+	var rule8 = /^\+?[1-9][0-9]*$/;  // ?: 0次或者1次 这里特殊字符要做转义： + 要写成 \+
+	console.log(rule8.test('+01')); // false
+	console.log(rule8.test('+1')); // true
+	console.log(rule8.test('1')); // true
+	
+	// 9).验证非0的负整数
+	var rule9 = /^\-[1-9][0-9]*$/;
+	console.log(rule9.test('-0')); // false
+	console.log(rule9.test('-10')); // true
+	
+	// 10).验证非负整数 （0 + 正整数）
+	var rule10 = /^(0|[1-9][0-9]*)$/;
+	console.log(rule10.test('0101')); // false
+	console.log(rule10.test('0')); // true
+	console.log(rule10.test('1')); // true
+	
+	// 11).验证非正整数 （0 + 负整数）
+	var rule11 = /^(0|\-[1-9][0-9]*)$/;
+	console.log(rule11.test('0')); // true
+	console.log(rule11.test('-10')); // true
+	console.log(rule11.test('-01')); // false
+	
+	// 12).验证长度为3的字符
+	var rule12 = /^.{3}$/;
+	console.log(rule12.test('jessie')); // false
+	console.log(rule12.test('jes')); // true
+	
+	// 13).验证由26个英文字符组成的字符串
+	var rule13 = /^[a-zA-Z]+$/;
+	console.log(rule13.test('ab4dAS')); // false
+	console.log(rule13.test('abdAS')); // true
+	
+	// 14).验证由26个大写英文字母组成的字符串
+	var rule14 = /^[A-Z]+$/;
+	
+	// 15).验证由26个小写英文字母组成的字符串
+	var rule15 = /^[a-z]+$/;
+	
+	// 16).验证由数字和26个英文字母组成的字符串
+	var rule16 = /^[a-zA-Z0-9]+$/;
+	console.log(rule16.test('a1a')); // true
+	console.log(rule16.test('12_1')); // false
+	
+	// 17).验证由数字、26个英文字母或者下划线组成的字符串
+	var rule17 = /^\w+$/;
+	console.log(rule17.test('1a_')); // true
+	console.log(rule17.test('1a_趟')); // false
+	
+	// 18).验证用户密码，格式为：以字母开头，长度在6-10之间，只能包含数字、字母和下划线
+	var rule18 = /^[a-zA-Z]\w{6,10}$/;
+	console.log(rule18.test('T1234567890')); // true
+	console.log(rule18.test('T12_456')); // true
+	
+	// 19).验证是否含有 %&',;=?$\" 等字符
+	var rule19 = /[^%&',;=?$\x22]+/;  // ^修饰%&',;=?$\",表示非，不包含
+	console.log(rule19.test('^')); // true  ^不被包含在%&',;=?$\里面,所以为true
+	console.log(rule19.test('@')); // true  @不被包含在%&',;=?$\里面,所以为true
+	console.log(rule19.test('12$&=?')); // true  12$&=?不被包含在%&',;=?$\里面,所以为true
+	console.log(rule19.test('=?&')); // false  =?&被包含在%&',;=?$\里面,所以为false
+	
+	// 20).验证汉字
+	var rule20 = /^[\u4e00-\u9fa5],{0,}$/;
+	console.log(rule20.test('趟')); // true
+	console.log(rule20.test('yia1')); // false
+	
+	// 21).验证email地址
+	var rule21 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	console.log(rule21.test('1247961449@qq.com')); // true
+	console.log(rule21.test('jessietang@aaxischina.com')); // true
+	console.log(rule21.test('a.b.cn')); // false
+	console.log(rule21.test('abc@m.b.cn')); // true
+	
+	// 22).验证电话号码：XXXX-XXXXXXX，XXXX-XXXXXXXX，XXX-XXXXXXX，XXX-XXXXXXXX，XXXXXXX，XXXXXXXX。 
+	var rule22 = /^(\(\d{3,4}\)|\d{3,4}-)?\d{7,8}$/;
+	console.log(rule22.test('0826-5740475')); // true
+	console.log(rule22.test('0826-90909090')); // true
+	console.log(rule22.test('190-90909090')); // true
+	
+	// 23).验证身份证号（15位或18位数字）
+	var rule23 = /^\d{15}|\d{18}$/;
+	console.log(rule23.test('511621909009098989')); // true
+	
+	// 24).验证一年的12个月：正确格式为“01 02.... 10 11 12 or 1 2 3 ... 10 11 12”
+	var rule24 = /^(0?[1-9]|1[0-2])$/;
+	console.log(rule24.test('06')); // true
+	console.log(rule24.test('6')); // true
+	console.log(rule24.test('11')); // true
+	console.log(rule24.test('16')); // false
+	
+	// 25).验证一个月的31天,正确格式为：01 02 03 ... 1 2 3... 30 31
+	var rule25 = /^(0?[1-9]|[1-2][0-9]|3[0-1])$/;
+	console.log(rule25.test('09')); // true
+	console.log(rule25.test('29')); // true
+	console.log(rule25.test('9')); // true
+	console.log(rule25.test('31')); // true
+	console.log(rule25.test('39')); // false
+	
+	// 26).整数 （正整数 0 负整数）
+	var rule26 = /^(-|\+)?\d+$/; // 这里要用+就要做转义，-不用做转义
+	console.log(rule26.test('0')); // true
+	console.log(rule26.test('-1')); // true
+	console.log(rule26.test('1')); // true
+	console.log(rule26.test('+1')); // true
+	
+	// 27).非负浮点数 （正浮点数 + 0）
+	var rule27 = /^\d+(\.\d+)?$/;
+	console.log(rule27.test('0.01.01'));
+	
+</script>
+</body>
+</html>

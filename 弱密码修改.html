@@ -22,7 +22,10 @@
         }
 		return  false;
     }
-	console.log(pwdValidate('12345678'));
+	console.log('tj123456' + pwdValidate('tj123456'));
+	console.log('@1234560' + pwdValidate('@1234560'));
+	console.log('tj!@#$%^' + pwdValidate('tj!@#$%^'));
+	console.log('t@123456' + pwdValidate('t@123456'));
 	/*解释：\S 匹配所有非空白，而 \w 只匹配单词字符，等价于 [a-zA-Z0-9_] 共63个字符（字母数字下划线）
 		  + : 一次或多次
 		  * : 零次或多次
