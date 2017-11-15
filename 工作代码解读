@@ -1,0 +1,63 @@
+form.getVal = function () {
+        var items = form.getCtlItems();
+        var obj = {};
+        for (var i = 0; i < items.length; i++) {
+            var value = items[i].getDbValue();
+            for (var name in value) {
+                obj[name] = value[name];
+            }
+        }
+        obj["toDbData"] = toObj;
+
+        return obj; 
+    }
+	function toObj() {
+        var oneObj = {};
+        var data = this;
+        for (var i in data) {
+            if (typeof data[i] === "object") {
+                for (var e in data[i]) {
+                    oneObj[e] = data[i][e];
+                }
+            } else if (typeof data[i] !== "function") {
+                oneObj[i] = data[i];
+            }
+        }
+        return oneObj;
+    }
+form.getVal()：
+toObj() 就是把类似于下面这种 typeof 等于 object的弄到oneObj里面去，就像这样： {platformId: 111, platformName: "成都网阔"}
+platformId: {
+	platformId: 111,
+	platformName: "成都网阔"
+}
+然后form.getTableParam = function (ntype) {
+
+        return { nType: ntype, Model: form.getVal().toDbData() };
+    } 这样， Model传递的就是一个只有一层的对象了
+然后页面上（比如VehicleInstall.js）就这样执行了：
+table.loadTable({
+                columns: clm,
+                paramData: form.getTableParam(tab.getNType()), // 注意这里参数是 paramData
+                serverSide: true,
+                url: "/Report/GetVehicleInstallData",
+                isTotal: isTotal
+            });
+值得注意的是，这里跟基本信息配置里面不一样，
+如 BaseInfo.js里面，Gov.Control.BaseInfoTab这个组件里面是这样写的：
+tab.loadTable = function (obj) {
+        var table = tab.getTableCtl();
+        table.loadTable({
+            columns: obj.columns,
+            paramData: obj.param,
+            serverSide: obj.serverSide == undefined ? true : obj.serverSide,
+            url: obj.url, //"/BaseInfo/GetAllToUnitId",
+            isTotal: false
+        });
+    }
+然后在BaseInfo/Vehicle.js里面是这样用的：
+tab.loadTable({
+                columns: getBaseInfoColl(),
+                param: paramDataValue,
+                url: "/BaseInfo/QueryBaseGovVehicle"
+            });	
