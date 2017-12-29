@@ -1,13 +1,13 @@
 {
-  "awardRotate.js": "awardRotate-3816154b74.js",
-  "common.js": "common-112e735a16.js",
-  "fastclick.js": "fastclick-1517c77ba1.js",
-  "fileflex.js": "fileflex-a29183acbb.js",
-  "jquery.min.js": "jquery.min-64ec1b9cff.js",
-  "lib/SE_JSAPI_New.js": "lib/SE_JSAPI_New-92c4ec0350.js",
-  "lib/SE_JSLIB_New.js": "lib/SE_JSLIB_New-48bfda260d.js",
-  "lib/jquery-1.11.3.min.js": "lib/jquery-1.11.3.min-895323ed2f.js",
-  "page/demo1.js": "page/demo1-2bdf62a1d9.js",
-  "vconsole.min.js": "vconsole.min-889a7c8afb.js",
-  "zepto.js": "zepto-186ebdabaf.js"
+  "awardRotate.js": "awardRotate-49e071463e.js",
+  "common.js": "common-1d2be56f0f.js",
+  "fastclick.js": "fastclick-08d4f03d3a.js",
+  "fileflex.js": "fileflex-d1cd834efc.js",
+  "jquery.min.js": "jquery.min-c8870de723.js",
+  "lib/SE_JSAPI_New.js": "lib/SE_JSAPI_New-9a8d38c8b2.js",
+  "lib/SE_JSLIB_New.js": "lib/SE_JSLIB_New-f219c72f6a.js",
+  "lib/jquery-1.11.3.min.js": "lib/jquery-1.11.3.min-5419c718e4.js",
+  "page/demo1.js": "page/demo1-43a31e643d.js",
+  "vconsole.min.js": "vconsole.min-be4ec3032f.js",
+  "zepto.js": "zepto-81d8e3474d.js"
 }

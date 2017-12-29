@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+	/*测试一*/
+		.box .item2 {
+			color: blue;
+		}
+		
+		.box .item1 {
+			color: red;
+		}
+		
+		.item2 {
+			color: green;
+		}
+		
+		/*测试二*/
+		.monitor-mapfun-div .map-fun-icon {
+			display: block;
+			width: 55px;
+			height: 55px;
+			z-index: 100;
+		}
+		
+		.monitor-history-track-icon {
+			/*position: absolute;
+			top: 5px;
+			left: 265px;
+			z-index: 100;
+			width: 55px;
+			height: 55px;*/
+			display: none;
+			background: url('/Images/Views/Monitor/history_disabled.png') no-repeat;
+			background-size: 100% 100%;
+		}
+		
+		
+		/*测试三*/
+		.blue{
+			background-color: blue;
+        }
+
+        .red{
+			background-color: red;
+        }
+
+
+		#red{
+			background-color: red;
+        }
+		
+        .black{
+			background-color: black;
+        }
+		
+		
+    </style>
+</head>
+<body>
+	<!--测试一-->
+	<div class="box">
+		<div class="item1 item2">css加载顺序test</div> 
+		<!--结果： 红色 red   原因：这些东西是算权值的：
+									id 的权值是100
+									class的权值是10
+									标签的权值是1
+									多个都出现的情况，例如： #main .inner h1
+									或者 #main.inner>h1
+									权值都是 100 + 10 + 1=111
+									发生样式冲突时，权值越高，就用谁对应的样式-->
+	</div>
+	
+	<!--测试二-->
+	<!--这里先加载的.monitor-history-track-icon样式, 后加载的.monitor-mapfun-div .map-fun-icon 样式， 所以结果是 display: block;
+	这里如果把（.monitor-mapfun-div .map-fun-icon）换成（.map-fun-icon），就是按照正常的加载的了,结果是 display: none;-->
+	<div class="monitor-mapfun-div">
+		<div class="map-fun-div">
+			<a class="map-fun-icon monitor-history-track-icon" data-control="level_vehicle_manage_history_trajectory" data-to="monitor_history_track_div" data-show="0" title="历史轨迹">  
+权值计算			
+			</a>
+		</div>
+	</div>
+	
+	<!--测试三-->
+	<!-- 1. 对于相同类型选择器制定的样式，在样式表文件中，越靠后的优先级越高-->
+	<div class="red blue">1111</div><!-- result:  red -->
+
+		<!--2. 样式表的元素选择器选择越精确，则其中的样式优先级越高：
+	   id选择器指定的样式 > 类选择器指定的样式 > 元素类型选择器指定的样式-->
+	<div id="red" class="black">2222</div><!-- result:  red -->
+
+	   <!--3. 如果要让某个样式的优先级变高，可以使用!important来指定-->
+	
+</body>
+</html>

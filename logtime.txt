@@ -1672,6 +1672,9 @@ Gov.getWSThread().on({
         Gov.Controls.SaveLogs({ Type: 4, Operation: "取消跟踪车辆" });
     }
 	
+	
+Baseinfo_platform_update_synchro
+	
 2.ES6 对正则表达式添加了u修饰符，含义为“Unicode模式”，用来正确处理大于\uFFFF的 Unicode 字符。也就是说，会正确处理四个字节的 UTF-16 编码。
 // 正确返回字符串长度的函数：
 	function codePointLength(text){
@@ -1762,4 +1765,870 @@ NOTICE:
 
 	
 2017-11-7：
+1.山西省下面的各个市（太原、大同、晋中等等）做静态信息配置表（StaticInfoConfig.js）[其实就相当于是定义属于window的全局变量，可以看到有下面这样一段代码：]
+(function($){
+	$.StaticInfoConfig = $.StaticInfoConfig == null ? {} : $.StaticInfoConfig;
+	var staticInfoConfig = {
+		taiyuan: {
+            province: "太原市",
+            mapCenterCity: "太原市",
+            loginTitle: "太原市重点营运车辆<br/>联网联控系统",
+            mainTitle: "太原市重点营运车辆联网联控系统",
+            subMainTitle: "太原市重点营运车辆联网联控系统",
+            footerContent: "航天科技控股集团山西有限公司 Copyright © 2005 - " + new Date().getFullYear()
+        }
+	};
+	// 当前配置
+    var currentConfig = staticInfoConfig.taiyuan;
+
+    var province = currentConfig.province,
+        mapCenterCity = currentConfig.mapCenterCity,
+        loginTitle = currentConfig.loginTitle,
+        mainTitle = currentConfig.mainTitle,
+        subMainTitle = currentConfig.subMainTitle,
+        footerContent = currentConfig.footerContent;
+
+    $.StaticInfoConfig.getProvince = function () {
+        return province;
+    };
+    $.StaticInfoConfig.getMapCenterCity = function () {
+        return mapCenterCity;
+    };
+    $.StaticInfoConfig.getLoginTitle = function () {
+        return loginTitle;
+    };
+    $.StaticInfoConfig.getMainTitle = function () {
+        return mainTitle;
+    };
+    $.StaticInfoConfig.getSubMainTitle = function () {
+        return subMainTitle;
+    };
+    $.StaticInfoConfig.getFooterContent = function () {
+        return footerContent;
+    };
+})(function(){
+	var $;
+	try {
+		$ = window;
+	}
+	catch(e){
+		$ = this;
+	}
+	return $;
+}()); 
+然后在其他页面引用这个文件，就可以像下面这样使用啦：
+$('.home-footer > p').text(StaticInfoConfig.getFooterContent()); // footer
+//这里代码注入的参数只有window, 同样的还可以注入jQuery等参数，例如：
+(function($, jq){
+	$.StaticInfoConfig = $.StaticInfoConfig == null ? {} : $.StaticInfoConfig;
+	$.StaticInfoConfig.getDomById = function(id){
+		return jq('#' + id);
+	};
+})(function(){
+	var $;
+	try {
+		$ = window;
+	}
+	catch(e) {
+		$ = this;
+	}
+	return $;
+}(), function(){
+	try {
+		return jQuery;
+	}
+	catch (e) {
+		return null;
+	}
+}());
+
+2017-11-8：
+1.c#类学习：
+1).对象是类的实例。构成类的方法和变量成为类的成员。
+// 申明一个class_name类
+<access specifier> class class_name {
+	// 1.member varibles
+	<data type> variable1;
+	<data type> variable2;
+	...
+	<data type> variableN;
+	
+	// 2.member methods
+	<access specifier> <return type> method1(parameter_list){
+		// method body
+	}
+	....
+	<access specifier> <return type> methodN(parameter_list) 
+    {
+        // method body 
+    }
+}
+<access specifier>: 访问标识符
+类的默认访问标识符是：internal
+成员的默认访问标识符是：private
+要访问类的成员，使用（.）标识符
+2).类的构造函数是类的一个特殊的成员函数，当创建类的新对象时执行。
+构造函数的名称与类的名称完全相同，它没有任何的返回类型。例子：
+using System;
+namespace BLL.Reports{
+   public class VehicleInstallZone:BaseReports<ZoneMPar>{ 
+       public VehicleInstallZone(StrucReportInfo rInfo, string model) : base(rInfo, model) { // 构造函数
+        }
+       protected override DataSet GetDataSet(){
+           IDAL.IVehicleInstall iOver = DALFactory.Factory.CreateVehicleInstall();
+           return iOver.GetDataByZone(this.ModelParame);
+       }
+    }
+}
+默认的构造函数没有任何参数，但是如果你需要一个带有参数的构造函数的话，就可以有，这种构造函数叫做参数化构造函数。
+一个类里面的Main函数是类的入口函数：
+class Line
+   {
+      private double length;   // 线条的长度
+      public Line(double len)  // 参数化构造函数
+      {
+         Console.WriteLine("对象已创建，length = {0}", len);
+         length = len;
+      }
+
+      public void setLength( double len )
+      {
+         length = len;
+      }
+      public double getLength()
+      {
+         return length;
+      }
+
+      static void Main(string[] args)
+      {
+         Line line = new Line(10.0);
+         Console.WriteLine("线条的长度： {0}", line.getLength()); 
+         // 设置线条长度
+         line.setLength(6.0);
+         Console.WriteLine("线条的长度： {0}", line.getLength()); 
+         Console.ReadKey();
+      }
+   }
+3).c#继承
+继承是面向对象程序设计中最重要的概念之一。当创建一个类的时候，不需要重新编写新的数据成员和成员函数，只需要设计一个新的类，继承已有的类的成员即可。
+这个已有的类叫做基类，新的类叫做派生类。继承的思想实现了属于（IS-A）关系。
+public class VehicleInstallZone:BaseReports<ZoneMPar>{ // VehicleInstallZone: 派生类   BaseReports：基类
+
+}
+c#不支持多重继承，但是可以使用接口（interface）来实现多重继承
+class Shape() {}
+public interface PainCost(){} // 基类PainCost
+class Rectangle : Shape, PaintCost { } // 派生类
+class RectangleTester {
+	static void Main(string[] args){
+		Rectangle Rect = new Rectangle();
+		int area;
+		Rect.setWidth(5);
+		Rect.setHeight(7);
+		area = Rect.getArea();
+	}
+}
+4).c#多态性
+多态意味着有多种形式。在面向对象编程编程中往往表现为“一个接口，多个功能”
+	1).静态多态性：c#提供了两种技术来实现静态多态性，分别是： 函数重载； 运算符重载；
+什么是函数重载？你可以在同一个范围内对相同的函数名有多个定义。函数的定义必须彼此不同，可以是参数列表中的参数类型不同，也可以是参数个数不同。不能重载只有返回类型不同的函数声明。
+class Printdata
+   {
+      void print(int i)
+      {
+         Console.WriteLine("Printing int: {0}", i );
+      }
+
+      void print(double f)
+      {
+         Console.WriteLine("Printing float: {0}" , f);
+      }
+
+      void print(string s)
+      {
+         Console.WriteLine("Printing string: {0}", s);
+      }
+      static void Main(string[] args)
+      {
+         Printdata p = new Printdata();
+         // 调用 print 来打印整数
+         p.print(5);
+         // 调用 print 来打印浮点数
+         p.print(500.263);
+         // 调用 print 来打印字符串
+         p.print("Hello C++");
+         Console.ReadKey();
+      }
+   }
+	2). 动态多态性：c#允许你使用关键字abstract创建抽象类，抽象类有一些规则：
+你不能创建一个抽象类的实例；你不能在一个抽象类外部申明一个抽象方法；通过在类定义前面放置关键字sealed,可以将类申明为密封类。当一个类被申明为sealed时，它不能被继承。抽象类不能被申明为sealed。
+当有一个定义在类中的函数需要在继承类中实现时，可以使用虚方法，虚方法是使用关键字virtual申明的。虚方法可以在不同的继承类中有不同的实现。
+动态多态性是通过抽象类和虚方法实现的。
+
+5).接口使用interface关键字申明，他与类的申明类似。接口申明默认是public的。
+using System;
+
+interface IMyInterface
+{
+    // 接口成员
+    void MethodToImplement();
+}
+
+class InterfaceImplementer : IMyInterface
+{
+    static void Main()
+    {
+        InterfaceImplementer iImp = new InterfaceImplementer();
+        iImp.MethodToImplement();
+    }
+
+    public void MethodToImplement()
+    {
+        Console.WriteLine("MethodToImplement() called.");
+    }
+}
+InterfaceImplementer 类实现了 IMyInterface 接口，接口的实现与类的继承语法格式类似：
+class InterfaceImplementer : IMyInterface
+继承接口后，我们需要实现接口的方法 MethodToImplement() , 方法名必须与接口定义的方法名一致。
+
+
+
+
+
+2.
+封装： 提高大家的工作效率。
+重构： 先了解重构原则，然后找出可以重构的代码， 明天代码审查就做这个任务。
+
+3.吕梁：http://124.165.225.190:10035 
+阳泉：http://124.166.240.220:10035
+临汾：http://60.221.207.57:10035
+
+2017-11-9：
+1.Echart渲染时报错，说echarts-all.js:1 Dom’s width & height should be ready before init. 但是我是设置了width：100%；height:100%;的，他还是报错了。
+解决办法：第一种，宽度高度写死，多少多少px；  第二种，延迟初始化（setTimeout），待jQuery切换完dom宽高ready后再init,
+// 初始化
+    function init() {
+        // 延迟初始化！！！
+		setTimeout(function () {
+			initFundamentalMapMonitor();
+		}, 0);
+    }
+	init();
+	
+2.main.js里面有这样一段代码：
+Gov.Controls.Pages["home-main"].getDelay = function () {
+        return {
+            delayFuns: [],
+            platformInterval: null,
+            time: 10,
+            delayExecFun: function (obj) {
+                if (obj.delayFuns.length == 0) {
+                    clearInterval(obj.platformInterval);
+                    obj.platformInterval = null;
+                } else {
+                    var fun = obj.delayFuns.shift(); // shift()  unshift() 从头部开始操作 shift删除 unshift 添加   push()  pop() 尾部开始操作 push添加  pop 删除
+                    fun();
+                }
+            },
+            addDelayFuns: function (fun) {
+                this.delayFuns.push(fun);
+                if (!this.platformInterval) {
+                    this.platformInterval = setInterval(this.delayExecFun, this.time, this);
+                }
+            }
+        }
+    }
+然后其他地方是这样用的：
+		var dataShareDelay = Gov.Controls.Pages["home-main"].getDelay();
+		dataShareDelay.addDelayFuns(function () {
+            chart.operateVehicleChart.setOption(initOption(dataChart[2])); // 1
+        });
+        dataShareDelay.addDelayFuns(function () {
+            chart.freightVehicleChart.setOption(initOption(dataChart[4])); // 2
+        });
+        dataShareDelay.addDelayFuns(function () {
+            chart.policePlatefromChart.setOption(initOption(dataChart[0])); // 3
+        });
+        dataShareDelay.addDelayFuns(function () {
+            chart.tourismPlatefromChart.setOption(initOption(dataChart[3])); // 4
+        });
+意思是1,2,3,4这四个方法，每隔10s执行一个，直到执行完毕。即，10s后执行1， 再隔10s执行2，	
+
+2017-11-13：
+1. 车辆状态，默认选中：
+var status = Gov.Control.Select({
+                dbName: "GovStatus",
+                selItems: [{ name: "营运", val: 0x2, isSelect: true }, // 默认选中
+                           { name: "报废", val: 0x1 },
+                           { name: "停运", val: 0x4 },
+                           { name: "注销", val: 0x8 },
+                           { name: "转出", val: 0x10 },
+                           { name: "挂失", val: 0x20 },
+                           { name: "歇业", val: 0x40 },
+                           { name: "锁定", val: 0x100 },
+                           { name: "删除", val: 0x80 }
+                ],
+                isAllSelect: true,
+                isMultiselect: true,
+                label: "状态",
+                isCondition: true
+            });
+			
+2.云南上次的问题是
+Gov-1.1.0.js:
+if (opts.detailBtnType) {
+   str += '<tr class="detail-btn-line"><td><input class="vehicle-detail-btn vehicle-detail-btn-' + opts.detailBtnType + '" 
+   type="button" value=' + opts.btnValue + ' onClick="Gov.showVehicleMoreDetail(' + opts.detailBtnType + ',' + opts.vehicleId + ')" /><td></tr>';
+}
+最开始的做法是，在Gov-1.1.0.js中，写了showVehicleMoreDetail这个方法，只是方法体是空的，然后onClick绑定的事件是ctl.showVehicleMoreDetail。
+然后我去Monitor.js里面写了这个方法ctl.showVehicleMoreDetail， 并在要使用的地方用该方法来重写Gov-1.1.0.js里面的这个showVehicleMoreDetail方法，
+后来第一次不点击就自动执行了，然后再去 点击就报错，说找不到ctl.showVehicleMoreDetail。后来跟俊杰兄讨论了知道是ctl在Monitor.js里面的Gov.Page.Query执行完之后就释放掉了，所以报找不到的错误。
+所以后来把Monitor.js里面的ctl.showVehicleMoreDetail改成了Gov.showVehicleMoreDetail，这样全局都可以访问了，并且在Gov-1.1.0.js这个里面的onClick事件也可以写成Gov.showVehicleMoreDetail这样了。
+最后版本：if (opts.detailBtnType) {
+                str += '<tr class="detail-btn-line"><td><input class="vehicle-detail-btn vehicle-detail-btn-' + opts.detailBtnType + '" 
+				type="button" value=' + opts.btnValue + ' onClick="Gov.showVehicleMoreDetail(' + opts.detailBtnType + ',' + opts.vehicleId + ')" /><td></tr>';
+            }
+			
+2017-11-14：
+1.山西省下面的市：
+太原：http://221.180.19.42:10035
+忻州：http://211.142.75.30:10035
+晋中：202.99.199.61:10035
+晋城：124.164.246.52:10035
+长治：http://218.26.211.210:10035
+大同：121.30.235.186:10035
+吕梁：http://124.165.225.190:10035 
+阳泉：http://124.166.240.220:10035
+临汾：http://60.221.207.57:10035
+运城：http://60.222.254.147:10035
+
+内网ip替换：
+长治：10.18.8.8:
+晋城：10.21.3.8
+运城：10.17.7.8
+
+2.四川可重构和完善的地方：
+1).地图上面的弹出信息框（包括车辆监管和违章督办，可考虑封装）
+2).车辆监管 画历史轨迹 时间选择复制 开始时间的可赋值给下面结束时间 下面的结束时间也可赋值给上面的开始时间
+3).车辆监管页面 地图左上角的历史轨迹、车辆跟踪等功能按钮按照是否可以使用来展示（这里有修改了以前的按钮布局模式）
+(在做这个的同时，修改和统一了一些布局，也修复了一些显然易见的bug,如点击历史轨迹按钮打开了再点击不能关闭的bug,以及调整了集结按钮的一些样式，使其与其他的按钮样式统一)
+
+
+2017-11-15：
+1.俊杰兄， 四川的我提了两拨代码：
+第一波改的【车辆监管 画历史轨迹 时间选择复制 开始时间的可赋值给下面结束时间 下面的结束时间也可赋值给上面的开始时间】， 
+第二波改的【车辆监管页面 地图左上角的历史轨迹、车辆跟踪等功能按钮按照是否可以使用来展示】我先提交到这里，你空了在发布吧，这个优先级不高，可以慢慢来，看你咯。
+因为改的代码有点多，所以我按一个功能来提交的代码，怕搞混淆了。 
+然后明天可能还要做这个【地图上面的弹出信息框（包括车辆监管和违章督办，可考虑封装）这个我看了一下，封装性不是很强，明天我再细细看看】
+
+
+2017-11-16:
+1.长治、晋城、运城内网ip配置替换；
+2.山西市考核明细添加竖向滚动条；
+3.云南车辆监管车辆详情，返回的table没有的时候，用“---”代替undefined;
+4.对象没有length属性，判断一个对象是否为空：
+方法一：通过jquery的方法$.isEmptyObj()来判断；
+方法二：var a = {};
+		if (JSON.stringify(a) == "{}") {
+			console.log('空对象');
+		}else{
+			console.log('非空对象');
+		}
+		// result: "空对象"
+方法三：
+		function getObjLength(obj){
+			var num = 0;
+			for (var attr in obj) {
+				num++;
+			}
+			return num;
+		}
+		var a = {};
+		if (getObjLength(a) > 0) {
+			alert('不是空对象');
+		}else{
+			alert('是空对象');
+		}
+		
+5.山西运城 本地 网约车权限账号:cdgovadmin
+		
+2017-11-21:
+1.	
+map.converter = function (obj) {
+                function getUnionDate(date, time) {
+                    var temp = date + "";
+                    var y = parseInt(temp.substr(0, 4)),
+                        m = parseInt(temp.substr(4, 2)) - 1,
+                        d = parseInt(temp.substr(6, 2));
+                    var _date = (+new Date(y, m, d)) + parseInt(time) * 1000;
+                    return (new Date(_date)).Format('yyyy-MM-dd hh:mm:ss');
+                }
+				
+				var info = {
+                vehicleId: obj.vehicleId,
+                plate: obj.plate,
+                unitName: obj.unitName,
+                platformName: obj.platformName,
+                speedLimitSpeed: obj.topSpeed + '/' + obj.speedLimit + ' km/h',
+                alarmTypeName: obj.alarmTypeName,
+                alarmTime: getUnionDate(obj.sDate, obj.sTime),
+                lng: (obj.sLon / 1000000).toFixed(6),
+                lat: (obj.sLat / 1000000).toFixed(6),
+                direction: 3,
+                carType: obj.carType,
+                isAlarm: true,
+                isSupervise: obj.isSupervise
+            };
+            var mapping = {
+                unitName: "所属企业",
+                platformName: "所属接入平台",
+                speedLimitSpeed: "速度/限速值",
+                alarmTypeName: "报警类型",
+                alarmTime: "报警时间"
+            }
+                
+                return {
+					info: info,
+					mapping: mapping
+				}
+            };	
+			var ret = map.converter(obj);
+			var mapLocation = map.mapLocation({
+                mapping: ret.mapping,
+                info: ret.info,
+                title: ret.info.plate,
+                ico: {
+                    url: Gov.getOrigin() + map.getDirectionImg(ret.info.direction, ret.info.carType, ret.info.isAlarm, ret.info.isSupervise),
+                    width: ret.info.isAlarm ? 20 : 12,
+                    height: ret.info.isAlarm ? 20 : 12
+                }, // marker图标定义
+                isInitInfowindow: isInitInfowindow, // 是否初始化infoWindow
+                isAjaxData: false, // 是否通过ajax加载数据
+                isShift: false, // 是否转化地址
+                isSetCenter: isSetCenter, // 是否居中显示
+                clearOverLays: isInitInfowindow 
+            });
+            mapLocation.render();
+            index++;
+			
+			
+2017-11-21：
+1.封装替换了一些地方，需要测试，特别是历史轨迹上面的marker点击，有按钮“历史轨迹”的， 还需要测试！！！！	
+
+
+
+2017-11-23：
+1.内蒙和四川的 报表里面双击某一行弹出地图并画轨迹什么的，用到的是/Controls/TabToMap.js, 然后报表用到的有：/Report/VehicleBreakRule.js （validDataDbClick方法）
+
+report_vehiclebreakrule_table_div_tabs0_content_panel0_form0_text2
+report_vehiclebreakrule_table_div_tabs0_content_panel0_form0_checkBox0
+report_vehiclebreakrule_table_div_tabs0_content_panel1_form0_checkBox0
+report_vehiclebreakrule_table_div_tabs0_content_panel2_form0_checkBox0
+report_vehiclebreakrule_table_div_tabs0_content_panel3_form0_checkBox0
+
+
+2017-11-24：
 1.
+span.fancytree-node.fancytree-active, span.fancytree-node.fancytree-selected {background-color: #172832;}
+2.Object.keys() 返回值是一个数组，其中包含对象的可枚举属性和方法的名称。
+3.em单位： 相对于当前元素的父级元素的font-size来确定。若： 父级元素：font-size: 16px; 则该子元素中，1em = 16px；这样来换算。
+
+1.湖南区域配置添加地区类型配置组织树
+
+
+2017-11-27：
+1.山西各地市新增服务商问题修改
+2.support春雨解决前端问题
+
+
+2017-11-28:
+1.山西市级内网ip配置逻辑修改
+2.云南响应式样式调整
+3.框架选型对比文档丰富
+
+
+表格：合计行，动态生成列，模板列，固定前几列
+
+树形：单选，多选，延迟加载
+
+下拉框：自动完成
+
+
+
+2017-11-30：
+1.svn代码路径： https://222.172.220.248:9888/svn/gov/GovSupervisionPlatform/Trunk/
+2.svn检出某个指定文件夹代码（拉指定文件夹代码）： 右键--》版本库浏览器-》选择要检出的目录，然后右键-》检出
+
+
+2017-12-1：
+1.河北新增投诉管理功能；
+2.河北统计分析+基本信息样式调整；
+3.河北增加配置文件（内外网切换websocket地址用的）；
+
+4.点击空白区域隐藏或关闭div：
+假设id="myBox"
+$(document).on('click', function(e){
+	var e = e || window.event;
+	var elem = e.target || e.srcElement;
+	while(elem){ // 循环判断至根节点，防止点击的是div的子元素
+		if(elem.id && elem.id == "myBox"){
+			return;
+		}
+		elem = elem.parentNode;
+	}
+	hideDiv(); // 隐藏div的方法
+});
+
+
+2017-12-3：
+1.关于input样式的一个问题：
+input:-webkit-autofill 导致chrome的输入框背景颜色变成黄色,字体变成黑色 （注意，autocomplete="off" 这个在chrome浏览器中不支持！！！）
+如下，chrome默认加的样式：
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+	background-color: rgb(250, 255, 189); /* #FAFFBD; */
+	background-image: none;
+	color: rgb(0, 0, 0);
+}
+解决办法：
+1). 可以对input:-webkit-autofill使用足够大的纯色内阴影来覆盖input输入框的黄色背景
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+}
+如果你有使用圆角等属性，或者发现输入框的长度高度不太对，可以对其进行调整，
+除了chrome默认定义的background-color，background-image，color不能用!important
+提升其优先级以外，其他的属性均可使用!important提升其优先级，如：
+	input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px white inset;
+	border: 1px solid #CCC!important;
+	height: 27px!important;
+	line-height: 27px!important;
+	border-radius: 0 4px 4px 0;
+}
+
+
+2017-12-4：
+1.河北随机抽查配置页面
+2.云南查岗bug修复
+
+
+2017-12-5：
+1.伪类和伪元素：
+伪类： :active  :focus  :hover  :link  :visited  :first-child  :lang (允许创作者来定义指定的元素中使用的语言)
+伪元素： :first-letter  :first-line  :before  :after
+两者的区别就是：伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到，这也就是为什么他们一个称为伪类，一个称为伪元素的原因。
+伪元素和伪类之所以这么容易混淆，是因为他们的效果类似，而且写法也相仿。但实际上css3为了区分两者，已经明确规定了伪类用一个冒号来表示，伪元素用两个冒号来表示。
+CSS3规范中的要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类，比如::before和::after等伪元素使用双冒号(::)，:hover和:active等伪类使用单冒号(:)。
+除了一些低于IE8版本的浏览器外，大部分浏览器都支持伪元素的双冒号(::)表示方法。
+然而，除了少部分伪元素，如::backdrop必须使用双冒号，大部分伪元素都支持单冒号和双冒号的写法，比如::after，写成:after也可以正确运行。
+
+2.任务
+1.云南“综合监管”修改为“车辆监管”；云南查岗问题发布后测试出另一个bug，完成修复。
+2.湖南一车多平台增加日期
+
+3.新拉的项目echart-admin-vue 可部分参考
+4.明天来了弄router导航的各个导航的页面内容，如echart, element-ui的table等。
+
+
+2017-12-6：
+1.lodash: 这是一个具有一致接口、模块化、高性能等特性的javascript库。http://lodashjs.com/docs/
+2.Moment.js : 是一个javascript日期处理类库。http://momentjs.cn/
+3.Element-ui组件库单独引用某个组件的时候，有些可以单独调用他们的一些方法，例如：
+import {Notification} from 'element-ui'
+Notification.error({
+          title: '错误',
+          message: '这是一条错误的提示消息'
+        });
+再举个栗子：
+import { MessageBox } from 'element-ui';
+MessageBox.confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+		
+4.任务：
+1.基于上周未完成的“web框架选型任务”，搭建了一个小型demo，然后按照网约车原型图大致实现了一个首页的布局，然后做了一些关于vue-echarts，table表格, 页面跳转router的试用和测试
+
+各项目远程地址及账号：
+查看交通部链路服务器（山西前置机）  
+地址：202.97.158.140:12328
+帐号：gov_yw
+密码：f6f#Ez.P88?U
+在该机器上登录（网址：http://10.242.0.110/LMC/stat/city.jsp）查看与交通部链接状态
+
+公司外堡垒机：
+地址：182.148.114.194:36589
+帐号：temp_yw
+密码：Q(e$6mJ73^tN
+
+公司内堡垒机：
+地址：125.71.30.131:4999
+帐号：zfpt
+密码：YHins65(sg2%xn
+
+四川（需登录公司内堡垒机）：
+服务器地址：192.168.100.205
+帐号：gov05_ser
+密码：11HXupD)&1w=
+
+湖南（需登录公司内堡垒机）：
+服务器地址：192.168.10.202:4082
+帐号：gov_yw
+密码：EMm4l8),D,a7
+
+云南（需先登录VPN）：
+VPN地址：https://222.221.254.154:4999
+VPN帐号：ynwk
+VPN密码：ynwk@221133
+服务器地址：172.18.217.206
+帐号：yun_sjy        
+密码：CVsfdfg#87&f4
+
+内蒙堡垒机：
+地址：116.113.104.68:23089
+帐号：gov_yw
+密码：0FV`x&lVr^07
+
+内蒙（需登录内蒙堡垒机）：
+服务器地址：192.168.0.131
+帐号：gov_yw
+密码：C[b[%7K1a7cM
+
+山西省（直接访问）：
+地址：202.97.158.140:12327
+帐号：gov_yw
+密码：2``vI`31EqoF
+
+太原：
+地址：221.180.19.42:8010
+帐号：gov_yw
+密码：#72Xmpr,M[2P
+
+忻州
+地址：211.142.75.30:8020
+帐号：gov_yw
+密码：xpb6,B9Q7<*I
+
+晋中：
+地址：202.99.199.61:8020
+帐号：gov_yw
+密码：5,7e=ZXL_0bz
+
+晋城：
+地址：124.164.246.52:8020
+帐号：gov_yw
+密码：wu4$f3N4F$A#
+
+朔州：
+地址：218.26.191.110:8020
+帐号：gov_yw
+密码：a7#J7[@FSkr9
+
+长治：
+地址：218.26.211.210:8020
+帐号：gov_yw
+密码：@!4q5vGq&9VI
+
+大同：
+地址：121.30.235.186:8020
+帐号：gov_yw
+密码：_gP9p$A7Zi#8
+
+阳泉：
+地址：124.166.240.220:8020
+帐号：gov_yw
+密码：6lnQQ*%~0Kz0
+
+吕梁：
+地址：124.165.225.190:8020
+帐号：gov_yw
+密码：Fm24Q+i1?[Ew
+
+临汾：
+地址：60.221.207.57:8020
+帐号：gov_yw
+密码：~g463)kL*ZKh
+
+运城：
+地址：60.222.254.147:8020
+帐号：gov_yw
+密码：o@b6h!OL&J73
+
+
+
+2017-12-7：
+1.任务：
+1.云南反馈的前端页面问题修改
+2.demo左边菜单栏折叠展开功能实现
+3.云南车辆监管搜索时组织树第一次没能及时定位问题研究（还未解决）
+
+2017-12-8:
+1.任务：
+1.内蒙-区县账号屏蔽企业监管页面
+2.demo - element-ui树形组件、下拉菜单、弹出框使用
+
+3.现阶段在demo中实现了table合计行，模板列，固定行列，多表头，排序，多选框等。使用router进行页面加载，跳转。
+接下来需要：
+	1.table实现与分页控件结合，动态生成列。
+	2.利用组件技术封装table控件。
+	3.对router进行封装简化加载，跳转。
+	4.封装form，常用控件。
+
+4.云南组织树定位问题 （玉溪众合运输有限公司）
+俊杰兄这样改的：
+定义了一个tree里面的全局变量： var scrollToNode = null;
+然后添加了：
+onExpand: function (node) {
+	if (scrollToNode) {
+        controlTree.tree("scrollTo", scrollToNode);
+        scrollToNode.scrollIntoView(true);
+        scrollToNode = null;
+    }
+}
+然后在这里添加了这一句：
+function setActiveNode(key) {
+    var ctl = treeFindNode(key);
+    if (ctl != null) {
+        controlTree.tree("select", ctl.target);
+        controlTree.tree("expandTo", ctl.target);
+        controlTree.tree("scrollTo", ctl.target);
+        scrollToNode = ctl.target; // 这句是添加的
+
+        return true;
+    }
+    return false;
+}
+俊杰兄说：控件有问题，只有等他展开后再去调用方法了，现在还是有点问题。
+
+
+2017-12-11：
+1.js同步和异步：
+同步：程序的执行顺序与任务的排列顺序是一致的、同步的
+异步：程序的执行顺序与任务的排列顺序是不一致的、异步的
+
+2.任务：
+1.协助湖南移动端部署
+2.html标签语义化以及html语义化标签详细了解
+3.css框架的一些思考（html标签嵌套，css样式写法，css文件和html文件，html上面添加class选择器或者id选择器）
+
+1.梳理html标签嵌套基本规则
+2.css书写规范、顺序，选择器命名规范（区分dom选择器和css的选择器）
+3.html文件引用css的方法，css加载顺序问题 （媒体查询顺序）
+4.梳理落实到当前项目中应该做哪些修改、调整等
+着重介绍：
+定位position: absolute  z-index
+盒模型box-sizing: border-box;
+css sprite:  background-position
+
+
+2017-12-13:
+1.background-color:transparent; 和 opacity: 0;fliter: alpha(opacity=0);的区别
+与 background-color: rgba(0,0,0,.4)和 opacity: .4;filter: alpha(opacity=40);的区别都是：
+前者只是透明，不会被子元素继承；或者除了透明，还会被子元素继承，例如字体什么的也会跟着透明；
+
+2.云南的cshtml里面写样式的时候加了一个媒体查询，结果就报错了，原因是cshtml语法规定，@在cshtml里面需要转义，如果要输出@，则使用@@。
+所以后来的修改方式是重新新建了一个css文件，把css拿出去了。
+
+3.chrome查看元素里面灰色的css属性和被划横线的属性分别代表什么意思：
+灰色的css属性：该元素不能继承这个属性（该属性本来就是不可继承的（如background），该元素类别决定其不可继承的（如有些属性不允许外联元素继承，如div是外联元素，其不能继承其父的color属性），差不多就这些）
+划横线的属性：注释了这个属性 或者 写错了这个属性或者不支持这个属性（一般浏览器前面会带黄色感叹号）或者 可继承的但是由于优先级问题没有继承被抛弃的。
+
+4.resolution test --- chrome的一个插件，可以修改浏览器窗口的分辨率，从而让网页开发人员能够及时预览页面在不同分辨率下面的表现情况。
+
+5.任务：
+1.梳理落实到当前项目中css应该做哪些修改、调整
+2.运维巡检
+3.修改湖南闭环管理点击报错的问题（cshtml语法规定，@在cshtml里面需要转义，如果要输出@，则使用@@）
+
+6.函数前面加; +  ! ~表示什么意思：
+函数前面加;是为了保证压缩的时候不出问题，比如跟上一行代码连接起来或者怎么的。
+立即执行函数前面加+（也可以是！或者 ~）,举例说明：
+window.Gov = window.Gov == null ? {} : window.Gov;
++function(ns){
+	// some code
+	ns.config = {};
+}(Gov);
+如果没有这个加号的话，解析器会认为function是一个函数声明的开始，而后面（）将会导致语法错误。
+在function前面加上+号时，就变成了一个函数表达式，而函数表达式后面又添加了一个()就变成了一个立即执行的函数了。
+这个立即执行函数等价于下面的代码：
+(function(ns){
+	// some code
+	ns.config = {};
+})(Gov);
+
+2017-12-19：
+1.湖南sp本地账号： admin 123456
+湖南sp线上账号： 997  1C97A1
+
+2.今天任务：
+湖南运输企业客户端/省平台需求：
+1， 2， 4， 5， 6，省平台需求 （前端的东西修改）
+
+
+2017-12-21：
+1.湖南考核，服务商考核排名报表导出的时候排序字段也要传进去！！！
+
+796过检违章督办数据模拟
+
+
+2017-12-26：
+跳出循环：
+1.jquery each ： 跳出当前循环,进入下一个循环（return true; 终止本次循环）； 跳出整个循环（return false;）
+2.for循环： 跳出当前循环,进入下一个循环（continue; 终止本次循环）； 跳出整个循环（break;）
+3.function里面return，跳出函数。
+
+
+
+2017-12-27：
+1.云南多地区查岗
+2.湖南-凌晨禁行：报表添加车辆的申请时间段；
+3.四川-被停业务的服务商所属的车在车辆监管查询时，弹出的提示框时间问题修改；
+4.// 判断一个对象是否在一个数组里面
+    function findElem(arrayToSearch, attr, val) {
+        for (var i = 0; i < arrayToSearch.length; i++) {
+            if (arrayToSearch[i][attr] == val) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+	
+5.四川10.50.75.102 GPS_GOV 数据库
+
+4194312  8388
+
+
+2017-12-28：
+1.四川的库
+姚依江—GPS政府 2017/12/27 16:27:49
+用201的GPS_GOV_SC
+2017/12/27 16:30:42
+姚依江—GPS政府 2017/12/27 16:30:42
+admin fpI$@wSYnMJ5 可以登录
+本地201数据库-四川数据库（GPS_GOV_SC）已经替换为最新存储过程，里面的表数据也基本都有（10月份）
+
+2.云南多地区查岗的需求提交代码的时候，记得先去掉模拟数据！！！
+
+3.
+1.云南查岗一些用户体验细节处理，如：查询无数据的提示，地区的初始化等；
+2.云南查岗查询接口对接，并配合春雨调试
+
+
+2017-12-29：
+1.云南配合测试调整
+2.自主了解了一些关于gulp配置文件的书写规则

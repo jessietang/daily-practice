@@ -102,7 +102,7 @@
     <div class="searchContainer">
         <input type="text" class="searchBox" placeholder="搜车牌号"/>
         <div class="searchBtn">
-            <img src="../static/images/icons/magnify.png" alt="" id="searchBtn"/>
+            <img src="../static/images/icons/magnify.png?v=9526b2a340" alt="" id="searchBtn"/>
         </div>
         <ul class="autoComplete">
             <li class="list">川AE6666</li>
@@ -149,7 +149,7 @@
         var lat = result[0].y;//纬度
         console.log('转为百度地图定位坐标：'+'('+ lng + ',' + lat + ')');
         var point = new BMap.Point(lng,lat);
-        var myIcon = new BMap.Icon("../static/images/icons/me.png", new BMap.Size(134,125));
+        var myIcon = new BMap.Icon("../static/images/icons/me.png?v=44dbe0d51c", new BMap.Size(134,125));
         var marker = new BMap.Marker(point,{icon:myIcon});
         map.addOverlay(marker);
         map.centerAndZoom(point,16);
@@ -163,7 +163,7 @@
             option: {
                 lng: 104.06792346,
                 lat: 30.67994285,
-                ico: 'icons/1.png',
+                ico: 'icons/1.png?v=dd52458408',
                 zIndex: 100,
                 UnitName: "网阔信息", // 所属企业
                 PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -178,7 +178,7 @@
             option: {
                 lng: 103.67174,
                 lat: 30.84639,
-                ico: 'icons/1.png',
+                ico: 'icons/1.png?v=dd52458408',
                 zIndex: 100,
                 UnitName: "网阔信息", // 所属企业
                 PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -205,7 +205,7 @@
                 "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
                 '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
                 "</table></div>";
-        var myIcon = new BMap.Icon("../static/images/icons/nearCar.png", new BMap.Size(34,25));// 附近车辆定位图标
+        var myIcon = new BMap.Icon("../static/images/icons/nearCar.png?v=c94e5e4c69", new BMap.Size(34,25));// 附近车辆定位图标
         var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
         map.addOverlay(marker);
         addClickHandler(html,marker,new BMap.Point(option.lng,option.lat));
@@ -249,7 +249,7 @@
                                 "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
                                 '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
                                 "</table></div>";
-                        var myIcon = new BMap.Icon("../static/images/icons/1.png", new BMap.Size(300,157));// 搜索到的车辆定位图标
+                        var myIcon = new BMap.Icon("../static/images/icons/1.png?v=dd52458408", new BMap.Size(300,157));// 搜索到的车辆定位图标
                         var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
                         map.addOverlay(marker);
                         openInfo(html, new BMap.Point(option.lng,option.lat));

@@ -1,9 +1,3 @@
-/**
- *
- * @authors chen Ran (465282098@qq.com)
- * @github    https://github.com/jyhjn1
- * @date    2016-07-12 10:39:32
- */
 
 var gulp = require('gulp'),
     browserSync = require('browser-sync').create(), //之前一直在用Gulp开发项目，每次编写完Sass后还要用按F5刷新页面看效果，想想也是够傻的，这么好用的东西竟然现在才开始用。
@@ -15,11 +9,16 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'), //使用gulp-autoprefixer根据设置浏览器版本自动处理浏览器前缀。使用它我们可以很潇洒的写代码【特别是开发移动端页面时，就能充分体现它的优势。例如兼容性不太好的flex布局】
     runSequence = require('run-sequence'), //按照指定的顺序运行一系列gulp任务，这种函数是被设计用来解决这种场景：你定义了运行顺序，但是选择不使用依赖。
     concat = require('gulp-concat'), //用来把多个文件合并成一个文件，我们可以用它来合并js文件或者css文件等，这样来减少http请求数量
+	gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'), //gulp-uglify用来压缩js文件，使用的是uglify引擎
+	minifyCss = require('gulp-minify-css'), // gulp-minify-css用来压缩css文件
+	minifyHtml = require('gulp-minify-html'), // gulp-minify-html用来压缩html文件
     inject = require('gulp-inject'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
     base64 = require('gulp-base64');
+	
+var condition = true;
 
 //gulp自动添加版本号 【需要注意的地方，很重要！！！】
 /*推荐使用gulp-rev + gulp-rev-collector是比较方便的方法，结果如下:
@@ -81,15 +80,17 @@ gulp.task('serve', ['sass'], function() {
             baseDir: "./"
         }
     });
-    gulp.watch('src/scss/**/*.scss', ['sass']); //会在编译完sass后，以无刷新方式更新页面
+    gulp.watch('src/scss/**/*.scss', ['sass']); //监听scss文件，会在scss文件变动后执行sass这个task
     gulp.watch('src/module/*.html').on('change', reload); //会在修改html文件后刷新页面
     gulp.watch('src/static/js/**/*.js').on('change', reload); //会在修改js后刷新页面
 });
 
-//JS获取版本号
-gulp.task('revJs', function() {
+//js压缩 //JS获取版本号
+gulp.task('miniJs', function() {
     return gulp.src('src/static/js/**/*.js')
-        // .pipe(uglify())
+        .pipe(gulpif(
+            condition, uglify()
+        )) // 生产环境，condition=true，对js进行压缩， 否则不压缩
         .pipe(rev())
         .pipe(gulp.dest('./tActivity/static/js'))
         .pipe(rev.manifest())
@@ -105,9 +106,9 @@ gulp.task('revJs', function() {
 
 // Img获取版本号
 gulp.task('revImg', function() {
-    return gulp.src('src/static/images/*.*')
+    return gulp.src('src/static/images/**/*.*') //  src\static\images\icons\*.*   and   src\static\images\icons2\*.*  and  src\static\images\*.*
         .pipe(rev())
-        .pipe(gulp.dest('./tActivity/static/images'))
+        .pipe(gulp.dest('./tActivity/static/images')) // tActivity\static\images\icons\*.*   and  tActivity\static\images\icons2\*.*  and  tActivity\static\images\*.*
         .pipe(rev.manifest())
         .pipe(gulp.dest('./cache/rev/images'));
 });
@@ -130,10 +131,17 @@ gulp.task('revCss', function() {
 });
 
 
-//更新引入文件版本
-gulp.task('revHtml', function() {
+// 压缩html文件/更新引入文件版本
+gulp.task('miniHtml', function() {
     return gulp.src(['./cache/rev/**/*.json', './src/module/*.html']) // 所以revCollector 就是根据json文件中显示的文件名对应关系，遍历所有html，替换文件命名
         .pipe(revCollector())
+		.pipe(gulpif(
+            condition, minifyHtml({
+                empty: true,
+                spare: true,
+                quotes: true
+            })
+        )) // condition=true表示生产环境环境下面压缩，否则（开发环境下面）不压缩html文件
         .pipe(gulp.dest('./tActivity/module')); //替换结果输出到./tActivity/module下
 });
 
@@ -142,9 +150,22 @@ gulp.task('cleanBuild', function(cb) {
     return del('./tActivity/', cb);
 });
 
-gulp.task('default', function(done) {
-    runSequence('cleanBuild', 'revImg', 'revCss', 'revHtml','revJs',done);
+// 开发构建 (开发的时候不压缩css,html,js等文件)
+gulp.task('dev', function(done){
+	condition = false; // 开发环境不压缩
+	runSequence(['cleanBuild'], ['revImg'], ['revCss'], ['miniHtml'], ['miniJs'], done);
+	//runSequence('cleanBuild', 'revImg', 'revCss', 'miniHtml', 'miniJs', done);
 });
+
+// 正式构建
+gulp.task('bulid', function(done){
+	runSequence(['cleanBuild'], ['revImg'], ['revCss'], ['miniHtml'], ['miniJs'], done);
+});
+
+
+gulp.task('default', ['build']); // 执行：gulp，默认执行build这个task
+
+// 开发的时候，先执行：gulp dev, 再执行：gulp serve;    上线的时候，执行gulp build, 然后把压缩后的文件用到线上
 
 //runSequence('A','B','C','D') 这里有一点必须注意，函数A,B,C必须返回值，这个返回值要么是流(stream)，要么是一个promise对象，要么是一个handle对象，要么是一个回调函数
 

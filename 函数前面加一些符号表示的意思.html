@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+// 无结果 ，解析出错
+function test(m){
+	var a = 1;
+	console.log(a+m);
+}(2);
+
+
+// 正确
++function test(m){
+	var a = 1;
+	console.log(a+m);
+}(2);
+
+
+// 等价于上面的这种
+(function test(m){
+	var a = 1;
+	console.log(a+m);
+})(2);
+
+
+//函数前面加;是为了保证压缩的时候不出问题，比如跟上一行代码连接起来或者怎么的。
+//立即执行函数前面加+（也可以是！或者 ~）,举例说明：
+window.Gov = window.Gov == null ? {} : window.Gov;
++function(ns){
+	// some code
+	ns.config = {};
+}(Gov);
+//如果没有这个加号的话，解析器会认为function是一个函数声明的开始，而后面（）将会导致语法错误。
+//在function前面加上+号时，就变成了一个函数表达式，而函数表达式后面又添加了一个()就变成了一个立即执行的函数了。
+//这个立即执行函数等价于下面的代码：
+(function(ns){
+	// some code
+	ns.config = {};
+})(Gov);
+
+</script>
+<body>
+	
+	
+</body>
+</html>

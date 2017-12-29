@@ -120,7 +120,7 @@
         <div class="searchContainer">
             <input type="text" class="searchBox" placeholder="搜车牌号"/>
             <div class="searchBtn">
-                <img src="../static/images/icons/magnify.png" alt="" id="searchBtn"/>
+                <img src="../static/images/icons/magnify.png?v=9526b2a340" alt="" id="searchBtn"/>
             </div>
             <ul class="autoComplete">
                 <li class="list">湘AE6666</li>
@@ -161,7 +161,7 @@
                         lat: 28.0976997634
                     }
                 };*/
-                var myIcon = new BMap.Icon("../static/images/icons/local.png", new BMap.Size(40,45));
+                var myIcon = new BMap.Icon("../static/images/icons/local.png?v=f7e2457e5c", new BMap.Size(40,45));
                 var marker = new BMap.Marker(r.point,{icon:myIcon});
                 map.addOverlay(marker);
                 map.centerAndZoom(r.point,16);
@@ -177,7 +177,7 @@
                         option: {
                             lng: myPoint[0] + Math.random() / 100,
                             lat: myPoint[1] + Math.random() / 1000,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -192,7 +192,7 @@
                         option: {
                             lng: myPoint[0] - Math.random() / 100,
                             lat: myPoint[1] - Math.random() / 1000,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -207,7 +207,7 @@
                         option: {
                             lng: myPoint[0] - Math.random() / 100,
                             lat: myPoint[1] - Math.random() / 1000,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -222,7 +222,7 @@
                         option: {
                             lng: myPoint[0] + Math.random() / 100,
                             lat: myPoint[1] - Math.random() / 1000,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -237,7 +237,7 @@
                         option: {
                             lng: myPoint[0] - Math.random() / 100,
                             lat: myPoint[1] - Math.random() / 100,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -252,7 +252,7 @@
                         option: {
                             lng: myPoint[0] + Math.random() / 100,
                             lat: myPoint[1] + Math.random() / 1000,
-                            ico: 'icons/1.png',
+                            ico: 'icons/1.png?v=dd52458408',
                             zIndex: 100,
                             UnitName: "网阔信息", // 所属企业
                             PlatformName: "成都网阔信息技术股份有限公司", // 接入平台
@@ -273,7 +273,7 @@
                             "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
                             '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
                             "</table></div>";
-                    var myIcon = new BMap.Icon("../static/images/icons/nearCar.png", new BMap.Size(34,25));// 附近车辆定位图标
+                    var myIcon = new BMap.Icon("../static/images/icons/nearCar.png?v=c94e5e4c69", new BMap.Size(34,25));// 附近车辆定位图标
                     var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
                     map.addOverlay(marker);
                     addClickHandler(html,marker,new BMap.Point(option.lng,option.lat));
@@ -342,7 +342,7 @@
                                             "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
                                             '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
                                             "</table></div>";
-                                    var myIcon = new BMap.Icon("../static/images/icons/nearCar.png", new BMap.Size(34,25));// 搜索到的车辆定位图标
+                                    var myIcon = new BMap.Icon("../static/images/icons/nearCar.png?v=c94e5e4c69", new BMap.Size(34,25));// 搜索到的车辆定位图标
                                     var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
                                     map.addOverlay(marker);
                                     openInfo(html, new BMap.Point(option.lng,option.lat));
@@ -361,7 +361,7 @@
                                     "<tr><td>速度/限速值：</td><td>" + option.SpeedCvt + "/" + option.LimitSpeed + ' km/h</td></tr>' +
                                     '<tr><td>报警时间：</td><td>' + option.GPSDateCvt + '</td></tr>' +
                                     "</table></div>";*/
-                            /*var myIcon = new BMap.Icon("../static/images/icons/1.png", new BMap.Size(300,157));// 搜索到的车辆定位图标
+                            /*var myIcon = new BMap.Icon("../static/images/icons/1.png?v=dd52458408", new BMap.Size(300,157));// 搜索到的车辆定位图标
                             var marker = new BMap.Marker(new BMap.Point(option.lng,option.lat),{icon:myIcon});// 创建标注
                             map.addOverlay(marker);
                             openInfo(html, new BMap.Point(option.lng,option.lat));
