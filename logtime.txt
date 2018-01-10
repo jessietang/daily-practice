@@ -2630,5 +2630,157 @@ admin fpI$@wSYnMJ5 可以登录
 
 
 2017-12-29：
-1.云南配合测试调整
-2.自主了解了一些关于gulp配置文件的书写规则
+1.云南配合发布
+2.了解了一些关于gulp配置文件的书写规则
+
+
+2018-1-3：
+1.四川sp系统本地账号（201数据库）：账号： 510001   密码：123456
+2.任务：
+	1.四川sp系统-车辆信息修改（车辆信息详情）-车牌颜色添加绿色
+	2.协助春雨看了看山西市级的消息通知页面表格数据渲染
+
+3.Virtual Dom算法包括以下几个步骤：
+	1.用JavaScript对象结构表示DOM树的结构，然后用这个树构建一个真正的树，插到文档中。
+	2.当状态变更的时候，重新构造一个新的对象树。然后用新的树与旧的树进行比较，记录两棵树的差异。
+	3.把2所记录的差异应用到步骤1所构建的真正的DOM树上，视图就更新了。
+	
+4.《深入react技术栈》看到21页
+
+5.云南闭环管理在线车辆明细，弹出框地图有点问题。什么鬼？？？
+
+
+2018-1-4：
+1.你这边就搬移四川的角色管理
+黄俊杰--GPS政府 2018/1/4 14:02:53
+还有根据设定的permissionId，js控制权限
+
+2018-1-5：
+1.四川角色管理组织树渲染（查询接口还需要后台调整）
+2.根据设定的permissioniD,JS控制权限
+
+RoleId: 3, Code: "test1", Name: "test1", State: 1, Comm: "test1"
+{"RoleId":10000,"RoleName":"test2","RoleCode":"test2","RoleComm":"","RoleStatus":1}
+
+
+2018-1-8：
+1.任务：
+	1.拿到改好的接口，进行调试，完善一些细节的地方。
+	2.综合代码调试
+	
+2018-1-9：
+1.跳一跳：https://github.com/faceair/youjumpijump
+2.任务：
+	1.加了权限控制功能后页面的样式调整，以及第一次登陆进来页面显示方式控制。
+	2.web问题讨论
+	3.关于春雨的问题：（关于云南项目的一些问题）
+		1.云南的基础类库和湖南的有何差异？----- 云南的功能库：websocket等跟四川湖南差不多，然后table，tab，PageLoad，form，map等相关的封装是封装在Gov-1.1.0.js里面的。
+		云南项目主要用jquery easyui框架,table,tree等封装也是基于该框架进行封装的，还用到一部分bootstrap的样式，主要是部分按钮和部分form表单在用。
+		
+		2.各分页面的html是这样嵌入到主页面的？----- 这个主要是Gov-1.1.0.js里面的pageLoad方法在控制。
+		页面的最上面的header nav 的属性data-show="comprehensive_manage"控制页面侧边栏body-nav对应的id模块显示；
+		侧边栏body-nav里面的每个list-group-item的属性data-id="report_network"，每点击一个就创建一个id属性等于data-id属性的div容器
+		（如果是首次加载就创建；如果已经有了，就隐藏同级容器，直接显示当前对应的容器），
+		并通过当前点击的list的data-url="/Report/VehicleNetWorkRate"属性来知道要请求什么数据，把请求拿到的数据（这个数据就是我们写的一个一个的分页面）放到刚刚创建的容器里面去，
+		然后把该容器追加到#container容器里面去，这样来控制右侧页面的显示隐藏。
+		
+		3.表格的加载过程，表格的样式是如何渲染的？----- 表格的样式是框架的样式easyui.css自带的，我们所做的就是在easyui的datagrid基础上进行了一下封装，
+		还有就是对可以进行排序的列的样式进行了一下处理（可参考Gov-1.1.0.js里面关于table组件封装那一块儿的initSortCloumnStyle方法）
+		
+	4.自己的问题：
+		1.jquery easyui tree? ----- 可查看easyui tree相关的api；对于node节点，可打印出来看
+				tree = $("#role_config_tree").tree({
+                    animate: true,
+                    checkbox: true,
+                    data: dataFormat, // tree的文字是通过dataFormat的对象的text属性来渲染的
+                    cascadeCheck: true, // 开启联动(父节点勾选子节点全选，父节点取消勾选子节点也全部取消,子节点选完父节点勾选...)
+                    onDblClick: function (node) {
+                        $("#role_config_menu").html(node.text);
+                        setSaveData();
+                        rTable.loadQueryTable(node.key, roleId);
+                    }
+                    
+                });
+				initTree();
+				function initTree() {
+					var nodes = $('#role_config_tree').tree('getChildren');
+					for (var i in nodes) {
+						if (nodes[i].isSelected && nodes[i].children.length == 0) {
+							var node = $('#role_config_tree').tree('find', nodes[i].id); // 找到id为role_config_tree这个树的节点id为nodes[i].id的对象
+							$('#role_config_tree').tree('check', node.target);//设置选中该节点
+						}
+					}
+
+					$("#role_config_menu").html("首页分布");
+
+				}
+				
+		2.jquery判断页面上某个元素是否存在？----- $("#report_online")获取到的永远是对象，不管改元素在页面上是否存在。所以如果要判断，则要使用$("#report_online").length来判断
+			例子：if ($("#report_online").length) {console.log("this element is exist");}
+			
+		3.代码封装基本写法：
+			例子：loadPage加载页面封装：
+			(function(_){
+				_.Loader = _.Loader || {};
+				_.Loader.LoadHTML = function(options){
+					var ctl = {};
+					var opt = {
+						container: "container",
+						pageClass: "body-content"
+					};
+					
+					Gov.Class.extend(ctl, opt, options); // 把options合并到opt上面去，并添加get set方法，然后合并到ctl上面去
+					
+					function createId(url, id){
+						if (id) {
+							return id;
+						}
+						return url.replace(/\//g, "_").replace(/-/, "").toLowerCase();
+					}
+					
+					function showLoadPage(pageId){
+						$(['#', ctl.getPageClass()].join("")).hide();
+						$(['#', pageId].join("")).show();
+					}
+					
+					function appendPage(pageId, data){
+						var html = '<div id="'+pageId+'" class="'+ctl.getPageClass()+'" name="'+pageId+'">'+data+'</div>';
+						$(['#', ctl.getContainer()].join("")).append(html);
+					}
+					
+					function isExistPage(pageId){
+						if ($(['#', pageId].join("")).length) { // jquery通过length判断页面上某个元素是否存在
+							return true;
+						}
+						return false;
+					}
+					
+					function loadPage(url, fn){
+						Gov.ajax({
+							url: url,
+							isDialog: true,
+							success: function(data){
+								fn(data);
+							}
+						});
+					}
+					
+					function init(url, pageId, fn){
+						pageId = createId(url, pageId);
+						if (!url) {return;}
+						if (isExistPage(pageId)) {
+							showLoadPage(pageId);
+							return;
+						}
+						loadPage(url, function(data){
+							appendPage(pageId, data);
+							showLoadPage(pageId);
+							fn && fn();
+						});
+					}
+					
+					ctl.loadPage = init;
+					
+					return ctl;
+				}
+			})(window.Gov);
