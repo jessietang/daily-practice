@@ -1,0 +1,238 @@
+body {
+    font: 400 14px '\5FAE\8F6F\96C5\9ED1', Helvetica;
+    font-size: .14rem;
+    color: #000;
+    background-color: #fff;
+    -webkit-overflow-scrolling: touch
+}
+
+body, div, dl, dt, dd, del, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, a, menu, header {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+input, textarea {
+    border: 0
+}
+
+select {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: pre;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-rtl-ordering: logical
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse
+}
+
+fieldset, img {
+    vertical-align: top;
+    border: 0
+}
+
+address, caption, cite, code, dfn, em, th, var {
+    font-weight: 400;
+    font-style: normal
+}
+
+ol, ul, li {
+    list-style: none
+}
+
+caption, th {
+    text-align: left
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: 400;
+    font-style: normal
+}
+
+q:before, q:after {
+    content: ''
+}
+
+abbr, acronym {
+    border: 0
+}
+
+header, section, footer {
+    display: block;
+    margin: 0;
+    padding: 0
+}
+
+a {
+    text-decoration: none;
+    color: #000
+}
+
+a, img {
+    -webkit-touch-callout: none
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+    user-select: none
+}
+
+button, input, optgroup, select, textarea {
+    -webkit-appearance: none;
+    border: none;
+    outline: none
+}
+
+a, button, input, optgroup, select, textarea {
+    -webkit-tap-highlight-color: transparent
+}
+
+input::-webkit-input-placeholder {
+    color: #ccc
+}
+
+body {
+    -webkit-text-size-adjust: 100% !important
+}
+
+input::-webkit-input-speech-button {
+    display: none
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 1000px #fff;
+    box-shadow: inset 0 0 0 1000px #fff
+}
+
+.login_box_bg {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    animation: move 30s linear 1s infinite;
+    -webkit-animation: move 30s linear 1s infinite;
+    -moz-animation: move 30s linear 1s infinite;
+    -o-animation: move 30s linear 1s infinite
+}
+
+@-webkit-keyframes move {
+    0% {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }
+    50% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px)
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px)
+    }
+}
+
+@keyframes move {
+    0% {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }
+    50% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px)
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px)
+    }
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    clear: both
+}
+
+.clearfix {
+    zoom: 1
+}
+
+.locationBox {
+    width: 100%;
+    height: 100%
+}
+
+#mapPanel {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 0
+}
+
+.searchContainer {
+    position: absolute;
+    z-index: 2;
+    width: 90%;
+    height: 1.12rem;
+    top: 5%;
+    left: 50%;
+    margin-left: -45%
+}
+
+.searchContainer .searchBox {
+    width: 100%;
+    height: 100%;
+    border-radius: .13333rem;
+    font-size: .37333rem;
+    padding-left: .26667rem;
+    border: 1px solid #e3e3e3
+}
+
+.searchContainer .searchBtn {
+    width: .56rem;
+    height: .56rem;
+    position: absolute;
+    padding-left: .26667rem;
+    right: .53333rem;
+    top: 0;
+    border-left: 1px solid #e3e3e3;
+    margin-top: .28rem
+}
+
+.searchContainer .searchBtn img {
+    width: .56rem;
+    height: .56rem
+}
+
+.searchContainer .autoComplete {
+    display: none;
+    width: 100%;
+    height: auto;
+    background-color: #fff
+}
+
+.searchContainer .autoComplete .list {
+    width: 100%;
+    height: .66667rem;
+    line-height: .66667rem;
+    padding-left: .4rem;
+    border-bottom: 1px solid #eee
+}
+
+.searchContainer .autoComplete .list:hover {
+    background-color: #eee;
+    cursor: pointer
+}
+

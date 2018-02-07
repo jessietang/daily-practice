@@ -1,0 +1,229 @@
+body {
+    font: 400 14px '\5FAE\8F6F\96C5\9ED1', Helvetica;
+    font-size: .14rem;
+    color: #000;
+    background-color: #fff;
+    -webkit-overflow-scrolling: touch
+}
+
+body, div, dl, dt, dd, del, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, a, menu, header {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+input, textarea {
+    border: 0
+}
+
+select {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: pre;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-rtl-ordering: logical
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse
+}
+
+fieldset, img {
+    vertical-align: top;
+    border: 0
+}
+
+address, caption, cite, code, dfn, em, th, var {
+    font-weight: 400;
+    font-style: normal
+}
+
+ol, ul, li {
+    list-style: none
+}
+
+caption, th {
+    text-align: left
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: 400;
+    font-style: normal
+}
+
+q:before, q:after {
+    content: ''
+}
+
+abbr, acronym {
+    border: 0
+}
+
+header, section, footer {
+    display: block;
+    margin: 0;
+    padding: 0
+}
+
+a {
+    text-decoration: none;
+    color: #000
+}
+
+a, img {
+    -webkit-touch-callout: none
+}
+
+html, body {
+    -webkit-user-select: none;
+    user-select: none
+}
+
+button, input, optgroup, select, textarea {
+    -webkit-appearance: none;
+    border: none;
+    outline: none
+}
+
+a, button, input, optgroup, select, textarea {
+    -webkit-tap-highlight-color: transparent
+}
+
+input::-webkit-input-placeholder {
+    color: #ccc
+}
+
+body {
+    -webkit-text-size-adjust: 100% !important
+}
+
+input::-webkit-input-speech-button {
+    display: none
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0 1000px #fff;
+    box-shadow: inset 0 0 0 1000px #fff
+}
+
+.login_box_bg {
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    animation: move 30s linear 1s infinite;
+    -webkit-animation: move 30s linear 1s infinite;
+    -moz-animation: move 30s linear 1s infinite;
+    -o-animation: move 30s linear 1s infinite
+}
+
+@-webkit-keyframes move {
+    0% {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }
+    50% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px)
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px)
+    }
+}
+
+@keyframes move {
+    0% {
+        -webkit-transform: translate(0);
+        transform: translate(0)
+    }
+    50% {
+        -webkit-transform: translateX(-100px);
+        transform: translateX(-100px)
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px)
+    }
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+    clear: both
+}
+
+.clearfix {
+    zoom: 1
+}
+
+.title {
+    font-size: .42667rem;
+    text-align: center;
+    font-weight: bold;
+    height: 1.06667rem;
+    line-height: 1.06667rem
+}
+
+.modularBox {
+    width: 100%;
+    height: 5.33333rem;
+    border: 1px solid #eee
+}
+
+.modularBox .modularList {
+    float: left;
+    width: 50%;
+    height: 2.66667rem;
+    line-height: 2.66667rem;
+    text-align: center
+}
+
+.modularBox .modularList img {
+    width: .89333rem;
+    height: .89333rem;
+    vertical-align: middle
+}
+
+.modularBox .modularList:nth-child(1), .modularBox .modularList:nth-child(2) {
+    border-bottom: 1px solid #e3e3e3
+}
+
+.modularBox .modularList:nth-child(1), .modularBox .modularList:nth-child(3) {
+    border-right: 1px solid #e3e3e3
+}
+
+.modularBottom {
+    width: 100%;
+    height: 12.01333rem;
+    background: url("../icons/modularBg.png") top center no-repeat;
+    -webkit-background-size: 10rem 12.01333rem;
+    background-size: 10rem 12.01333rem;
+    position: relative
+}
+
+.modularBottom .modularEchartBox {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 8.8rem;
+    border-radius: .13333rem;
+    height: 6.24rem;
+    margin: 2rem auto 1.14667rem -4.4rem;
+    background: rgba(255, 255, 255, 0.5)
+}
+
+.modularBottom .modularEchartBox #modularPie {
+    width: 100%;
+    height: 100%
+}
+

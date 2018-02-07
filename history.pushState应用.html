@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>history pushState replaceState popState</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.nav-box {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+		}
+		
+		.nav-box p {
+			width: 25%;
+			box-sizing: border-box;
+			border: 1px solid #eee;
+			padding: 10px 20px;
+			text-align: center;
+			cursor: pointer;
+			color: #fff;
+			background-color: #4D9DFF;
+		}
+		
+		#content {
+			height: 400px;
+			line-height: 400px;
+			border: 1px solid #ddd;
+			font-size: 20px;
+			text-align: center;
+		}
+	</style>
+</head>
+<h2>利用history的pushState等方法来解决ajax不能在浏览器上前进和后退的问题</h2>
+<div class="nav-box">
+	<p class="list-nav" id="section1">第一个Nav</p>
+	<p class="list-nav" id="section2">第二个Nav</p>
+	<p class="list-nav" id="section3">第三个Nav</p>
+	<p class="list-nav" id="section4">第四个Nav</p>
+</div>
+
+<div id="content">
+
+</div>
+
+<script src="js/jquery-1.11.2.js"></script>
+<script>
+$(function(){
+	/*$(".list-nav").click(ajax);
+	$('#section1').trigger('click');
+	
+	function ajax(){
+		// 实际的流程是发ajax请求，获取内容并显示。这里做了简单的处理
+		$('#content').html(this.id + '的内容');
+		var title = this.id;
+		document.title = title;
+	}*/
+});
+
+</script>
+<body>
+	
+	
+</body>
+</html>
