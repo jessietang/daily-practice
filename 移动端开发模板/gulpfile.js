@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(), //之前一直在用Gulp开发项目，每次编写完Sass后还要用按F5刷新页面看效果，想想也是够傻的，这么好用的东西竟然现在才开始用。
 //BrowserSync可以【同时同步刷新多个浏览器，更神奇的是你在一个浏览器中滚动页面、点击按钮、输入框中输入信息等用户行为也会同步到每个浏览器中】。
     reload = browserSync.reload,
-    del = require('del'),
+    del = require('del'), // 删除（用del代替gulp-clean）
     tmodjs = require('gulp-tmod'),
     sass = require('gulp-sass'), // compile your sass files 用来编译sass文件
     autoprefixer = require('gulp-autoprefixer'), //使用gulp-autoprefixer根据设置浏览器版本自动处理浏览器前缀。使用它我们可以很潇洒的写代码【特别是开发移动端页面时，就能充分体现它的优势。例如兼容性不太好的flex布局】
@@ -14,7 +14,7 @@ var gulp = require('gulp'),
 	minifyCss = require('gulp-minify-css'), // gulp-minify-css用来压缩css文件
 	minifyHtml = require('gulp-minify-html'), // gulp-minify-html用来压缩html文件
     inject = require('gulp-inject'),
-    rev = require('gulp-rev'),
+    rev = require('gulp-rev'), // 给静态资源文件名添加hash值:unicorn.css => unicorn-d41d8cd98f.css (这个要修改:http://blog.csdn.net/lunhui1994_/article/details/76549226)
     revCollector = require('gulp-rev-collector'),
     base64 = require('gulp-base64');
 	
@@ -113,10 +113,10 @@ gulp.task('revImg', function() {
         .pipe(gulp.dest('./cache/rev/images'));
 });
 
-//CSS添加版本号
+//CSS压缩  //CSS添加版本号
 gulp.task('revCss', function() {
     return gulp.src('src/static/css/**/*.css')
-        .pipe(base64({
+        .pipe(base64({ 
             extensions: ['png', 'jpg'],
             // exclude: ['a.jpg', 'c.png'],
             maxImageSize: 8 * 1024
@@ -158,7 +158,7 @@ gulp.task('dev', function(done){
 });
 
 // 正式构建
-gulp.task('bulid', function(done){
+gulp.task('build', function(done){
 	runSequence(['cleanBuild'], ['revImg'], ['revCss'], ['miniHtml'], ['miniJs'], done);
 });
 

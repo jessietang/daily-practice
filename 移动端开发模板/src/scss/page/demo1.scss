@@ -16,5 +16,9 @@ $standardNum: 75;
   @include pxrem(height,60);
   @include pxrem(line-height,60);
   text-align: center;
-  background-image: url('../static/images/icons/magnify.png');
+  background: url('../images/icons/magnify.png') left center no-repeat; 
+  /*注意： 这里的图片路径，应该是demo.css文件（编译后的文件）相对于图片的路径。*
+	js中引用图片，路径是 引用该js文件的html文件相对于图片的路径
+	css中引入图片，路径就是 css文件相对于图片的路径
+  */
 }
