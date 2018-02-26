@@ -8,7 +8,7 @@
 <!--Geocoding API是一类接口，用于提供从地址到经纬度坐标或者从经纬度坐标到地址的转换服务-->
 
 <!--
-    需求：通过定位得到当前位置
+    需求：通过定位得到当前位置经纬度，然后进行逆地址解析
 -->
 
 <script src="js/jquery.min.js"></script>
@@ -23,9 +23,9 @@
             // 定位成功
             if(this.getStatus() == BMAP_STATUS_SUCCESS){
                 console.log(r.point); // H {lng: 104.06792346, lat: 30.67994285}
-                console.log('你的经纬度坐标：'+ '('+ r.point.lat + ',' + r.point.lng);
+                console.log('你的经纬度坐标：'+ '('+ r.point.lat + ',' + r.point.lng)+')';
                 // 使用Geocoding API去把经纬度转换为地址
-                // 这里展示了jQuery如何实现jsonp的调用
+                // 这里展示了jQuery如何实现jsonp的调用（jquery在处理jsonp类型的ajax时，会自动帮我们生成回调函数并把数据取出来供success属性方法调用）
                 $.ajax({
                     url: 'http://api.map.baidu.com/geocoder/v2/?ak=Cu2gMKwvBltUntF3DUEZcZ6w&location=' + r.point.lat + ',' + r.point.lng + '&output=json&pois=2',
                     dataType: 'jsonp',
@@ -35,7 +35,7 @@
                         console.log(result);
                         if(result){
                             currentPosition = result.formatted_address;
-                            console.log(currentPosition);
+                            console.log('formatted_address----' + currentPosition);
                         }else{
                             console.log('地址解析失败');
                             currentPosition = '地址解析失败';
@@ -47,6 +47,7 @@
                     }
 
                 });
+				
             }else{ // 定位失败
                 console.log('failed'+ this.getStatus());
                 currentPosition = 'failed'+ this.getStatus();

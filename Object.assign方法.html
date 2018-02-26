@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Object.assign()方法的应用</title>
+</head>
+
+
+<script>
+// 1.合并对象
+var target = {a: 1, b: 1};
+var source1 = {b: 2, c: 2};
+var source2 = {c: 3};
+Object.assign(target, source1, source2);
+console.log(target); // {a: 1, b: 2, c: 3}
+
+// 2.复制对象（深度克隆）
+var obj1 = {
+	a: 1,
+	b: {
+		m: 2,
+		n: 3,
+		o: {
+			t1: 4,
+			t2: 5
+		}
+	}
+};
+var copyObj = {};
+Object.assign(copyObj, obj1);
+console.log(copyObj); 
+//copyObj = {a: 1, b: {m: 2,n: 3,o: {t1: 4,t2: 5}}}
+
+
+// 3.更改属性的值
+var sourceObj = {
+	id: 1,
+	name: 'test',
+	startDate: '2017-10-10',
+	startTime: '',
+	endDate: '2018-10-10',
+	endTime: ''
+};
+Object.assign(sourceObj, {
+	startTime: sourceObj.startTime ? sourceObj.startTime : '至今',
+	endTime: sourceObj.endTime ? sourceObj.endTime : '至今'
+});
+console.log(sourceObj);
+// sourceObj = {id: 1, name: 'test', startDate: '2017-10-10', startTime: '至今', endDate: '2018-10-10', endTime: '至今'}
+
+
+</script>
+<body>
+	
+	
+</body>
+</html>
