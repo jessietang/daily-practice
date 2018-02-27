@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量提升</title>
+</head>
+
+
+<script>
+var name = 'World!';
+(function () {
+    if (typeof name === 'undefined') {
+        var name = 'Jack';
+		console.log(this); // 里面含有最外层的那个name
+		console.log(this.name); // World
+		console.log(name); // Jack
+        console.log('Goodbye ' + name);
+    } else {
+        console.log('Hello ' + name);
+    }
+})();
+
+
+// 立即执行函数里面的name变量提升，等价于下面的代码
+/*
+var name = 'World!';
+(function(){
+	var name;
+	if (typeof name === 'undefined') {
+		name = 'Jack';
+		console.log('Goodbye ' + name);
+	} else {
+		console.log('Hello ' + name);
+	}
+})();
+*/
+</script>
+<body>
+	
+	
+</body>
+</html>
