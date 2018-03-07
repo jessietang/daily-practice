@@ -34,6 +34,73 @@ var name = 'World!';
 	}
 })();
 */
+
+
+/*
+(function(a){
+	console.log(a)
+}(this));
+
+(function(){
+	console.log(this)
+}.bind(this)());
+*/
+
+var mm = 'i am the window mm'
+var obj = {
+	mm: 'i am the obj mm',
+	fn: function(){
+		setTimeout(function(){
+			console.log(this.mm);
+		}, 1000);
+	}
+};
+
+obj.fn(); // i am the window mm  定时器中的this总是指向window.
+
+// 解决办法有两个： 1.在外部函数中将this存为一个变量，回调函数中使用该变量而不是直接使用this; 
+// 2.使用bind()方法绑定this； 
+// 3.使用es6的箭头函数：箭头函数的最大作用就是this指向。箭头函数中的this指向的是外层调用者obj(其实就是一层一层往上找)。
+// 箭头函数中，this指向的固定化，并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，导致内部的this就是外层代码块的this。
+// 正是因为它没有this，所以也就不能用作构造函数。
+
+// 解决办法1：this另存
+var m1 = 'i am window m1';
+var obj1 = {
+	m1: 'i am obj m1',
+	fn: function(){
+		var _this = this;
+		setTimeout(function(){
+			console.log(_this.m1);
+		}, 1000);
+	}
+};
+obj1.fn(); // i am obj m1
+
+// 解决办法2： 使用bind方法绑定
+var m2 = 'i am window m2';
+var obj2 = {
+	m2: 'i am obj m2',
+	fn: function(){
+		setTimeout(function(){
+			console.log(this.m2);
+		}.bind(this), 1000);
+	}
+}
+obj2.fn(); // i am obj m2
+
+// 解决办法3： 使用箭头函数
+var m3 = 'i am window m3';
+var obj3 = {
+	m3: 'i am obj m3',
+	fn: function(){
+		setTimeout(() => {
+			console.log(this.m3);
+		}, 1000);
+	}
+};
+obj3.fn(); // i am obj m3
+		
 </script>
 <body>
 	

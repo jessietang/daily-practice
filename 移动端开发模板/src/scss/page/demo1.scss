@@ -22,3 +22,11 @@ $standardNum: 75;
 	css中引入图片，路径就是 css文件相对于图片的路径
   */
 }
+
+.p3 {
+	@include pxrem(font-size, 30);
+}
+
+.p4 {
+	@include font-dpr(30px); /*具体用哪种写法，要看设计图上面的font-size是怎么给的，这里我也有点没太捋清*/
+}
